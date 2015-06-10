@@ -1,0 +1,37 @@
+import("modelObj",
+       "methods"
+)
+export(
+    "buildModelObjSubset",
+    "iqLearnFSV",
+    "iqLearnFSM",  
+    "iqLearnFSC",  
+    "iqLearnSS",  
+    "optimalSeq", 
+    "optimalClass", 
+    "plugInValue",
+    "qLearn"
+)
+exportClasses("DynTxRegime")
+exportMethods(
+    "classif",
+    "coef",
+    "DTRstep",
+    "estimator",
+    "fitObject",
+    "fittedMain",
+    "fittedCont",
+    "genetic",
+    "optTx",
+    "outcome",
+    "plot",
+    "propen",
+    "qFuncs",
+    "qqPlot",
+    "regimeCoef",
+    "residuals",
+    "show",
+    "stdDev",
+    "summary"
+)
+
