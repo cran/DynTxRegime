@@ -1,27 +1,29 @@
 \name{DynTxRegime-package}
 \alias{DynTxRegime-package}
-\alias{DynTxRegime}
 \docType{package}
 \title{
-Methods for Estimating Dynamic Treatment Regimes
+Methods for Estimating Optimal Dynamic Treatment Regimes
 }
-
 \description{
 Implementations of Interactive Q-Learning, Q-Learning,
-and value-search methods based on augmented
+value-search methods based on augmented
 inverse probability weighted estimators and inverse
-probability weighted estimators. 
+probability weighted estimators, outcome weighted learning (OWL),
+residual weighted learning (RWL), backward outcome weighted learning (BOWL),
+and efficient augmentation and relaxation learning (EARL). 
 }
 \details{
 \tabular{ll}{
 Package: \tab DynTxRegime\cr
 Type: \tab Package\cr
-Version: \tab 2.1\cr
-Date: \tab 2015-06-10\cr
+Version: \tab 3.0\cr
+Date: \tab 2017-05-12\cr
 License: \tab GPL-2\cr
-Depends: \tab methods, modelObj, rgenoud\cr
+Depends:  \tab methods, modelObj, stats\cr
+Suggests:  \tab MASS, rpart, nnet\cr
+Imports: \tab  kernlab, rgenoud, dfoptim
 }
-Please see the references below for details of each method implemented.
+See the references below for details of each method implemented.
 }
 \author{
 Marie Davidian, Eric B. Laber, Kristin A. Linn, 
@@ -32,8 +34,8 @@ Maintainer: Shannon T. Holloway <sthollow@ncsu.edu>
 \references{
 Laber, E. B., Linn, K. A., and Stefanski, L. A. 
 (2014). 
-Interactive Q-learning. 
-Biometrika, in press.
+Interactive model building for Q-learning. 
+Biometrika, 101, 831--847.
 
 Zhang, B., Tsiatis, A. A., Davidian, M., Zhang, M., and Laber, E. B.
 (2012).
@@ -55,15 +57,41 @@ Mebane, W. and Sekhon, J. S.
 (2011).
 Genetic Optimization Using Derivatives : The rgenoud package for R.
 Journal of Statistical Software, 42, 1--26.
+
+Zhao, Y-Q., Laber, E. B., Saha, S., and Sands, B. E.
+(2016+).
+Efficient Augmentation and Relaxation Learning for Treatment
+Regimes Using Observational Data.
+in press.
+
+Zhou, X., Mayer-Hamblett, N., Kham, U., and Kosorok, M. R.
+(2016+).
+Residual Weighted Learning for Estimating Individualized Treatment Rules.
+Journal of the American Statistical Association, in press.
+
+Zhao, Y-Q., Zeng, D., Rush, A. J., and Kosrok, M. R.
+(2012).
+Estimating Individualized Treatment Rules Using Outcome Weighted Learning.
+Journal of the American Statistical Association, 107, 1106--1118.
+
+Zhao, Y-Q., Zeng, D., Laber, E. B., and Kosorok, M. R.
+(2015).
+New Statistical Learning Methods for Estimating Optimal Dynamic Treatment Regimes.
+Journal of the American Statistical Association, 110, 583--598.
+
 }
-\keyword{ package }
+
 \seealso{
- \code{\link{iqLearnSS}}, 
- \code{\link{iqLearnFSM}}, 
+ \code{\link{bowl}},
+ \code{\link{earl}},
  \code{\link{iqLearnFSC}}, 
+ \code{\link{iqLearnFSM}}, 
  \code{\link{iqLearnFSV}}, 
- \code{\link{optimalSeq}}, 
+ \code{\link{iqLearnSS}}, 
  \code{\link{optimalClass}}, 
- \code{\link{qLearn}}
+ \code{\link{optimalSeq}}, 
+ \code{\link{owl}},
+ \code{\link{qLearn}}, and
+ \code{\link{rwl}},
 }
 

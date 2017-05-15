@@ -1,28 +1,27 @@
 \name{fittedMain}
+\docType{methods}
 \alias{fittedMain}
-\alias{fittedMain,DynTxRegime-method}
 
-\title{ Extract Fitted Main Effects}
+\title{ Extract Fitted Main Effects of Outcome}
 \description{
-Extract fitted main effects for IQ-Learning algorithm.
+Retrieve the fitted main effects component of the outcome
+regression analysis for the second-stage decision point.
+Only available for the IQ-Learning algorithm.
 }
 
-\usage{ \S4method{fittedMain}{DynTxRegime}(object, ...)  }
+\usage{
+fittedMain(object, ...)
+}
 
 \arguments{
-  \item{object }{an object of class DynTxRegime.}
-
-  \item{\dots }{ignored.}
-
+\item{object}{An object of class \code{"DynTxRegime"}}
+\item{...}{Ignored.}
 }
 
-\value{
-For object returned by IQ-Learning functions, the fitted main effects.
-For all others, NULL
-}
+\value{ For objects returned by iqLearnSS(), a vector. 
+For all other \code{"DynTxRegime"} objects, NA. }
 
 \author{
   Shannon T. Holloway <sthollow@ncsu.edu>
 }
-
 

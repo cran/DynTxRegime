@@ -1,84 +1,49 @@
 \name{coef}
+\docType{methods}
 \alias{coef}
-\alias{coef,DynTxRegime-method}
 
-\title{ Extract Model Coefficients}
+\title{ Retrieve Model Coefficients}
 
 \description{
-Extract model coefficients from regression analyses.
+Retrieve model coefficients from regression analyses.
 }
 
-\usage{ \S4method{coef}{DynTxRegime}(object, ...)  }
+\usage{
+coef(object,...)
+}
 
 \arguments{
-  \item{object }{an object of class DynTxRegime.}
-
-  \item{\dots  }{passed through to coef() method of modelObj.}
-
+\item{object}{An object of class \code{"DynTxRegime"}.}
+\item{...}{Passed to coef() defined by fitting function.}
 }
 
 \details{
 
-There is a pattern to the format for the returned values of 
-all standard regression tools that have been extended to the
-DynTxRegime class. A list is always returned. The length and
-structure of the list are determined by the 
-statistical method used to estimate the optimal dynamic treatment regime
-and by the combination of the input arguments.
+The exact structure of the returned list will depend on the
+statistical method used to estimate an optimal treatment regime
+and value.
 
-For IQ-Learning, only outcome regression models are used. These models
-are always communicated using objects of class modelObj. The pattern for
-the returned object follows:
+For methods that employ outcome regression, the list will have one
+element named 'outcome' in which all coefficient information
+for the outcome regression step(s) will be given.
 
-if( iter == 0 && class(moMain) == "modelObj" && class(moCont) == "modelObj")
+For methods that use propensity score modeling, the list will have one
+element named 'propensity' in which all coefficient information
+for the propensity score regression step(s) will be given.
 
-names(coef()) = "Combined"
+The 'outcome' and 'propensity' elements may also be lists. For example,
+for multiple-decision-points, the sub-list will have an element for
+each decision point named with 'dp=x' where x takes the value of the
+decision point. For example, [['outcome']][['dp=1']],
+[['outcome']][['dp=2']], etc.
 
-if( iter > 0 && class(moMain) == "modelObj" && class(moCont) == "modelObj")
+Subset modeling will also result in sub-lists, the names of which
+are 'Subset=x' where x takes the values of the subset names as defined
+by the user in the input.
 
-names(coef()) = "MainEffect", "Contrast"
-
-if( iter == 0 && class(moMain) == "modelObj" && class(moCont) == "NULL")
-
-names(coef()) = "moMain"
-
-if( iter == 0 && class(moMain) == "NULL" && class(moCont) == "modelObj")
-
-names(coef()) = "moCont"
-
-
-
-For Q-Learning, only outcome regression models are used. 
-If regression models are defined using objects of class modelObj, 
-the returned list will follow the pattern described for IQ-Learning.
-If regression models are defined using objects of class modelObjSubset,
-a list is returned. The kth element of that list
-corresponds to the kth subset model and is named accordingly. 
-Each subset model follows the pattern for modelObj described above. 
-
-For optimalSeq, a list is returned,
-the elements of which are named "regimes," "propen," and "outcome." 
-Element "regimes" will contain the parameter estimates for the treatment
-regimes. Element "propen" will contain the parameter estimates for each
-of the propensity for treatment models. And, "outcome" will contain
-the parameter estimates for each of the outcome regression models.
-
-For optimalClass, a list is returned,
-the elements of which are named "propen" and "outcome." 
-Element "propen" will contain the parameter estimates for 
-the propensity for treatment model. And, "outcome" will contain
-the parameter estimates for the outcome regression models.
-The coef method is not appropriate for classification regression and is thus
-excluded from the returned list.
-
-}
-
-\value{
-       Returns a list. See the details section for more information.
 }
 
 \author{
   Shannon T. Holloway <sthollow@ncsu.edu>
 }
-
 

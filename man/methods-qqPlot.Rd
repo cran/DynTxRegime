@@ -1,19 +1,29 @@
-\name{qqPlot}
-\alias{qqPlot}
-\alias{qqPlot,DynTxRegime-method}
+\name{qqplot}
+\docType{methods}
+\alias{qqplot}
+\alias{qqplot,IQLearnFS_VHet-method}
 
 
 \title{ IQ-Learning: Generate QQ-Plots for Variance Modeling .}
 \description{
 Generate QQ plots for Variance modeling in IQ-Learning.
 }
-\usage{ \S4method{qqPlot}{DynTxRegime}(x, ...)  }
+
+\usage{
+qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
+                 ylab = deparse(substitute(y)),...)
+\S4method{qqplot}{IQLearnFS_VHet}(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
+                 ylab = deparse(substitute(y)),...)
+}
+
 
 \arguments{
-  \item{x }{an object of class DynTxRegime.}
-
-  \item{\dots }{ignored.}
-
+\item{x}{An object of class \code{"IQLearnFS_VHet"}.}
+\item{y}{Ignored.}
+\item{plot.it}{logical. Should the result be plotted?}
+\item{xlab}{Plot labels.}
+\item{ylab}{Plot labels.}
+\item{...}{Graphical parameters.}
 }
 
 \details{

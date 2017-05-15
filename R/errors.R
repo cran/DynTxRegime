@@ -14,3 +14,19 @@ DeveloperError <- function(msg, place){
   stop(e)
 
 }
+
+badMethod <- function(nm, ...){
+
+  alist <- list(...)
+
+  clist <- sapply(alist, class)
+
+  msg <- paste("This method was called with inappropriate classes",
+               paste(clist, collapse = ", "))
+
+  DeveloperError(msg, nm)
+
+}
+
+
+

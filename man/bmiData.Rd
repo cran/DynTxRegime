@@ -5,8 +5,7 @@
 Adolescent BMI dataset (generated toy example)
 }
 \description{
-A dataset originally created for R package iqLearn. 
-The data were generated to mimic data from a two-stage randomized clinical trial 
+A dataset generated to mimic data from a two-stage randomized clinical trial 
 that studied the effect of meal replacement shakes on adolescent obesity. 
 The dataset contains the following covariates collected at the start of the 
 first stage: "gender," "race," "parentBMI," and "baselineBMI." At the 

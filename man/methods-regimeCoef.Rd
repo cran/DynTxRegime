@@ -1,23 +1,28 @@
 \name{regimeCoef}
+\docType{methods}
 \alias{regimeCoef}
-\alias{regimeCoef,DynTxRegime-method}
 
 \title{ Retrieve Regime Parameter Estimates}
 \description{
- Retrieves treatment regime parameter estimates from an object returned by optimalSeq.
+ Retrieves treatment regime parameter estimates.
 }
-\usage{ \S4method{regimeCoef}{DynTxRegime}(object, ...)  }
+
+\usage{
+regimeCoef(object,...)
+}
 
 \arguments{
-  \item{object }{an object of class DynTxRegime.}
-
-  \item{\dots }{ignored.}
-
+\item{object}{An object of class \code{"DynTxRegime"}.}
+\item{...}{Ignored.}
 }
 
-\value{
-Retrieves the parameter estimates for the treatment rules as determined
-by the genetic algorithm of \pkg{rgenoud}.
+\value{ Defined only for objects returned by 
+owl(), bowl(), rwl(), earl(), and optimalSeq().
+For single-decision-point scenarios, a vector of the 
+estimated treatment regime parameters.
+For multiple-decision-point scenarioes, a list; each element containing
+the estimated treatment regime parameters for the decision point.
+For all other \code{"DynTxRegime"} objects, NA.
 }
 
 \author{

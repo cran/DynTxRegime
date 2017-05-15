@@ -1,28 +1,27 @@
 \name{genetic}
+\docType{methods}
 \alias{genetic}
-\alias{genetic,DynTxRegime-method}
 
 \title{ Retrieve the Result of the Genetic Algorithm Optimization}
 
 \description{
-Retrieve the value objects returned by the rgenoud algorithm.
+Retrieve the value object returned by the rgenoud algorithm.
+Only available for objects returned by optimalSeq().
+See ?genoud for further information.
 }
-\usage{ \S4method{genetic}{DynTxRegime}(object, ...)  }
+
+\usage{
+genetic(object, ...)
+}
 
 \arguments{
-  \item{object }{an object of class DynTxRegime.}
-
-  \item{\dots }{ignored.}
-
+\item{object}{An object of class \code{"DynTxRegime"}.}
+\item{...}{Ignored.}
 }
 
-\details{
-This method returns NULL for all DynTxRegime objects except those
-returned by optimalSeq().
-}
-
-\value{
-       See ?genoud for details.
+\value{For objects returned by optimalSeq(),
+a list, the structure of which is defined by rgenoud(). For
+all other \code{"DynTxRegime"} objects, NA.
 }
 
 \author{

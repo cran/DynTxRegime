@@ -1,156 +1,140 @@
 \name{optimalClass}
 \alias{optimalClass}
 \title{
-Classification Based Robust Estimation of Optimal Dynamic Treatment Regimes
+Classification Based Estimation of Optimal Dynamic Treatment Regimes
 }
 \description{
-Implements a classification based alternative 
-to Q- and A- learning that uses an Augmented Inverse Probability Weighted
-Estimator (AIPWE) or an Inverse Probability Weighted Estimator (IPWE) 
+Uses an Augmented Inverse Propensity Weighted
+Estimator (AIPWE) or an Inverse Propensity Weighted Estimator (IPWE) 
 of the contrast function to define a weighted classification
 problem. The method is limited to single decision point binary treatment regimes. 
 }
-\usage{ optimalClass(..., moPropen, moMain, moCont, moClass, 
-data, response, txName, iter=0L, suppress = FALSE)
+\usage{
+optimalClass(..., moPropen, moMain, moCont, moClass, 
+             data, response, txName, iter = 0L, verbose = TRUE)
 }
 \arguments{
- \item{...      }{ignored.}
 
- \item{moPropen }{an object of class \code{modelObj}.
-                  This object defines the
-                  models and R methods to be used to obtain parameter          
-                  estimates and predictions for the propensity for treatment   
+ \item{\dots    }{ignored. Included to require named input.}
+
+ \item{moPropen }{An object of class \code{"modelObj."}
+                  This object specifies the model of the
+                  propensity score regression
+                  and the R methods to be used to obtain parameter
+                  estimates and predictions.
+                  The method specified to obtain predictions must return
+                  the prediction on the scale of the probability,
+                  i.e., returned values must be in the interval (0,1).
+                  See \link{moPropen} for further information.}
+
+ \item{moMain   }{An object of class \code{"modelObj."}
+                  This object specifies the model of the
+                  main effects component of the outcome regression
+                  and the R methods to be used to obtain parameter
+                  estimates and predictions.
                   The method chosen to obtain predictions must return
-                  the prediction on the scale of the response variable.
-                  See ?modeling.object for details. 
+                  the prediction on the scale of the response variable.}
 
-                  moPropen objects differ slightly from the standard modelObj
-                  in that an additional predict.args element may be required.
-                  In the list of control parameters passed to the prediction
-                  method, an additional list element, "propenMissing" can be
-                  included. This element takes value "smallest" or "largest".
-
-                  If the prediction method specified in moPropen returns
-                  predictions for only a subset of the treatment data,
-                  propenMissing indicates whether it is the smallest or the
-                  largest treatment value that is missing, or base case.
-
-                   For example, fitting a binary tx using
-\preformatted{
-moPropen@predict.method <- predict.glm
-moPropen@predict.args <- list(type='response')
-}
-                   returns only P(A=1). P(A=0) is "missing", and thus
-\preformatted{
-moPropen@predict.args <- list("type"="response",
-                              "propenMissing" = "smallest")
-}
-                  If the dimension of the value returned by the prediction
-                  method is less than the number of treatment options
-                  and no value is provided in propenMissing, it is
-                  assumed that the smallest valued treatment option is missing.}
-
- \item{moMain   }{an object of class \code{modelObj}.
-                  This object defines the
-                  models and R methods to be used to obtain parameter
-                  estimates and predictions for the main effects component
-                  of the outcome regression.
+ \item{moCont   }{An object of class \code{"modelObj."}
+                  This object specifies the models of the
+                  contrasts component of the outcome regression
+                  and the R methods to be used to obtain parameter
+                  estimates and predictions.
                   The method chosen to obtain predictions must return
-                  the prediction on the scale of the response variable.
-                  See ?modelObj for details.}
+                  the prediction on the scale of the response variable.}
 
- \item{moCont   }{an object of class \code{modelObj}.
-                  This object defines the
-                  models and R methods to be used to obtain parameter 
-                  estimates and predictions for the contrast component of
-                  the outcome regression. 
+ \item{moClass  }{An object of class \code{"modelObj."}
+                  This object defines the classification model
+                  (covariates to be used) and the R methods to be
+                  used to obtain parameter estimates and 
+                  predictions.
                   The method chosen to obtain predictions must return
-                  the prediction on the scale of the response variable.
-                  See ?modelObj for details.}
+                  the predicted category.}
 
- \item{moClass  }{an object of class \code{modelObj}.
-                  This object defines the
-                  models and R methods to be used to obtain parameter
-                  estimates and predictions for the classification.
-                  The method chosen to obtain predictions must return
-                  the predicted category.
-                  See ?modelObj for details.}
+ \item{data     }{An object of class \code{"data.frame."}
+                  The covariates and treatment histories.}
 
- \item{data     }{an object of class \code{data.frame} containing the
-                  covariates and treatment histories.}
+  \item{response}{An object of class \code{"vector."}
+                  A vector of the outcome of interest.}
 
- \item{response }{an object of class \code{vector} containing the response variable.}
+ \item{txName   }{An object of class \code{"character."}
+                  The column header of the stage treatment variable
+                  as given in input \code{data}. Treatment must be binary
+                  and will be recoded as 0/1 if not provided as such.}
 
- \item{txName   }{an object of class \code{character};
-                  the column header of \code{data} containing the 
-                  treatment variable.}
+  \item{iter    }{An object of class \code{"numeric."}
+                  If >0, the iterative method will be used to 
+                  obtain parameter estimates in the outcome regression step.
+                  See \link{iter} for further information.}
 
-  \item{iter    }{an object of class \code{numeric}.
 
-                 >=1 if \code{moMain} and \code{moCont} are to be
-                 fitted separately, iter is the maximum number of iterations.
-                 Assume Y = Ymain + Ycont;
-                 the iterative algorithm is as follows:
-                  (1) hat(Ycont) = 0;
-                  (2) Ymain = Y - hat(Ycont);
-                  (3) fit Ymain ~ moMain;
-                  (4) set Ycont = Y - hat(Ymain);
-                  (5) fit Ycont ~ A*moCont;
-                  (6) Repeat steps (2) - (5) until convergence or
-                  a maximum of iter iterations.
-
-                 <=0 if the components of the conditional expectation 
-                 \code{moMain} and \code{moCont} will be combined and 
-                 fit as a single object.
-                 Note that if iter <= 0, all non-model components of the
-                 \code{moMain} and \code{moCont} must be
-                 identical. By default, the choices in moMain are used.}
-
-  \item{suppress }{an object of class \code{logical}. If TRUE,
-                   final screen prints will be suppressed.}
+  \item{verbose }{An object of class \code{"logical."} 
+                  If FALSE, screen prints will be suppressed.}
 }
 
 \details{
-A single decision point dynamic treatment regime is a decision rule for
-assigning treatment based on a patient's history. Several regression
-based approaches have been developed to estimate the "optimal dynamic
-treatment regime". 'optimalClass' is an alternative approach that
-uses a doubly robust Augmented Inverse Probability Weighted 
-estimator (AIPWE) or an Inverse Probability Weighted 
-estimator (IPWE) for the contrast function to define a weighted 
-classification problem.
-The resulting classifications scheme defines the optimal treatment regime.
+The user can opt for the IPWE estimator by specifying \code{moMain}
+ and \code{moCont} 
+as NULL or not providing them in the named input.
 
-The user provides a model for the propensity for treatment and a model for
-the main effects and contrasts of the conditional expectation of the 
-outcome given treatment and covariates.
-Parameter estimates for these models are obtained using 
-available R methods as specified by the user. The AIPWE contrast function
-is defined by the fitted models and is used to 
-define a weighted classification problem. The R method to fit the 
-classification problem is specified by the user with some limitations.
-
-The user can opt for the IPWE estimator by specifying moMain and moCont as NULL.
-
-Generally speaking, there are few limitations on the models that can be 
-employed.
-However, classification methods must also accept "weights" as a formal 
+The classification method must accept "weights" as a formal 
 argument.
-In addition, predict methods must return predictions on the scale of the 
-response
-for propensity and conditional expectations and on the scale of class for
-the classification methods. 
-
 }
 
 \value{
-       Returns an object that inherits directly from class \code{DynTxRegime}.
+       Returns an object of class \code{"OptimalClass"} that inherits directly from class \code{"DynTxRegime."} 
 }
 
+\section{Methods}{
+  \describe{
+    \item{classif}{\code{signature(object = "OptimalClass")}: 
+       Retrieve value object from classification step. NA for
+       all objects returned by \pkg{DynTxRegime} statistical methods 
+       except for those returned by optimalClass(). }
+
+    \item{coef}{\code{signature(object = "OptimalClass")}: 
+       Retrieve parameter estimates for all regression steps. }
+
+    \item{DTRstep}{\code{signature(object = "OptimalClass")}: 
+       Retrieve description of method used to create object. }
+
+    \item{estimator}{\code{signature(x = "OptimalClass")}: 
+       Retrieve the estimated value of the estimated
+       optimal regime for the training data set. }
+
+    \item{fitObject}{\code{signature(object = "OptimalClass")}: 
+       Retrieve value object returned by regression methods. }
+
+    \item{optTx}{\code{signature(x = "OptimalClass", newdata = "missing")}: 
+       Retrieve the estimated optimal treatment regime for
+       training data set. }
+
+    \item{optTx}{\code{signature(x = "OptimalClass", newdata = "data.frame")}: 
+       Estimate the optimal treatment regime for newdata. }
+
+    \item{outcome}{\code{signature(x = "OptimalClass")}: 
+       Retrieve value object returned by outcome regression methods.  }
+
+    \item{plot}{\code{signature(x = "OptimalClass")}: 
+       Generate plots for regression analyses.  }
+
+    \item{print}{\code{signature(object = "OptimalClass")}: 
+       Print main results of analysis.}
+
+    \item{propen}{\code{signature(x = "OptimalClass")}: 
+       Retrieve value object returned by propensity score regression methods.}
+
+    \item{show}{\code{signature(object = "OptimalClass")}: 
+       Show main results of analysis.}
+
+    \item{summary}{\code{signature(object = "OptimalClass")}: 
+       Retrieve summary information from regression analyses.}
+
+  }
+}
 
 \author{
-Baqun Zhang, Anastasios A. Tsiatis, Eric B. Laber, Min Zhang, 
-Marie Davidian, and Shannon T. Holloway \email{sthollow@ncsu.edu}
+Shannon T. Holloway <sthollow@ncsu.edu>
 }
 
 \references{
@@ -162,98 +146,91 @@ Stat, 1, 103--114
 
 
 \examples{
-#------------------------------------------------------------------------------#
-#This is simulation study #1 described in Stat 2012; 1: 103-114.
-#------------------------------------------------------------------------------#
 
-  library(MASS)
-  library(rpart)
+library(rpart)
 
-  #::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::#
-  #Generate data
-  #::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::#
-  expit <- function(x) { exp(x)/(1+exp(x)) }
-  n <- 200
+# Load and process data set
+  data(bmiData)
 
-  means <- rep(0,5)
-  vmat <- matrix(0,nrow=5,ncol=5) + diag(5)
+  # define response y to be the negative 12 month
+  # change in BMI from baseline
+  bmiData$y <- -100*(bmiData[,6] - bmiData[,4])/bmiData[,4]
 
-  X <- data.frame(mvrnorm(n,means,vmat))
-
-  p1 <- expit(-0.1 + 0.5*X$X1 + 0.5*X$X2)
-  a <- rbinom(n=n, size=1, prob=p1)
-
-  tg <- I(X$X1 > -0.545) * I( X$X2 < 0.545)
-  means <- exp( 2 + 0.25*X$X1 + 0.25*X$X2 - 0.25*X$X5 - 0.3*(a-tg)^2)
-
-  y <- sapply(means,function(x){rnorm(n=1, mean=x, sd=1)})
-
-  df <- data.frame(X,a)
-  colnames(df) <- c("x1", "x2", "x3", "x4", "x5", "a1")
-
-  #--------------------------------------------------------------------------#
   # Define the propensity for treatment model and methods.
-  #--------------------------------------------------------------------------#
-  propen <- buildModelObj(model =  ~ x1 + x2, 
-                     solver.method = 'glm', 
-                     solver.args = list('family'='binomial'),
-                     predict.method = 'predict.glm',
-                     predict.args = list(type='response'))
+  moPropen <- buildModelObj(model =  ~ 1, 
+                            solver.method = 'glm', 
+                            solver.args = list('family'='binomial'),
+                            predict.method = 'predict.glm',
+                            predict.args = list(type='response'))
 
-  #--------------------------------------------------------------------------#
-  # Define the conditional expectation model.
-  #--------------------------------------------------------------------------#
-  expec.main <- buildModelObj(model = ~x1+x2+x3+x4+x5,
-                         solver.method = 'lm')
-
-  expec.cont <- buildModelObj(model = ~x1+x2+x3+x4+x5,
-                         solver.method = 'lm')
-
-  #--------------------------------------------------------------------------#
   # Define the classification model.
-  #--------------------------------------------------------------------------#
-  class <- buildModelObj(model = ~x1 + x2 + x3 + x4 + x5,
-                    solver.method = 'rpart',
-                    solver.args = list(method="class"),
-                    predict.args = list(type='class'))
+  moClass <- buildModelObj(model = ~parentBMI + month4BMI,
+                           solver.method = 'rpart',
+                           solver.args = list(method="class"),
+                           predict.args = list(type='class'))
 
-  #--------------------------------------------------------------------------#
-  # Specify the column index of df corresponding to the treatment covariate
-  #--------------------------------------------------------------------------#
-  tx.vars <- "a1"
+# IPWE estimator
+  estIPWE <- optimalClass(moPropen = moPropen, moClass = moClass,
+                          data = bmiData, response = bmiData$y, txName = "A2",
+                          iter = 0L)
 
-  estAIPWE <- optimalClass(moPropen = propen,
-                           moMain = expec.main,
-                           moCont = expec.cont,
-                           moClass = class,
-                           data = df,
-                           response = y,
-                           txName = tx.vars,
-                           iter=0)
+  # Create modelObj object for main effect component
+  moMain <- buildModelObj(model = ~ gender + parentBMI + month4BMI,
+                          solver.method = 'lm')
 
-  estimator(estAIPWE)
+  # Create modelObj object for contrast component
+  moCont <- buildModelObj(model = ~ parentBMI + month4BMI,
+                          solver.method = 'lm')
+
+# AIPWE estimator
+  estAIPWE <- optimalClass(moPropen = moPropen, moMain = moMain, 
+                           moCont = moCont, moClass = moClass,
+                           data = bmiData, response = bmiData$y, txName = "A2",
+                           iter = 0L)
+
+## Available methods
+
+  # Value object returned by classification method
   classif(estAIPWE)
+
+  # Coefficients of the propensity score and outcome regression
+  coef(estAIPWE)
+
+  # Description of method used to obtain object
+  DTRstep(estAIPWE)
+
+  # Estimated value of estimated optimal treatment for training data
+  estimator(estAIPWE)
+
+  # Value object returned by outcome regression method
+  fitObject(estAIPWE)
+
+  # Estimated optimal treatment for training data
+  optTx(estAIPWE)
+
+  # Estimated optimal treatment for new data
+  optTx(estAIPWE, newdata = bmiData)
+
+  # Value object returned by outcome regression method
   outcome(estAIPWE)
+
+  # Plots if defined by outcome regression method
+  dev.new()
+  par(mfrow = c(2,4))
+  plot(estAIPWE)
+
+  dev.new()
+  par(mfrow = c(2,4))
+  plot(estAIPWE, suppress = TRUE)
+
+  # Value object returned by propensity score regression method
   propen(estAIPWE)
-  head(optTx(estAIPWE))
 
+  # Show main results of method
+  show(estAIPWE)
 
-  estIPWE <- optimalClass(moPropen = propen,
-                          moMain = NULL,
-                          moCont = NULL,
-                          moClass = class,
-                          data = df,
-                          response = y,
-                          txName = tx.vars,
-                          iter=0)
+  # Show summary results of method
+  summary(estAIPWE)
 
-  estimator(estIPWE)
-  classif(estIPWE)
-  propen(estIPWE)
-  head(optTx(estIPWE))
 }
 
-
-
-\keyword{robust}
-\keyword{tree}

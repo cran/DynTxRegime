@@ -1,28 +1,27 @@
 \name{fittedCont}
+\docType{methods}
 \alias{fittedCont}
-\alias{fittedCont,DynTxRegime-method}
 
-\title{ Extract Fitted Contrast Functions}
+\title{ Extract Fitted Contrast Component of Outcome}
 \description{
-Extract fitted contrast functions for IQ-Learning algorithm.
+Retrieve the fitted contrast component of the outcome
+regression analysis for the second-stage decision point.
+Only available for the IQ-Learning algorithm.
 }
 
-\usage{ \S4method{fittedCont}{DynTxRegime}(object, ...)  }
+\usage{
+fittedCont(object, ...)
+}
 
 \arguments{
-  \item{object }{an object of class DynTxRegime.}
-
-  \item{\dots }{ignored.}
-
+\item{object}{An object of class \code{"DynTxRegime"}}
+\item{...}{Ignored.}
 }
 
-\value{
-For object returned by IQ-Learning functions, the fitted contrast functions.
-For all others, NULL
-}
+\value{ For objects returned by iqLearnSS(), a vector. 
+For all other \code{"DynTxRegime"} objects, NA.}
 
 \author{
   Shannon T. Holloway <sthollow@ncsu.edu>
 }
-
 

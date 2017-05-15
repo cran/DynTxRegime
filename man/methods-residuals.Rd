@@ -1,25 +1,26 @@
 \name{residuals}
+\docType{methods}
 \alias{residuals}
-\alias{residuals,DynTxRegime-method}
 
 \title{ Extract Model Residuals}
 \description{
-Extract model residuals.
+For methods that employ residuals, retrieve residuals.
 }
 
-\usage{ \S4method{residuals}{DynTxRegime}(object, ...)  }
+\usage{
+residuals(object,...)
+}
 
 \arguments{
-  \item{object }{an object of class DynTxRegime.}
-
-  \item{\dots }{ignored.}
-
+\item{object}{An object of class \code{"DynTxRegime"}.}
+\item{...}{Ignored.}
 }
 
-\value{
-Residuals extracted from the DynTxRegime object. For outcome
-regression, these will be
-the residuals for the full/combined model.
+\value{For objects returned by iqLearnFSC(), the residuals of the
+contrast component regression. For iqLearnFSV(), the 
+standardized fitted residuals. For rwl(),
+a vector of the residuals used by the method to obtain
+the optimal treatment. For all other \code{"DynTxRegime"} objects, NA.
 }
 
 \author{

@@ -1,6 +1,11 @@
 import("modelObj",
-       "methods"
+       "methods", "kernlab", "rgenoud"
 )
+importFrom("stats", 
+           "as.formula", "model.matrix", "optim", "pnorm", "qqline",
+           "qqnorm", "rnorm", "runif", "sd", "terms")
+importFrom("dfoptim", "hjk")
+
 export(
     "buildModelObjSubset",
     "iqLearnFSV",
@@ -9,6 +14,10 @@ export(
     "iqLearnSS",  
     "optimalSeq", 
     "optimalClass", 
+    "owl",
+    "rwl",
+    "bowl",
+    "earl",
     "plugInValue",
     "qLearn"
 )
@@ -16,22 +25,24 @@ exportClasses("DynTxRegime")
 exportMethods(
     "classif",
     "coef",
+    "cvInfo",
     "DTRstep",
     "estimator",
     "fitObject",
     "fittedMain",
     "fittedCont",
     "genetic",
+    "optimObj",
     "optTx",
     "outcome",
+    "print",
     "plot",
     "propen",
-    "qFuncs",
-    "qqPlot",
+    "qqplot",
     "regimeCoef",
     "residuals",
     "show",
-    "stdDev",
+    "sd",
     "summary"
 )
 

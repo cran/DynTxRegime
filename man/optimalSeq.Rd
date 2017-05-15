@@ -1,228 +1,199 @@
 \name{optimalSeq}
 \alias{optimalSeq}
+
 \title{
 Regression Based Value-Search Estimation of Optimal Dynamic Treatment Regimes
 }
+
 \description{
-A regression based value-search alternative to Q- and A- learning. A doubly robust Augmented Inverse Probability Weighted Estimator (AIPWE) or Inverse Probability Weighted Estimator (IPWE) for population mean outcome is optimized over a restricted class of regimes. Methods are available for both single-decision-point and multiple-decision-point regimes. This method requires the rgenoud package. 
+A doubly robust Augmented Inverse Propensity Weighted Estimator (AIPWE) or Inverse Propensity Weighted Estimator (IPWE) for population mean outcome is optimized over a restricted class of regimes. Methods are available for both single-decision-point and multiple-decision-point regimes. This method requires the \pkg{rgenoud} package. 
 }
 
 \usage{
 optimalSeq(..., moPropen, moMain, moCont, data, response, txName, regimes,
- fSet = NULL, refit = FALSE, iter = 0, suppress = FALSE)
+           fSet = NULL, refit = FALSE, iter = 0, verbose = TRUE)
 }
 \arguments{
 
- \item{...          }{additional arguments required by rgenoud. At a minimum,
-                      this should include Domains, pop.size and starting.values. 
-                      See ?rgenoud for more information.}
+ \item{...        }{additional arguments required by rgenoud. 
+                    At a minimum,
+                    this should include Domains, pop.size and starting.values. 
+                    See ?rgenoud for more information.}
 
- \item{moPropen  }{a single object of class modelObj or a list of objects of 
-                  class modelObj or {modelObjSubset}.
-                  This object defines the, which define the models and R 
-                  methods to be used to obtain parameter estimates and
-                  predictions for the propensity for treatment. 
+ \item{moPropen  }{An object of class \code{"modelObj,"} 
+                   an object of class \code{"list"} containing 
+                   objects of class \code{"modelObj,"} or
+                   an object of class \code{"list"} containing 
+                   objects of class \code{"modelObjSubset."}
+                  This object specifies the model(s) of the
+                  propensity score regression
+                  and the R methods to be used to obtain parameter
+                  estimates and predictions.
+                  The method(s) specified to obtain predictions must return
+                  the prediction on the scale of the probability,
+                  i.e., returned values must be in the interval (0,1).
+                  If performing a single-decision-point analysis,
+                  \code{moPropen} is an object of class \code{"modelObj"} or
+                  a list of objects of class \code{"modelObjSubset."}
+                  If performing a multiple-decision-point analysis,
+                  \code{moPropen} is a list of objects of class \code{"modelObj"} or
+                  a list of objects of class \code{"modelObjSubset."}
+                  See \link{moPropen} for further information.}
+
+ \item{moMain   }{An object of class \code{"modelObj,"} 
+                   an object of class \code{"list"} containing 
+                   objects of class \code{"modelObj,"} or
+                   an object of class \code{"list"} containing 
+                   objects of class \code{"modelObjSubset."}
+                  This object specifies the model(s) of the
+                  main effects component of the outcome regression(s)
+                  and the R methods to be used to obtain parameter
+                  estimates and predictions.
                   The method chosen to obtain predictions must return
                   the prediction on the scale of the response variable.
-                  See ?modelObj and/or ?modelObjSubset for details. 
+                  If performing a single-decision-point analysis,
+                  moMain is an object of class \code{"modelObj"} or
+                  a list of objects of class \code{"modelObjSubset."}
+                  If performing a multiple-decision-point analysis,
+                  moMain is a list of objects of class \code{"modelObj"} or
+                  a list of objects of class \code{"modelObjSubset."}}
 
-                  moPropen objects differ slightly from the standard modelObj 
-                  in that an additional predict.args element may be required. 
-                  In the list of control parameters passed to the prediction
-                  method, an additional list element, "propenMissing" can be
-                  included. This element takes value "smallest" or "largest". 
-
-                  If the prediction method specified in moPropen returns
-                  predictions for only a subset of the categorical tx data, 
-                  propenMissing indicates if the smallest or largest category 
-                  is missing category.
-                   For example, fitting a binary tx using
-\preformatted{
-moPropen@predict.method <- predict.glm
-moPropen@predict.args <- list(type='response')
-}
-                   returns only P(A=1). P(A=0) is "missing", and thus
-\preformatted{
-moPropen@predict.args <- list("type"="response",
-                              "propenMissing" = "smallest")
-}
-
-                  If the dimension of the value returned by the prediction
-                  method is less than the number of treatment options
-                  and no value is provided in propenMissing, it is
-                  assumed that the smallest valued treatment option is missing.}
-
- \item{moMain   }{a single object of class modelObj or a list of objects of 
-                  class modelObj or {modelObjSubset}.
-                  This object defines the models and R
-                  methods to be used to obtain parameter estimates and
-                  predictions for for the main effects component of the
-                  outcome regression.
+ \item{moCont   }{An object of class \code{"modelObj,"} 
+                   an object of class \code{"list"} containing 
+                   objects of class \code{"modelObj,"} or
+                   an object of class \code{"list"} containing 
+                   objects of class \code{"modelObjSubset."}
+                  This object specifies the model(s) of the
+                  contrasts component of the outcome regression(s)
+                  and the R methods to be used to obtain parameter
+                  estimates and predictions.
                   The method chosen to obtain predictions must return
                   the prediction on the scale of the response variable.
-                  See ?modelObj and/or ?modelObjSubset for details.}
+                  If performing a single-decision-point analysis,
+                  moCont is an object of class \code{"modelObj"} or
+                  a list of objects of class \code{"modelObjSubset."}
+                  If performing a multiple-decision-point analysis,
+                  moCont is a list of objects of class \code{"modelObj"} or
+                  a list of objects of class \code{"modelObjSubset."}}
 
- \item{moCont   }{a single object of class modelObj or a list of objects of 
-                  class modelObj or {modelObjSubset}.
-                  This object defines the models and R
-                  methods to be used to obtain parameter estimates and
-                  predictions for for the contrasts component of the
-                  outcome regression.
-                  The method chosen to obtain predictions must return
-                  the prediction on the scale of the response variable.
-                  See ?modelObj and/or ?modelObjSubset for details.}
+ \item{data     }{An object of class \code{"data.frame."} 
+                  The covariates and treatment histories.}
 
- \item{data     }{an object of class {data.frame} containing the
-                  covariates and treatment histories.}
+  \item{response}{An object of class \code{"vector."}
+                  A vector of the outcome of interest.}
 
- \item{response }{an object of class {vector} containing the response variable.}
-
- \item{txName   }{and object of class {numeric}.
-                  For a single decision point analysis, the column
-                  index of {data} containing the treatment variable.
-                  For multiple decision point analyses, a vector, the
-                  ith element of which gives the column of {data}
+ \item{txName   }{An object of class \code{"character."}
+                  For a single-decision-point analysis, the column 
+                  header of the stage treatment variable
+                  as given in input \code{data}.
+                  For multiple-decision-point analyses, a vector, the
+                  ith element of which gives the column header of \code{data}
                   containing the treatment variable for the ith stage.}
 
- \item{regimes  }{an object of class {list} or {function}.
-                  For single decision point analyses, {regimes}
-                  is a single function. For multiple decision point analyses,
-                  {regimes} is a list of functions;
-                  each element of the list 
-                  corresponds to the decision point (1st element <-
-                  1st decision point, etc.) 
-                  The function defines the treatment regime for the
-                  decision point. 
-                  For example, for \deqn{g_i <- I(eta_1 > x1),}
-                       \preformatted{
-regimes[[i]] = function(a,data)\{
-  as.numeric(a > data\$x1)
-\} }
- 
-                  The formal arguments of each function must include the
-                  parameters to be estimated and the data.frame.
-                  NOTE: THE LAST ARGUMENT OF EACH FUNCTION MUST BE THE 
-                  DATA FRAME.}
+ \item{regimes  }{An object of class \code{"function"} or
+                  an object of class \code{"list"} 
+                  containing objects of class \code{"function."}
+                  Function(s) defining the class of decision rule
+                  to be considered. 
+                  See Details section for further information}
 
- \item{fSet     }{Object of class {list} or {function}.
-                  For single decision point analyses, {fSet}
-                  is a single function. For multiple decision point analyses,
-                  {fSet} is a list of functions;
-                  each element of the list 
-                  corresponds to the decision point (1st element <-
-                  1st decision point, etc.) 
-                  The function defines the conditions under which only
-                  a subset of treatment options is available to a patient
-                  or a subset of patients, for whom different models will be
-                  used.
-                  The formal arguments of the function should include either 
-                  the name of the data.frame or individual covariate names
-                  as given by the column headers of {data}. The function
-                  must return a list. The first element of the list
-                  is a character nickname. The
-                  second element is a vector of available treatment options.
+ \item{fSet     }{An object of class \code{"function,"}
+                  an object of class \code{"list"} 
+                  containing objects of class \code{"function,"}
+                  or NULL.
+                  See \link{fSet} section for further information.
 
-                  For example
+}
 
-                        \preformatted{ 
-fSet <- function(data)
-\{ 
-   if(data\$a1 > 1)\{ 
-     subset <- list("A",c(1,2))
-   \} else \{ 
-     subset <- list("B",c(3,4) )
-   \} 
-   return(subset) 
-\} }
-                        or 
-                        \preformatted{
-fSet <- function(a1)
-\{
-  if(a1 > 1)\{
-    subset <- list("A",c(1,2))
-  \} else \{
-    subset <- list("B",c(3,4) )
-  \}
-  return(subset)
-\}}
+ \item{refit    }{No longer used.}
 
-                     }
+  \item{iter    }{An object of class \code{"numeric."}
+                  If >0, the iterative method will be used to 
+                  obtain parameter estimates in the outcome regression step.
+                  See \link{iter} for further information.}
 
- \item{refit    }{an object of class {logical}.
-                  TRUE/FALSE flag indicating if conditional expectations 
-                  are to be refit for each new set of treatment regime
-                  parameters (TRUE), or Q-learning is to be used (FALSE). 
-                  Choosing TRUE significantly increases the run time.}
-
-  \item{iter    }{an object of class {numeric}.
-
-                 >=1 if {moMain} and {moCont} are to be
-                 fitted separately, iter is the maximum number of iterations.
-                 Assume Y = Ymain + Ycont;
-                 the iterative algorithm is as follows:
-                  (1) hat(Ycont) = 0;
-                  (2) Ymain = Y - hat(Ycont);
-                  (3) fit Ymain ~ moMain;
-                  (4) set Ycont = Y - hat(Ymain)
-                  (5) fit Ycont ~ A*moCont;
-                  (6) Repeat steps (2) - (5) until convergence or
-                  a maximum of iter iterations.
-
-                 <=0 if the components of the conditional expectation 
-                 {moMain} and {moCont} will be combined and 
-                 fit as a single object.
-                 Note that if iter <= 0, all non-model components of the
-                 {moMain} and {moCont} must be
-                 identical. By default, the choices in moMain are used.}
-
-  \item{suppress}{an object of class logical. If TRUE, final screen prints 
-                  will be suppressed.}
+  \item{verbose }{An object of class \code{"logical."} 
+                  If FALSE, screen prints will be suppressed.}
 
 }
 
 \details{
 
-A dynamic treatment regime is a list of sequential decision rules for
-assigning treatment based on a patient's history. Q- and A- learning
-are common approaches to obtain estimates of the ``optimal treatment regime.''
-\code{optimalSeq} is an alternative approach that maximizes a doubly
-robust Augmented Inverse Probability Weighted estimator (AIPWE) for population
-mean outcome over a restricted class of regimes. 
-
-For a single decision point treatment regime, the problem is recast as a 
-missing data problem. The user specifies models for the propensity for 
-treatment and the conditional expectation of the outcome given
-covariates and treatment. For sequential decision point 
-treatment regimes, the problem is recast as a monotone coarsening problem. 
-The user provides a model for the propensity for treatment for each decision
-point (k) 
- and a model for the conditional expectation of the outcome given
-covariates and treatment at each
-decision point. Parameter estimates for these models are obtained using 
-available R methods as specified by the user. The AIPWE estimator for 
-E\{Y*(g_{eta})\} is constructed using the user-specified models. Parameter
-estimates for the
-user defined treatment regime are obtained by maximizing the AIPWE estimator 
-via the R package \code{rgenoud}, a genetic algorithm developed by 
-Walter Mebane, Jr. and Jasjeet S. Sekhon.
-
 The IPWE estimator can be chosen by specifying moMain and moCont as NULL.
 
-Treatment rules/regimes are provided by the user in the form of user-defined 
-functions. 
-
-The method uses a genetic algorithm (R package rgenoud) to maximize the 
+The method uses a genetic algorithm (R package \pkg{rgenoud}) to maximize the 
 AIPWE/IPWE estimator over the class of treatment regimes specified by the
-treatment rules. In the maximization of the AIPWE,
-conditional expectation models can either be refitted at each value of the
-treatment regime or can be approximated by fitted Q-functions obtained
-from Q-learning; the latter choice can lead to significant improvements in 
-speed.
+treatment rules. 
+
+A regimes function defines the class of the decision rule
+to be considered. The formal arguments of each 
+function must include the parameters to be estimated
+and the data.frame.
+NOTE: THE LAST ARGUMENT OF THE FUNCTION MUST BE THE 
+DATA FRAME. For example, 
+for \deqn{d_i = I(eta_1 > x1),}
+\preformatted{
+regimes <- function(a,data)\{
+  as.numeric(a > data\$x1)
+\} }
+
+
+For a single-decision-point analysis, \code{regimes}
+is a single function. For multiple-decision-point analyses,
+\code{regimes} is a list of functions where each element of 
+the list corresponds to the decision point (1st element <-
+1st decision point, etc.)]
 
 }
 
 \value{
-       Returns an object that inherits directly from class \code{DynTxRegime}.
+       Returns an object of class \code{"OptimalSeq"} that inherits directly from class \code{"DynTxRegime."} 
+}
+
+\section{Methods}{
+  \describe{
+    \item{coef}{\code{signature(object = "OptimalSeq")}: 
+       Retrieve parameter estimates for all regression steps. }
+
+    \item{DTRstep}{\code{signature(object = "OptimalSeq")}: 
+       Retrieve description of method used to create object. }
+
+    \item{estimator}{\code{signature(x = "OptimalSeq")}: 
+       Retrieve the estimated value of the estimated
+       optimal regime for the training data set. }
+
+    \item{fitObject}{\code{signature(object = "OptimalSeq")}: 
+       Retrieve value object returned by regression methods. }
+
+    \item{genetic}{\code{signature(object = "OptimalSeq")}: 
+       Retrieve value object returned by genoud().  }
+
+    \item{optTx}{\code{signature(x = "OptimalSeq", newdata = "missing")}: 
+       Retrieve the estimated optimal treatment regime for
+       training data set. }
+
+    \item{optTx}{\code{signature(x = "OptimalSeq", newdata = "data.frame")}: 
+       Estimate the optimal treatment regime for newdata. }
+
+    \item{outcome}{\code{signature(x = "OptimalSeq")}: 
+       Retrieve value object returned by outcome regression methods.  }
+
+    \item{plot}{\code{signature(x = "OptimalSeq")}: 
+       Generate plots for regression analyses.  }
+
+    \item{print}{\code{signature(object = "OptimalSeq")}: 
+       Print main results of analysis.}
+
+    \item{propen}{\code{signature(x = "OptimalSeq")}: 
+       Retrieve value object returned by propensity score regression methods.}
+
+    \item{show}{\code{signature(object = "OptimalSeq")}: 
+       Show main results of analysis.}
+
+    \item{summary}{\code{signature(object = "OptimalSeq")}: 
+       Retrieve summary information from regression analyses.}
+
+  }
 }
 
 \references{
@@ -244,117 +215,107 @@ Journal of Statistical Software, 42, 1--26.
 }
 
 \author{
-Baqun Zhang, Anastasios A. Tsiatis, Eric B. Laber, 
-Marie Davidian, and Shannon T. Holloway <sthollow@ncsu.edu>
+Shannon T. Holloway <sthollow@ncsu.edu>
 }
 
 
 \examples{
 
-#------------------------------------------------------------------------------#
-#  This is simulation study#1 described in Biometrics \bold{68} 4 pp 1010-1018
-#------------------------------------------------------------------------------#
+# Load and process data set
+  data(bmiData)
 
-#::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::#
-#                               Generate data 
-#::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::#
-  expit <- function(x) { exp(x)/(1+exp(x)) }
+  # define response y to be the negative 12 month
+  # change in BMI from baseline
+  bmiData$y <- -100*(bmiData[,6] - bmiData[,4])/bmiData[,4]
 
-  n <- 100
-
-  x1 <- runif(n, -1.5, 1.5)
-  x2 <- runif(n, -1.5, 1.5)
-
-  x12 <- x1*x1
-  x22 <- x2*x2
-
-  p1 <- expit(-1.0 + 0.8*x12 + 0.8*x22)
-  a1 <- rbinom(n=n, size=1, prob=p1)
-
-  mean <- exp(2.0 - 1.5*x12 - 1.5*x22 + 3.0*x1*x2 + a1*(-0.1 - x1 + x2))
-  y <- abs(rnorm(n,mean,sd=1))
-
-  data <- data.frame(x1,x12,x2,x22,a1,y)
-
-#--------------------------------------------------------------------------#
-# tx.var tells optimal which columns of data correspond to treatments.
-#--------------------------------------------------------------------------#
-  tx.vars <- "a1"
-
-#--------------------------------------------------------------------------#
-# modeling.object for propensity of treatment.
-#--------------------------------------------------------------------------#
-  moPropen <- buildModelObj(model = ~x12 + x22,
-                       solver.method = 'glm',
-                       solver.args = list('family'='binomial'),
-                       predict.method = 'predict.glm',
-                       predict.args = list(type='response'))
+# Define the propensity for treatment model and methods.
+  moPropen <- buildModelObj(model =  ~ 1, 
+                            solver.method = 'glm', 
+                            solver.args = list('family'='binomial'),
+                            predict.method = 'predict.glm',
+                            predict.args = list(type='response'))
 
 
-#--------------------------------------------------------------------------#
-# modeling.object for conditional expectation models
-#--------------------------------------------------------------------------#
-  expec.main <- buildModelObj(model = ~ x12 + x22 + x1:x2 + a1 + a1:(x1 + x2),
-                              solver.method = 'lm')
-  expec.cont <- NULL
+# Create modelObj object for main effect component
+  moMain <- buildModelObj(model = ~ gender + parentBMI + month4BMI,
+                          solver.method = 'lm')
 
+# Create modelObj object for contrast component
+  moCont <- buildModelObj(model = ~ parentBMI + month4BMI,
+                          solver.method = 'lm')
 
-#--------------------------------------------------------------------------#
 # treatment regime rules at each decision point.
-#--------------------------------------------------------------------------#
-  tx.rules <- function(a,b,c,data){
-                 as.numeric(a + b*data$x1 + c*data$x2 > 0 )}
+  regimes <- function(a,b,c,data){
+               tst <- a + b*data$parentBMI + c*data$month4BMI > 0 
+               res <- character(nrow(data))
+               res[tst] <- "MR"
+               res[!tst] <- "CD"
+               return(res)
+             }
 
-#--------------------------------------------------------------------------#
 # genoud requires some additional information 
-#--------------------------------------------------------------------------#
   c1 <- c(-1,-1,-1)
   c2 <- c( 1, 1, 1)
   Domains <- cbind(c1,c2)
   starts <- c(0,0,0)
 
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
-#!!              A LARGER VALUE FOR POP.SIZE IS RECOMMENDED             !!#
-#!!        THIS VALUE WAS CHOSEN TO MINIMIZE RUN TIME OF EXAMPLES       !!#
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
+#!! A LARGER VALUE FOR POP.SIZE IS RECOMMENDED
+#!! THIS VALUE WAS CHOSEN TO MINIMIZE RUN TIME OF EXAMPLES
   pop.size <- 50
+\dontrun{
+  ft <- optimalSeq(moPropen = moPropen, moMain = moMain, moCont = moCont, 
+                   data = bmiData,  response = bmiData$y,  txName = "A2", 
+                   regimes = regimes, iter = 0L,
+                   pop.size = pop.size, starting.values = starts, 
+                   Domains = Domains, solution.tolerance = 0.0001)
 
-  ft <- optimalSeq(moPropen = moPropen, 
-                moMain = expec.main, 
-                moCont = expec.cont, 
-                data = data, 
-                response = y, 
-                txName = tx.vars, 
-                regimes = tx.rules, 
-                pop.size = pop.size, 
-                starting.values = starts, 
-                Domains = Domains, 
-                solution.tolerance = 0.0001, 
-                iter = 0)
+## Available methods
 
-  # The  normalized estimated optimal treatment regime
-  # True Regime (-0.07, -0.71, 0.71)
-  est <- regimeCoef(ft)
-  est <- est/sqrt(est \%*\% est)
-  print(est)
+  # Coefficients of the propensity score and outcome regression
+  coef(ft)
 
-  # The estimated mean potential outcome for the treatment regime 
-  # defined by the regime
+  # Description of method used to obtain object
+  DTRstep(ft)
+
+  # Estimated value of estimated optimal treatment for training data
   estimator(ft)
 
-  # Access value objects of regression steps
+  # Value object returned by outcome regression method
+  fitObject(ft)
+
+  # Value object returned by genetic algorithm
   genetic(ft)
+
+  # Estimated optimal treatment for training data
+  optTx(ft)
+
+  # Estimated optimal treatment for new data
+  optTx(ft, newdata = bmiData)
+
+  # Value object returned by outcome regression method
   outcome(ft)
+
+  # Plots if defined by outcome regression method
+  dev.new()
+  par(mfrow = c(2,4))
+  plot(ft)
+
+  dev.new()
+  par(mfrow = c(2,4))
+  plot(ft, suppress = TRUE)
+
+  # Value object returned by propensity score regression method
   propen(ft)
 
-  # Retrieve optimal treatment for training data
-  head(optTx(ft))
+  # Estimated decision function parameters
+  regimeCoef(ft)
 
+  # Show main results of method
+  show(ft)
+
+  # Show summary results of method
   summary(ft)
-
 
 }
 
-
-\keyword{robust}
-\keyword{regression}
+}

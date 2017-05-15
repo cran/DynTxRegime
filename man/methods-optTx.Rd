@@ -1,48 +1,44 @@
 \name{optTx}
+\docType{methods}
 \alias{optTx}
-\alias{optTx,DynTxRegime,data.frame-method}
 \alias{optTx,DynTxRegime,missing-method}
+\alias{optTx,DynTxRegime,data.frame-method}
+\alias{optTx,IQLearnFS,missing-method}
+\alias{optTx,IQLearnFS,data.frame-method}
 
-\title{ Methods to Retrieve Estimated or to Predict Optimal Treatment}
+\title{Methods to Retrieve Estimated  Optimal Treatment
+       or to Predict Optimal Treatment}
 
 \description{
 Retrieves the estimated or predicted optimal treatment.
 }
 
 \usage{
-\S4method{optTx}{DynTxRegime,missing}(x, newdata, ...)  
-\S4method{optTx}{DynTxRegime,data.frame}(x, newdata, ...)  
+optTx(x, newdata, ...)
+\S4method{optTx}{DynTxRegime,data.frame}(x, newdata)
+\S4method{optTx}{DynTxRegime,missing}(x, newdata)
+\S4method{optTx}{IQLearnFS,data.frame}(x, newdata, ..., y = NULL, z = NULL, dens = NULL)
+\S4method{optTx}{IQLearnFS,missing}(x, newdata, ..., y = NULL, z = NULL, dens = NULL)
 }
 
 \arguments{
-  \item{x }{an object of class DynTxRegime.}
-
-  \item{newdata }{an object of class data.frame containing
-                  covariates and treatment histories.}
-
-  \item{\dots }{ignored.}
-
+\item{x}{An object of class \code{"DynTxRegime"}.}
+\item{newdata}{\code{"data.frame"} of covariates}
+\item{...}{Ignored. Used to required named input}
+\item{y}{An object of class \code{IQLearnFS}.}
+\item{z}{An object of class \code{IQLearnFS}.}
+\item{dens}{\code{"character"} indicating density estimator. One
+of \{'nonpar','norm'\}.}
 }
 
-\details{
-  For all DynTxRegime treatment regime methods, 
-  if newdata is missing, optTx retrieves the estimated
-  optimal treatment for the training data. 
-
-  If newdata is provided, optTx estimates the
-  optimal treatment for the new data based on the
-  original analysis.
-
-  For optimalSeq, an optinal argument, dp, must be set,
-  which indicates the stage of treatment for which
-  the estimated optimal treatment is desired.
-}
 
 \value{
-       For outcome regression methods Q-Learning and IQ-Learning a list
-       \item{qFunctions}{ a matrix of estimated Q-Functions.}
-       \item{optimalTx}{a vector of estimated optimal treatments.}
-       For value-search methods optimalClass and optimalSeq a 
-       a matrix of estimated optimal treatments.
+       For outcome regression methods Q-Learning and IQ-Learning 
+       and weighted learning methods OWL, BOWL, RWL, and EARL, a list
+       with elements: 'decisionFunc', a matrix of estimated Q-Functions
+       and 'optimalTx', a vector of estimated optimal treatments.
+       For value-search methods optimalClass() and optimalSeq() a 
+       matrix of estimated optimal treatments.
 }
 
+\author{Shannon T. Holloway <sthollow@ncsu.edu>}

@@ -11,99 +11,144 @@ iqLearnSS implements the second-stage regression step of the
 IQ-Learning algorithm (IQ1).
 }
 
-\usage{ iqLearnSS(..., moMain, moCont, data, response, txName, 
-                  iter = 0, suppress = FALSE) }
+\usage{ 
+iqLearnSS(..., moMain, moCont, data, response, txName, iter = 0L, verbose = TRUE) }
 
 \arguments{
 
-  \item{\dots   }{ignored}
+ \item{\dots    }{ignored. Included to require named input.}
 
-  \item{moMain  }{an object of class \code{modelObj} defining the
-                  regression model and procedures to be used 
-                  for the main effects component of this regression step.
-                  The object must be created by a call to 
-                  modelObj::buildModelObj().
-                  The method chosen to obtain predictions must return
+ \item{moMain   }{An object of class \code{"modelObj."}
+                  This object specifies the main effects component
+                  of the model for the outcome regression
+                  and the R methods to be used to obtain parameter
+                  estimates and predictions.
+                  The method specified to obtain predictions must return
                   the prediction on the scale of the response variable.
-                  See ?modelObj for details.}
+                  }
 
-  \item{moCont  }{an object of class \code{modelObj} defining the
-                  regression model and procedures to be used 
-                  for the contrast component of this regression step.
-                  The object must be created by a call to 
-                  modelObj::buildModelObj().
-                  The method chosen to obtain predictions must return
+ \item{moCont   }{An object of class \code{"modelObj."}
+                  This object specifies the contrasts component
+                  of the model for the outcome regression
+                  and the R methods to be used to obtain parameter
+                  estimates and predictions.
+                  The method specified to obtain predictions must return
                   the prediction on the scale of the response variable.
-                  See ?modelObj for details.}
+                  }
 
-  \item{data    }{an object of class \code{data.frame}
-                  containing the covariates and treatment history.
-                  Treatment must be an integer (or able to be cast to an integer)
-                  and take values \{-1,1\}.}
+ \item{data     }{An object of class \code{"data.frame."}
+                  The covariates and treatment histories.}
 
-  \item{response}{an object is of class \code{vector}: 
-                  the response variable.}
+  \item{response}{An object of class \code{"vector."}
+                  The outcome of interest. }
 
-  \item{txName  }{an object of class \code{"character"}:
-                  the column header of the
-                  first-stage treatment variable in \code{data}.}
+ \item{txName   }{An object of class \code{"character."}
+                  The column header of the stage treatment variable
+                  as given in input \code{data}. The treatment variable must
+                  be binary and will be recoded as -1/+1 if not provided
+                  as such.}
 
-  \item{iter   }{an object of class \code{integer}.
+  \item{iter    }{An object of class \code{"integer."}
+                  If >0, the iterative method will be used to 
+                  obtain parameter estimates in the outcome regression step.
+                  See \link{iter} for further information.}
 
-                 >=1 if \code{moMain} and \code{moCont} are to be
-                 fitted separately, iter is the maximum number of iterations.
-                 Assume Y = Ymain + Ycont;
-                 the iterative algorithm is as follows:
-                  (1) hat(Ycont) = 0;
-                  (2) Ymain = Y - hat(Ycont);
-                  (3) fit Ymain ~ moMain;
-                  (4) set Ycont = Y - hat(Ymain);
-                  (5) fit Ycont ~ A*moCont;
-                  (6) Repeat steps (2) - (5) until convergence or
-                  a maximum of iter iterations.
-
-                 <=0 if the components of the conditional expectation 
-                 \code{moMain} and \code{moCont} will be combined and 
-                 fit as a single object.
-                 Note that if iter <= 0, all non-model components of the
-                 \code{moMain} and \code{moCont} must be
-                 identical. By default, the choices in moMain are used.}
-
-  \item{suppress }{an object of class \code{logical}. If TRUE, final
-                   screen prints are suppressed.}
-
-}
-
-\details{
-
-There are standard regression analysis tools available for the
-object returned by this function. In general, these tools 
-simply extend the methods defined by the regression function. 
-If defined, \code{coef()} returns the model
-parameter estimates; \code{plot()} generates the standard x-y plots; 
-\code{residuals} returns model residuals for the combined model; and
-\code{summary} returns summary information. 
-
-Other tools, such as \code{fitted()} for the \code{lm}
-regression function, can be accessed using \code{fitObject()}. 
-\code{fitObject()} retrieves the standard value object returned by the
-regression method, which can be passed as input to other functions. 
-See ?fitObject for details.
+  \item{verbose }{An object of class \code{"logical."} 
+                  If FALSE, screen prints will be suppressed.}
 
 }
 
 \value{
-       Returns an object that inherits directly from class \code{DynTxRegime}.
+       Returns an object of class \code{"IQLearnSS"} that inherits directly from class \code{"DynTxRegime."}
 }
+\note{
+The implementation of IQ-Learning utilizes
+methods \code{optTx()} and \code{estimator()} in a 
+different way than other methods
+implemented in \pkg{DynTxRegime}. For the first-stage
+component of the IQ-Learning method, all first-stage steps
+must be complete before an optimal treatment or value can be
+estimated. Therefore, \code{optTx()}
+requires the objects
+returned by first stage methods \code{iqLearnFSM()}, 
+\code{iqLearnFSC()}, and
+\code{iqLearnVar()} if using a log-linear model of the variance or
+\code{iqLearnFSM()} and \code{iqLearnFS()} 
+if using a constant model of the variance. 
+Function \code{estimator()} requires the first-stage objects
+and the second stage object returned by \code{iqLearnSS()}.
+In addition, the density must be specified. See \code{\link{optTx}} and
+\code{\link{estimator}} for further details.
+
+In addition to the standard methods available to all objects
+of class \code{"DynTxRegime"}, 
+the following methods can be applied
+to objects of class \code{"IQLearnSS"}
+
+\code{fittedCont(object)} returns the estimated contrast component of the
+second-stage regression. This is the 'outcome' regressed during 
+the \code{iqLearnFSC()} step of the IQ-Learning algorithm.
+
+\code{fittedMain(object)} returns the estimated main effects component of
+the second-stage regression. This is the 'outcome' regressed during the
+iqLearnFSM() step of the IQ-Learning algorithm.
+}
+
+\section{Methods}{
+  \describe{
+    \item{coef}{\code{signature(object = "IQLearnSS")}: 
+       Retrieve parameter estimates for all regression steps. }
+
+    \item{DTRstep}{\code{signature(object = "IQLearnSS")}: 
+       Retrieve description of method used to create object. }
+
+    \item{estimator}{\code{signature(x = "IQLearnSS")}: 
+       Retrieve the estimated value of the estimated
+       optimal regime for the training data set. }
+
+    \item{fitObject}{\code{signature(object = "IQLearnSS")}: 
+       Retrieve value object returned by regression methods. }
+
+    \item{fittedCont}{\code{signature(object = "IQLearnSS")}: 
+       Retrieve estimated contrast component of outcome regression.}
+
+    \item{fittedMain}{\code{signature(object = "IQLearnSS")}: 
+       Retrieve estimated main effects component of outcome regression.}
+
+    \item{optTx}{\code{signature(x = "IQLearnSS", newdata = "missing")}: 
+       Retrieve the estimated optimal treatment regime for
+       training data set. }
+
+    \item{optTx}{\code{signature(x = "IQLearnSS", newdata = "data.frame")}: 
+       Estimate the optimal treatment regime for newdata. }
+
+    \item{outcome}{\code{signature(x = "IQLearnSS")}: 
+       Retrieve value object returned by outcome regression methods.  }
+
+    \item{plot}{\code{signature(x = "IQLearnSS")}: 
+       Generate plots for regression analyses.  }
+
+    \item{print}{\code{signature(object = "IQLearnSS")}: 
+       Print main results of analysis.}
+
+    \item{show}{\code{signature(object = "IQLearnSS")}: 
+       Show main results of analysis.}
+
+    \item{summary}{\code{signature(object = "IQLearnSS")}: 
+       Retrieve summary information from regression analyses.}
+
+  }
+}
+
+
 \references{
-  Laber, E. B., Linn, K. A., and Stefanski, L. A. 
+  Laber, E. B., Linn, K. A., and Stefanski, L.A. 
   (2014). 
-  Interactive Q-learning. 
-  Biometrika, in press.
+  Interactive model building for Q-learning. 
+  Biometrika, 101, 831--847.
 }
 
 \author{
-  Kristin A. Linn, Eric B. Laber, Leonard A. Stefanski, and
   Shannon T. Holloway <sthollow@ncsu.edu>
 }
 
@@ -114,132 +159,56 @@ See ?fitObject for details.
 }
 
 \examples{
-  ##########################################################
-  # Load and process data set
-  ##########################################################
-    data(bmiData)
+# Load and process data set
+  data(bmiData)
 
-    #----------------------------------------------------#
-    # Recast treatment variables to (-1,1) --- required.
-    #----------------------------------------------------#
-    bmiData$A1[which (bmiData$A1=="MR")] <- 1L
-    bmiData$A1[which (bmiData$A1=="CD")] <- -1L
-    bmiData$A2[which (bmiData$A2=="MR")] <- 1L
-    bmiData$A2[which (bmiData$A2=="CD")] <- -1L
-    bmiData$A1 <- as.integer(bmiData$A1)
-    bmiData$A2 <- as.integer(bmiData$A2)
+  # define response y to be the negative 12 month
+  # change in BMI from baseline
+  bmiData$y <- -100*(bmiData[,6] - bmiData[,4])/bmiData[,4]
 
-    #----------------------------------------------------#
-    # define response y to be the negative 12 month
-    # change in BMI from baseline
-    #----------------------------------------------------#
-    bmiData$y <- -100*(bmiData[,6] - bmiData[,4])/bmiData[,4]
+# Second-stage regression - Single Regression Analysis
+  # Create modelObj object for main effect component
+  moMain <- buildModelObj(model = ~ gender + parentBMI + month4BMI,
+                          solver.method = 'lm')
 
-  ##########################################################
-  # Second-stage regression - Single Regression Analysis
-  ##########################################################
-    #----------------------------------------------------#
-    # Create modelObj object for main effect component
-    #----------------------------------------------------#
-    moMain <- buildModelObj(model = ~ gender + parentBMI + month4BMI,
-                            solver.method = 'lm')
+  # Create modelObj object for contrast component
+  moCont <- buildModelObj(model = ~ parentBMI + month4BMI,
+                          solver.method = 'lm')
 
-    #----------------------------------------------------#
-    # Create modelObj object for contrast component
-    #----------------------------------------------------#
-    moCont <- buildModelObj(model = ~ parentBMI + month4BMI,
-                            solver.method = 'lm')
+  iqSS <- iqLearnSS(moMain = moMain, moCont = moCont, 
+                    data = bmiData, response = bmiData$y, txName = "A2", 
+                    iter = 0L)
 
-    iqSS <- iqLearnSS(moMain = moMain, 
-                      moCont = moCont, 
-                      data = bmiData,
-                      response = bmiData$y, 
-                      txName = "A2", 
-                      iter = 0)
+## Available methods for second stage step
 
-    # Estimated Value functions
-    vals <- qFuncs(iqSS)
-    head(vals)
+  # Coefficients of the outcome regression
+  coef(iqSS)
 
-    # Residuals
-    res <- residuals(iqSS)
-    head(res)
+  # Description of method used to obtain object
+  DTRstep(iqSS)
 
-    # Model parameter estimates
-    coef(iqSS)
+  # Value object returned by outcome regression method
+  fitObject(iqSS)
 
-    # Summary information for fit object
-    #summary(iqSS)
+  # Contrast component of outcome regression
+  fittedCont(iqSS)
 
-    # Standard x-y plots
-    plot(iqSS)
+  # Main effects component of outcome regression
+  fittedMain(iqSS)
 
-    # Value objects returned by modeling function
-    fitObj <- fitObject(iqSS)
-    fitObj
+  # Value object returned by outcome regression method
+  outcome(iqSS)
 
-    # All standard lm  methods can be applied to the elements of this list.
-    summary(fitObj[[ "Combined" ]])
-    coef(fitObj[[ "Combined" ]])
-    head(residuals(fitObj[[ "Combined" ]]))
-    head(fitted.values(fitObj[[ "Combined" ]]))
-    plot(fitObj[[ "Combined"]])
+  # Plots if defined by outcome regression method
+  dev.new()
+  par(mfrow = c(2,4))
+  plot(iqSS)
+  plot(iqSS, suppress = TRUE)
 
-  ##########################################################
-  # Second-stage regression - Iterative Regression Analysis
-  ##########################################################
-    #----------------------------------------------------#
-    # Create modelObj object for main effect component
-    #----------------------------------------------------#
-    moMain <- buildModelObj(model = ~ gender + parentBMI + month4BMI,
-                            solver.method = 'lm')
+  # Show main results of method
+  show(iqSS)
 
-    #----------------------------------------------------#
-    # Create modelObj object for contrast component
-    #----------------------------------------------------#
-    moCont <- buildModelObj(model = ~ parentBMI + month4BMI,
-                            solver.method = 'lm')
-
-    iqSS <- iqLearnSS(moMain = moMain, 
-                      moCont = moCont, 
-                      data = bmiData,
-                      response = bmiData$y, 
-                      txName = "A2", 
-                      iter = 100)
-
-    # Estimated Value functions
-    vals <- qFuncs(iqSS)
-    head(vals)
-
-    # Residuals
-    res <- residuals(iqSS)
-    head(res)
-
-    # Model parameter estimates
-    coef(iqSS)
-
-    # Summary information for fit object
-    #summary(iqSS)
-
-    # Standard x-y plots
-    plot(iqSS)
-
-    # Value objects returned by modeling function
-    fitObj <- fitObject(iqSS)
-    fitObj
-
-    # All standard lm  methods can be applied to the elements of this list.
-    summary(fitObj[[ "MainEffect" ]])
-    coef(fitObj[[ "MainEffect" ]])
-    head(residuals(fitObj[[ "MainEffect" ]]))
-    head(fitted.values(fitObj[[ "MainEffect" ]]))
-    plot(fitObj[[ "MainEffect"]])
-
-    summary(fitObj[[ "Contrast" ]])
-    coef(fitObj[[ "Contrast" ]])
-    head(residuals(fitObj[[ "Contrast" ]]))
-    head(fitted.values(fitObj[[ "Contrast" ]]))
-    plot(fitObj[[ "Contrast"]])
-
+  # Show summary results of method
+  summary(iqSS)
 
 }

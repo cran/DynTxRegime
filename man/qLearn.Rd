@@ -3,220 +3,192 @@
 
 \title{ Q-learning}
 
-\description{Regresses the outcome on
-             stage history and treatment to estimate the optimal 
-             decision rule for the given stage using Q-learning.
+\description{As a single call, regresses the response on
+covariates and treatment histories to estimate the optimal 
+treatment decision rule. If called repeatedly, once for each
+treatment decision point, each call is a step of the Q-Learning
+algorithm.
 }
 
-\usage{ qLearn(..., moMain, moCont, data, response, txName, fSet=NULL, iter=0L,
-               suppress = FALSE) }
+\usage{ qLearn(..., moMain, moCont, data, response, txName, fSet, iter = 0L, verbose = TRUE) }
 
 \arguments{
-  \item{\dots   }{ignored}
 
- \item{moMain   }{a single object of class modelObj or a list of objects of 
-                  class {modelObj} or {modelObjSubset}.
-                  This object defines the models and R
-                  methods to be used to obtain parameter estimates and
-                  predictions for for the main effects component of the
-                  outcome regression.
+ \item{\dots    }{ignored. Included to require named input.}
+
+ \item{moMain   }{A single object of class \code{"modelObj"} or 
+                  an object of class \code{"list"} 
+                  containing objects of class \code{"modelObjSubset."}
+                  This object specifies the model(s) of the
+                  main effects component of the outcome regression
+                  and the R methods to be used to obtain parameter
+                  estimates and predictions.
                   The method chosen to obtain predictions must return
-                  the prediction on the scale of the response variable.
-                  See ?modelObj and/or ?modelObjSubset for details.}
+                  the prediction on the scale of the response variable.}
 
- \item{moCont   }{a single object of class modelObj or a list of objects of 
-                  class {modelObj} or {modelObjSubset}.
-                  This object defines the models and R
-                  methods to be used to obtain parameter estimates and
-                  predictions for for the contrasts component of the
-                  outcome regression.
+ \item{moCont   }{A single object of class \code{"modelObj"} or 
+                  an object of class \code{"list"} 
+                  containing objects of class \code{"modelObjSubset."}
+                  This object specifies the models of the
+                  contrasts component of the outcome regression
+                  and the R methods to be used to obtain parameter
+                  estimates and predictions.
                   The method chosen to obtain predictions must return
-                  the prediction on the scale of the response variable.
-                  See ?modelObj and/or ?modelObjSubset for details.}
+                  the prediction on the scale of the response variable.}
 
- \item{data     }{an object of class \code{data.frame} containing the
-                  covariates and treatment histories.}
+ \item{data     }{An object of class \code{"data.frame."}
+                  The covariates and treatment histories.}
 
-  \item{response }{an object of class {vector} or {qLearn}.
-                   If performing the first STEP of the Q-Learning algorithm,
-                   i.e., the final-stage regression, response is
-                   the vector outcome of interest. For all other
-                   steps of the Q-Learning algorithm, response is
-                   the value object returned by the previous Q-Learning step.}
+  \item{response}{An object of class \code{"vector"} or \code{"QLearn."}
+                  If performing a single decision point analysis
+                  or the first step of the Q-Learning algorithm,
+                  i.e., the final-stage regression, response is a 
+                  vector of the outcome of interest. 
+                  For multiple decision point analysis, this
+                  is the value object returned by the previous
+                  call to \code{qLearn()}.}
 
- \item{txName   }{an object of class \code{character};
-                  the column header of \code{data} containing the 
-                  treatment variable.}
+ \item{txName   }{An object of class \code{"character."}
+                  The column header of the stage treatment variable
+                  as given in input \code{data}.}
 
- \item{fSet     }{Object of class {function}.
-                  The function defines the conditions under which only
-                  a subset of treatment options is available to a patient
-                  or a subset of patients, for whom different models will be
-                  used.
-                  The formal arguments of the function should include either 
-                  the name of the data.frame or individual covariate names
-                  as given by the column headers of {data}. The function
-                  must return a list. The first element of the list
-                  is a character nickname. The
-                  second element is a vector of available treatment options.
-
-                  For example
-
-                        \preformatted{ 
-fSet <- function(data)
-\{ 
-   if(data\$a1 > 1)\{ 
-     subset <- list("A",c(1,2))
-   \} else \{ 
-     subset <- list("B",c(3,4) )
-   \} 
-   return(subset) 
-\} }
-                        or 
-                        \preformatted{
-fSet <- function(a1)
-\{
-  if(a1 > 1)\{
-    subset <- list("A",c(1,2))
-  \} else \{
-    subset <- list("B",c(3,4) )
-  \}
-  return(subset)
-\}}
-
+ \item{fSet     }{An object of class \code{"function"} or NULL.
+                  See \link{fSet} for further information.
                      }
 
-  \item{iter    }{Object of class {numeric}.
+  \item{iter    }{An object of class \code{"numeric."}
+                  If >0, the iterative method will be used to 
+                  obtain parameter estimates in the outcome regression step.
+                  See \link{iter} for further information.}
 
-                 >=1 if {moMain} and {moCont} are to be
-                 fitted separately, iter is the maximum number of iterations.
-                 Assume Y = Ymain + Ycont;
-                 the iterative algorithm is as follows:
-                  (1) hat(Ycont) = 0;
-                  (2) Ymain = Y - hat(Ycont);
-                  (3) fit Ymain ~ moMain;
-                  (4) set Ycont = Y - hat(Ymain)
-                  (5) fit Ycont ~ A*moCont;
-                  (6) Repeat steps (2) - (5) until convergence or
-                  a maximum of iter iterations.
-
-                 <=0 if the components of the conditional expectation 
-                 {moMain} and {moCont} will be combined and 
-                 fit as a single object.
-                 Note that if iter <= 0, all non-model components of the
-                 {moMain} and {moCont} must be
-                 identical. By default, the choices in moMain are used.}
-
-
-  \item{suppress }{Object of class logical. If TRUE, all screen prints will be 
-                   suppressed.}
+  \item{verbose }{An object of class \code{"logical."}
+                  If FALSE, screen prints will be suppressed.}
 }
 
 \value{
-       Returns an object that inherits directly from class {DynTxRegime}.
+       Returns an object of class \code{"QLearn"} that inherits directly from class \code{"DynTxRegime."} 
 }
 
-\references{
-  Laber, E. B., Linn, K. A., and Stefanski, L. A. 
-(2014). 
-  Interactive Q-learning. 
-Biometrika, in press.
+\section{Methods}{
+  \describe{
+    \item{coef}{\code{signature(object = "QLearn")}: 
+       Retrieve parameter estimates for all regression steps. }
+
+    \item{DTRstep}{\code{signature(object = "QLearn")}: 
+       Retrieve description of method used to create object. }
+
+    \item{estimator}{\code{signature(x = "QLearn")}: 
+       Retrieve the estimated value of the estimated
+       optimal regime for the training data set. }
+
+    \item{fitObject}{\code{signature(object = "QLearn")}: 
+       Retrieve value object returned by regression methods. }
+
+    \item{optTx}{\code{signature(x = "QLearn", newdata = "missing")}: 
+       Retrieve the estimated optimal treatment regime for
+       training data set. }
+
+    \item{optTx}{\code{signature(x = "QLearn", newdata = "data.frame")}: 
+       Estimate the optimal treatment regime for newdata. }
+
+    \item{outcome}{\code{signature(x = "QLearn")}: 
+       Retrieve value object returned by outcome regression methods.  }
+
+    \item{plot}{\code{signature(x = "QLearn")}: 
+       Generate plots for regression analyses.  }
+
+    \item{print}{\code{signature(object = "QLearn")}: 
+       Print main results of analysis.}
+
+    \item{show}{\code{signature(object = "QLearn")}: 
+       Show main results of analysis.}
+
+    \item{summary}{\code{signature(object = "QLearn")}: 
+       Retrieve summary information from regression analyses.}
+
+  }
 }
+
 \author{
-  Kristin A. Linn, Eric B. Laber, Leonard A. Stefanski, and
   Shannon T. Holloway <sthollow@ncsu.edu>
 }
 
 \examples{
-  ##########################################################
-  # Load and process data set
-  ##########################################################
-    data(bmiData)
+# Load and process data set
+  data(bmiData)
 
-    #----------------------------------------------------#
-    # Recast treatment variables to (0,1)
-    #----------------------------------------------------#
-    bmiData$A1[which (bmiData$A1=="MR")] <- 1L
-    bmiData$A1[which (bmiData$A1=="CD")] <- 0L
-    bmiData$A2[which (bmiData$A2=="MR")] <- 1L
-    bmiData$A2[which (bmiData$A2=="CD")] <- 0L
-    bmiData$A1 <- as.integer(bmiData$A1)
-    bmiData$A2 <- as.integer(bmiData$A2)
+  # define response y to be the negative 12 month
+  # change in BMI from baseline
+  bmiData$y <- -100*(bmiData[,6] - bmiData[,4])/bmiData[,4]
 
-    #----------------------------------------------------#
-    # define response y to be the negative 12 month
-    # change in BMI from baseline
-    #----------------------------------------------------#
-    bmiData$y <- -100*(bmiData[,6] - bmiData[,4])/bmiData[,4]
+# Second-stage regression
+  # Create modeling object for main effect component
+  moMain <- buildModelObj(model = ~ gender + parentBMI + month4BMI,
+                          solver.method='lm')
 
-  ##########################################################
-  # Second-stage regression
-  ##########################################################
-    #----------------------------------------------------#
-    # Create modeling object for main effect component
-    #----------------------------------------------------#
-    moMain <- buildModelObj(model = ~ gender + parentBMI + month4BMI,
-                       solver.method='lm')
+  # Create modeling object for contrast component
+  moCont <- buildModelObj(model = ~ parentBMI + month4BMI,
+                          solver.method='lm')
 
-    #----------------------------------------------------#
-    # Create modeling object for contrast component
-    #----------------------------------------------------#
-    moCont <- buildModelObj(model = ~ parentBMI + month4BMI,
-                       solver.method='lm')
+  fitQ2 <- qLearn(moMain = moMain, 
+                  moCont = moCont, 
+                  data = bmiData,  
+                  response = bmiData$y, 
+                  txName = "A2", 
+                  iter = 0L)
 
-    fitQ2 <- qLearn(moMain = moMain, 
-                    moCont = moCont, 
-                    data = bmiData,  
-                    response = bmiData$y, 
-                    txName = "A2", 
-                    iter = 0)
+##Available methods
+
+  # Coefficients of the propensity score regression
+  coef(fitQ2)
+
+  # Description of method used to obtain object
+  DTRstep(fitQ2)
+
+  # Estimated value of the optimal treatment regime for training set
+  estimator(fitQ2)
+
+  # Value object returned by propensity score regression method
+  fitObject(fitQ2)
+
+  # Estimated optimal treatment for training data
+  optTx(fitQ2)
+
+  # Estimated optimal treatment for new data
+  optTx(fitQ2, bmiData)
+
+  # Value object returned by outcome regression method
+  outcome(fitQ2)
+
+  # Plots if defined by propensity regression method
+  dev.new()
+  par(mfrow = c(2,4))
+
+  plot(fitQ2)
+  plot(fitQ2, suppress = TRUE)
+
+  # Show main results of method
+  show(fitQ2)
+
+  # Show summary results of method
+  summary(fitQ2)
  
-  ##########################################################
-  # First-stage regression
-  ##########################################################
 
-    #----------------------------------------------------#
-    # Create modeling object for main effect component
-    #----------------------------------------------------#
-    moMain <- buildModelObj(model = ~ gender + race + parentBMI + baselineBMI,
-                       solver.method='lm')
+# First-stage regression
 
-    #----------------------------------------------------#
-    # Create modeling object for contrast component
-    #----------------------------------------------------#
-    moCont <- buildModelObj(model = ~ gender + parentBMI,
-                      solver.method='lm')
+  # Create modeling object for main effect component
+  moMain <- buildModelObj(model = ~ gender + race + parentBMI + baselineBMI,
+                          solver.method='lm')
 
-    fitQ1 <- qLearn(moMain = moMain, 
-                    moCont = moCont,  
-                    response = fitQ2, 
-                    data = bmiData,  
-                    txName = "A1",  
-                    iter = 100)
+  # Create modeling object for contrast component
+  moCont <- buildModelObj(model = ~ gender + parentBMI,
+                          solver.method='lm')
 
-    # Coefficients of regressions
-    coef(fitQ1)
-
-    # Residuals
-    head(residuals(fitQ1))
-
-    # Summary
-    #summary(fitQ1)
-
-    # Plots
-    plot(fitQ1)
-
-    # List of value objects returned by modeling function
-    fitObj <- fitObject(fitQ1)
-    fitObj
-
-    # All standard lm  methods can be applied to this fit object
-    summary(fitObj$MainEffect)
-    coef(fitObj$MainEffect)
-    head(residuals(fitObj$MainEffect))
-
-    summary(fitObj$Contrast)
-    coef(fitObj$Contrast)
-    head(residuals(fitObj$Contrast))
+  fitQ1 <- qLearn(moMain = moMain, 
+                  moCont = moCont,  
+                  response = fitQ2, 
+                  data = bmiData,  
+                  txName = "A1",  
+                  iter = 100L)
 
 }

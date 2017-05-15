@@ -15,15 +15,17 @@ plugInValue <- function(optTx1,
                         tx1, 
                         tx2){
 
-  if( is(optTx1,"factor") ) optTx1 <- as.numeric(levels(optTx1)[optTx1])
-  if( is(optTx2,"factor") ) optTx2 <- as.numeric(levels(optTx2)[optTx2])
   #--------------------------------------------------------------------------#
   # determine the average value for patients that followed the optimal regime#
   #--------------------------------------------------------------------------#
-  tx1 <- as.integer(round(tx1,0L))
-  tx2 <- as.integer(round(tx2,0L))
-  optTx1 <- as.integer(round(optTx1,0L))
-  optTx2 <- as.integer(round(optTx2,0L))
+  if( is.numeric(tx1) ) tx1 <- as.integer(round(tx1,0L))
+  if( is.numeric(tx2) ) tx2 <- as.integer(round(tx2,0L))
+  if( is.numeric(optTx1) ) optTx1 <- as.integer(round(optTx1,0L))
+  if( is.numeric(optTx2) ) optTx2 <- as.integer(round(optTx2,0L))
+
+  if( class(optTx1) != class(tx1) ) {
+    stop("optTx1, optTx2, tx1, and tx2 must be of the same class")
+  }
 
   ind <- as.numeric( tx1 == optTx1 ) * as.numeric( tx2 == optTx2 )
   value <- sum(response*ind)/sum(ind)
@@ -40,9 +42,9 @@ plugInValue <- function(optTx1,
                      dimnames = list(paste("tx1=", txOptions1, sep=""),
                                      paste("tx2=", txOptions2, sep="")))
 
-  for( i in txOptions1 ) {
-    for( j in txOptions2 ) {
-      ind <- as.numeric(tx1 == i) * as.numeric(tx2 == j)
+  for( i in 1L:length(txOptions1) ) {
+    for( j in 1L:length(txOptions2) ) {
+      ind <- as.numeric(tx1 == txOptions1[i]) * as.numeric(tx2 == txOptions2[j])
       fixedReg[i,j] <- sum(response * ind)/sum(ind)
     }
   }

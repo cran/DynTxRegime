@@ -1,26 +1,18 @@
 \name{DTRstep}
+\docType{methods}
 \alias{DTRstep}
-\alias{DTRstep,DynTxRegime-method}
 
-\title{ Step of an DynTxRegime method}
+\title{ Identify Statistical Method of DynTxRegime Object}
 \description{
- Retrieves the step of the DynTxRegime method contained in a DynTxRegime object.
+ Retrieves a description of the method used to create the object.
 }
-\usage{ \S4method{DTRstep}{DynTxRegime}(object, ...)  }
+
+\usage{
+DTRstep(object)
+}
 
 \arguments{
-  \item{object }{an object of class DynTxRegime.}
-
-  \item{\dots }{ignored.}
-
-}
-
-\value{
-For IQ-Learning, returns a character string identifying the step of the 
-IQ-Learning algorithm contained in the DynTxRegime object. For
-Q-Learning, returns the step of the Q-Learning algorithm 
-contained in the DynTxRegime object. For optimalSeq and optimalClass, 
-returns the function name.
+\item{object}{An object of class \code{"DynTxRegime."}}
 }
 
 \author{
