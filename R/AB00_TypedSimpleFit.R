@@ -44,7 +44,7 @@ setClass(Class = "TypedSimpleFit",
          slots = c(type = "character",
                    txInfo = "ANY"),
          contains = c("modelObjFit",
-                      "SubsetsNotModeled",  
+                      "SubsetsNotModeled",
                       "SingleDecisionPoint",
                       "OutcomeRegression"),
          validity = .checkValidity_TypedSimpleFit)
@@ -55,7 +55,7 @@ setClass(Class = "TypedSimpleFit",
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- #
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ #
 
-setGeneric(name = ".predictAllTreatments", 
+setGeneric(name = ".predictAllTreatments",
            def = function(object, data, ...){
                    standardGeneric(".predictAllTreatments")
                  })
@@ -67,15 +67,15 @@ setGeneric(name = ".predictAllTreatments",
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ #
 
 #----------------------------------------------------------------------#
-# Retrieve the coefficient estimates                                   # 
+# Retrieve the coefficient estimates                                   #
 #----------------------------------------------------------------------#
 # input arguments                                                      #
 #   object : an object of class TypedSimpleFit                         #
 # returns                                                              #
 #   a list; elements are defined in the inherited class modelObjFit.   #
 #----------------------------------------------------------------------#
-setMethod(f = "coef", 
-          signature = c(object = "TypedSimpleFit"), 
+setMethod(f = "coef",
+          signature = c(object = "TypedSimpleFit"),
           definition = function(object, ...){
                          res <- list()
                          res[[ object@type ]] <- coef(object = as(object, "modelObjFit"))
@@ -83,15 +83,15 @@ setMethod(f = "coef",
                        } )
 
 #----------------------------------------------------------------------#
-# Retrieve the regression results                                      # 
+# Retrieve the regression results                                      #
 #----------------------------------------------------------------------#
 # input arguments                                                      #
 #   object : an object of class TypedSimpleFit                         #
 # returns                                                              #
 #   a list; elements are defined in the inherited class modelObjFit.   #
 #----------------------------------------------------------------------#
-setMethod(f = "fitObject", 
-          signature = c(object = "TypedSimpleFit"), 
+setMethod(f = "fitObject",
+          signature = c(object = "TypedSimpleFit"),
           definition = function(object, ...){
                          res <- list()
                          res[[ object@type ]] <- fitObject(object = as(object, "modelObjFit"))
@@ -108,8 +108,8 @@ setMethod(f = "fitObject",
 # returns                                                              #
 #   No object return.                                                  #
 #----------------------------------------------------------------------#
-setMethod(f = "plot", 
-          signature = c(x = "TypedSimpleFit"), 
+setMethod(f = "plot",
+          signature = c(x = "TypedSimpleFit"),
           definition = function(x, suppress=FALSE, ...){
 
                          argList <- list(...)
@@ -133,9 +133,9 @@ setMethod(f = "plot",
 #   returns                                                            #
 # A numeric vector. The estimated outcome.                             #
 #----------------------------------------------------------------------#
-setMethod(f = "predict", 
-          signature = c(object = "TypedSimpleFit"), 
-          definition = function(object,...){ 
+setMethod(f = "predict",
+          signature = c(object = "TypedSimpleFit"),
+          definition = function(object,...){
                          return(predict(object = as(object,"modelObjFit"),...)) } )
 
 #----------------------------------------------------------------------#
@@ -147,22 +147,22 @@ setMethod(f = "predict",
 #   returns                                                            #
 # A matrix. The estimated outcome.                                     #
 #----------------------------------------------------------------------#
-setMethod(f = ".predictAllTreatments", 
-          signature = c(object = "TypedSimpleFit"), 
-          definition = function(object, data, response){ 
+setMethod(f = ".predictAllTreatments",
+          signature = c(object = "TypedSimpleFit"),
+          definition = function(object, data, response){
 
-                         txSet <- .getSuperSet(object@txInfo)
+          	         txSet <- .getSuperSet(object@txInfo)
                          txName <- .getTxName(object@txInfo)
 
-                         vals <- matrix(data = 0.0, 
-                                        nrow = nrow(data), 
+                         vals <- matrix(data = 0.0,
+                                        nrow = nrow(data),
                                         ncol = length(txSet),
                                         dimnames = list(NULL,txSet))
 
                          for( i in 1L:length(txSet) ) {
                            data[,txName] <- txSet[i]
                            data[,txName] <- .convertTx(object@txInfo, data[,txName])
-                           vals[,i] <- predict(object = as(object,"modelObjFit"), 
+                           vals[,i] <- predict(object = as(object,"modelObjFit"),
                                                newdata = data)
                          }
 
@@ -170,7 +170,7 @@ setMethod(f = ".predictAllTreatments",
                        } )
 
 #----------------------------------------------------------------------#
-# Print key regression results                                         # 
+# Print key regression results                                         #
 #----------------------------------------------------------------------#
 # input arguments                                                      #
 # x : an object of class TypedSimpleFit                                #
@@ -185,30 +185,30 @@ setMethod(f = "print",
                         } )
 
 #----------------------------------------------------------------------#
-# Show key regression results                                          # 
+# Show key regression results                                          #
 #----------------------------------------------------------------------#
 # input arguments                                                      #
 # object : an object of class TypedSimpleFit                           #
 #   returns                                                            #
 # No object return.                                                    #
 #----------------------------------------------------------------------#
-setMethod(f = "show", 
-          signature = c(object = "TypedSimpleFit"), 
+setMethod(f = "show",
+          signature = c(object = "TypedSimpleFit"),
           definition = function(object){
                          cat("\n", object@type, "\n")
                          show(object = as(object,"modelObjFit"))
                        } )
 
 #----------------------------------------------------------------------#
-# Retrieve summary information of regression results                   # 
+# Retrieve summary information of regression results                   #
 #----------------------------------------------------------------------#
 # input arguments                                                      #
 # object : an object of class TypedSimpleFit                           #
 #   returns                                                            #
 # a list; elements are defined in the inherited class modelObjFit.     #
 #----------------------------------------------------------------------#
-setMethod(f = "summary", 
-          signature = c(object = "TypedSimpleFit"), 
+setMethod(f = "summary",
+          signature = c(object = "TypedSimpleFit"),
           definition = function(object, ...){
                          res <- list()
                          res[[ object@type ]] <- summary(object = as(object,"modelObjFit"))

@@ -36,19 +36,25 @@ setClass(Class = "TypedSimpleFitWithSubsets",
 #   returns                                                            #
 # A matrix. The estimated outcome.                                     #
 #----------------------------------------------------------------------#
-setMethod(f = ".predictAllTreatments", 
-          signature = c(object = "TypedSimpleFitWithSubsets"), 
-          definition = function(object, data, response=NULL){ 
+setMethod(f = ".predictAllTreatments",
+          signature = c(object = "TypedSimpleFitWithSubsets"),
+          definition = function(object, data, response=NULL){
 
-                         txSet <- .getSuperSet(object@txInfo)
+          	         txSet <- .getSuperSet(object@txInfo)
                          txName <- .getTxName(object@txInfo)
 
-                         val <- .predictAllTreatments(object = as(object,"TypedSimpleFit"), 
-                                                      data = data,  
+                         val <- .predictAllTreatments(object = as(object,"TypedSimpleFit"),
+                                                      data = data,
                                                       response = response)
                          val <- val$vals
 
-                         ptsSubset <- .getPtsSubset(object@txInfo)
+          	         txInfo <- .newTxInfo(fSet = .getSubsetRule(object@txInfo),
+                                              txName = .getTxName(object@txInfo),
+                                              data = data,
+                                              suppress = TRUE,
+          	              	              verify = FALSE)
+
+                         ptsSubset <- .getPtsSubset(txInfo)
                          subsets <- .getSubsets(object@txInfo)
                          for( i in 1L:length(subsets) ) {
                            tst1 <- ptsSubset %in% names(subsets)[i]
@@ -68,9 +74,9 @@ setMethod(f = ".predictAllTreatments",
 #   returns                                                            #
 # A matrix. The estimated outcome.                                     #
 #----------------------------------------------------------------------#
-setMethod(f = "predict", 
-          signature = c(object = "TypedSimpleFitWithSubsets"), 
-          definition = function(object, newdata, ...){ 
+setMethod(f = "predict",
+          signature = c(object = "TypedSimpleFitWithSubsets"),
+          definition = function(object, newdata, ...){
 
 
                          if( !missing(newdata) ) {

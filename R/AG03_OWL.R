@@ -44,7 +44,7 @@ setClass(Class = "OWL",
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 #                             OWL GENERICS                             #
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
-setGeneric(name = ".newOWL", 
+setGeneric(name = ".newOWL",
            def = function(moPropen, ...){
                    standardGeneric(".newOWL")
                  })
@@ -53,8 +53,8 @@ setGeneric(name = ".newOWL",
 #                             OWL METHODS                              #
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 
-setMethod(f = "cvInfo",   
-          signature = c(object = "OWL"), 
+setMethod(f = "cvInfo",
+          signature = c(object = "OWL"),
           definition = function(object) {
                          if( is(object@crossValidation,"NULL") ) {
                            return(NULL)
@@ -63,17 +63,17 @@ setMethod(f = "cvInfo",
                        })
 
 #----------------------------------------------------------------------#
-# Retrieve a string describing the method used to obtain the object    # 
+# Retrieve a string describing the method used to obtain the object    #
 #----------------------------------------------------------------------#
 #   params                                                             #
 # object : an object of class OWL                                      #
 #   returns                                                            #
 # String indicating OWL estimator                                      #
 #----------------------------------------------------------------------#
-setMethod(f = "DTRstep", 
-          signature = c(object = "OWL"), 
-          definition = function(object){ 
-                         return("Outcome Weighted Learning") 
+setMethod(f = "DTRstep",
+          signature = c(object = "OWL"),
+          definition = function(object){
+                         return("Outcome Weighted Learning")
                        } )
 
 #----------------------------------------------------------------------#
@@ -92,7 +92,7 @@ setMethod(f = "optimObj",
                        } )
 
 #----------------------------------------------------------------------#
-# Predict optimal treatment for new data                               # 
+# Predict optimal treatment for new data                               #
 #----------------------------------------------------------------------#
 #   params                                                             #
 # x : an object of class OWL                                           #
@@ -104,7 +104,7 @@ setMethod(f = "optimObj",
   #------------------------------------------------------------------#
   # Obtain model matrix for decision function                        #
   #------------------------------------------------------------------#
-  x2 <- try(model.matrix(object = x@modelFormula, data = newdata), 
+  x2 <- try(model.matrix(object = x@modelFormula, data = newdata),
             silent = FALSE)
 
   if( is(x2,"try-error") ) {
@@ -148,12 +148,12 @@ setMethod(f = "optimObj",
 }
 
 setMethod(f = "optTx",
-          signature = c(x = "OWL", 
+          signature = c(x = "OWL",
                         newdata = "data.frame"),
           definition = .predictOptTxOWL)
 
 setMethod(f = "optTx",
-          signature = c(x = "OWL", 
+          signature = c(x = "OWL",
                         newdata = "missing"),
           definition = function(x, newdata,....){
                          return(list("optimalTx" = x@optimalTx,
@@ -161,15 +161,15 @@ setMethod(f = "optTx",
                        })
 
 #----------------------------------------------------------------------#
-# Print key results.                                                   # 
+# Print key results.                                                   #
 #----------------------------------------------------------------------#
 #   params                                                             #
 # x : an object of class OWL                                           #
 #   returns                                                            #
 # Nothing returned                                                     #
 #----------------------------------------------------------------------#
-setMethod(f = "print",    
-          signature = c(x = "OWL"), 
+setMethod(f = "print",
+          signature = c(x = "OWL"),
           definition = function(x, ...){
                          cat("\n", DTRstep(x), "\n")
                          cat("Reward shifted by ", x@shift, "\n")
@@ -180,21 +180,21 @@ setMethod(f = "print",
                        } )
 
 #----------------------------------------------------------------------#
-# Retrieve the parameter estimates for the class of regimes            # 
+# Retrieve the parameter estimates for the class of regimes            #
 #----------------------------------------------------------------------#
 #   params                                                             #
 # object : an object of class OWL                                      #
 #   returns                                                            #
 # The parameter estimates for the decision function                    #
 #----------------------------------------------------------------------#
-setMethod(f = "regimeCoef",    
-          signature = c(object = "OWL"), 
+setMethod(f = "regimeCoef",
+          signature = c(object = "OWL"),
           definition = function(object, ...){
                          return( regimeCoef(object@optim) )
                        } )
 
 #----------------------------------------------------------------------#
-# Show the key results.                                                # 
+# Show the key results.                                                #
 #----------------------------------------------------------------------#
 #   params                                                             #
 # object : an object of class OWL                                      #
@@ -202,8 +202,8 @@ setMethod(f = "regimeCoef",
 # Nothing returned                                                     #
 # Calls show methods of OWLOptim and PropensityFit                     #
 #----------------------------------------------------------------------#
-setMethod(f = "show",    
-          signature = c(object = "OWL"), 
+setMethod(f = "show",
+          signature = c(object = "OWL"),
           definition = function(object){
                          cat("\n", DTRstep(object), "\n")
                          cat("Reward shifted by ", object@shift, "\n")
@@ -225,8 +225,8 @@ setMethod(f = "show",
 # 'optim' holds the key results of the optimization as defined in      #
 # OWLOptim. 'value' is the estimated value                             #
 #----------------------------------------------------------------------#
-setMethod(f = "summary",    
-          signature = c(object = "OWL"), 
+setMethod(f = "summary",
+          signature = c(object = "OWL"),
           definition = function(object, ...){
                          result <- summary(object = as(object,"PropensityOnly"))
                          result[[ "optim" ]] <- summary(object@optim)
@@ -252,15 +252,15 @@ setMethod(f = "summary",
 #   returns                                                            #
 # an OWL object                                                        #
 #----------------------------------------------------------------------#
-.OWL <- function(moPropen,   
-                 data,   
-                 reward,   
-                 txName,  
-                 regime,   
-                 lambdas,   
-                 cvFolds,   
+.OWL <- function(moPropen,
+                 data,
+                 reward,
+                 txName,
+                 regime,
+                 lambdas,
+                 cvFolds,
                  kernel,
-                 kparam,   
+                 kparam,
                  txVec,
                  suppress) {
 
@@ -288,7 +288,7 @@ setMethod(f = "summary",
   # Shift reward to be all positive                                  #
   #------------------------------------------------------------------#
   shift <- min(reward)
-  if( shift < 0.0 ) {
+  if( shift <= 0.0 ) {
     shift <- shift - 0.001
     reward <- reward - shift
     shift <- - shift
@@ -302,17 +302,17 @@ setMethod(f = "summary",
   #------------------------------------------------------------------#
   # Process treatment information.                                   #
   #------------------------------------------------------------------#
-  txInfo <- .newTxInfo(txName = txName, 
-                       data = data,  
-                       fSet = NULL, 
+  txInfo <- .newTxInfo(txName = txName,
+                       data = data,
+                       fSet = NULL,
                        suppress = suppress)
 
   #------------------------------------------------------------------#
   # Fit propensity models                                            #
   #------------------------------------------------------------------#
-  propen <- .newPropensityRegression(moPropen = moPropen, 
-                                     txInfo = txInfo, 
-                                     data = data, 
+  propen <- .newPropensityRegression(moPropen = moPropen,
+                                     txInfo = txInfo,
+                                     data = data,
                                      suppress = suppress)
 
   #------------------------------------------------------------------#
@@ -339,7 +339,7 @@ setMethod(f = "summary",
                            cvFolds = cvFolds,
                            lambdas = lambdas,
                            kernel = kernel,
-                           kparam = kparam, 
+                           kparam = kparam,
                            suppress = suppress)
 
   } else {
@@ -352,14 +352,14 @@ setMethod(f = "summary",
   #------------------------------------------------------------------#
   # Obtain parameter estimates at final lambda & kparam values.      #
   #------------------------------------------------------------------#
-  trainResult <- .newOWLOptim(x = x, 
+  trainResult <- .newOWLOptim(x = x,
                               subset = 1L:nrow(x),
-                              lambda = cvResult$lambda, 
+                              lambda = cvResult$lambda,
                               txVec = txVec,
                               prWgt = prWgt,
-                              response = reward, 
-                              suppress = suppress, 
-                              kernel = kernel, 
+                              response = reward,
+                              suppress = suppress,
+                              kernel = kernel,
                               kparam = cvResult$kparam)
 
   #------------------------------------------------------------------#
@@ -370,10 +370,10 @@ setMethod(f = "summary",
   #------------------------------------------------------------------#
   # Estimate value                                                   #
   #------------------------------------------------------------------#
-  value <- .valueFuncOWL(subset = 1L:nrow(x), 
-                         optTx = optVec$optimalTx, 
+  value <- .valueFuncOWL(subset = 1L:nrow(x),
+                         optTx = optVec$optimalTx,
                          txVec = txVec,
-                         prWgt = prWgt, 
+                         prWgt = prWgt,
                          response = reward)
 
   #------------------------------------------------------------------#
@@ -406,8 +406,8 @@ setMethod(f = "summary",
   return( result )
 }
 
-setMethod(f = ".newOWL",    
-          signature = c(moPropen = "modelObj"), 
+setMethod(f = ".newOWL",
+          signature = c(moPropen = "modelObj"),
           definition = .OWL)
 
 #----------------------------------------------------------------------#
@@ -420,10 +420,10 @@ setMethod(f = ".newOWL",
 # prWgt  : propensity of treatment received                            #
 # response : vector of response                                        #
 #----------------------------------------------------------------------#
-.valueFuncOWL <- function(subset, 
-                          optTx,  
-                          txVec,  
-                          prWgt,  
+.valueFuncOWL <- function(subset,
+                          optTx,
+                          txVec,
+                          prWgt,
                           response, ...){
 
   #------------------------------------------------------------------#

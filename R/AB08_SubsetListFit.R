@@ -33,7 +33,7 @@
 
 setClass(Class = "SubsetListFit",
          slots = c("txInfo" = "TxSubset"),
-         contains = c("SubsetList", 
+         contains = c("SubsetList",
                       "OutcomeRegression",
                       "SubsetsModeled"),
          validity = .checkValidity_SubsetListFit)
@@ -53,17 +53,23 @@ setClass(Class = "SubsetListFit",
 #   returns                                                            #
 # A matrix. The estimated outcome.                                     #
 #----------------------------------------------------------------------#
-setMethod(f = ".predictAllTreatments", 
-          signature = c(object = "SubsetListFit"), 
-          definition = function(object, data, response){ 
+setMethod(f = ".predictAllTreatments",
+          signature = c(object = "SubsetListFit"),
+          definition = function(object, data, response){
+
+          	         txInfo <- .newTxInfo(fSet = .getSubsetRule(object@txInfo),
+                                              txName = .getTxName(object@txInfo),
+                                              data = data,
+                                              suppress = TRUE,
+          	                              verify = FALSE)
 
                          subsets <- .getSubsets(object@txInfo)
-                         ptsSubset <- .getPtsSubset(object@txInfo)
+                         ptsSubset <- .getPtsSubset(txInfo)
                          superSet <- .getSuperSet(object@txInfo)
                          txName <- .getTxName(object@txInfo)
 
-                         res <- matrix(data = NA, 
-                                       nrow = nrow(data), 
+                         res <- matrix(data = NA,
+                                       nrow = nrow(data),
                                        ncol = length(superSet),
                                        dimnames = list(NULL,superSet))
 
@@ -75,6 +81,7 @@ setMethod(f = ".predictAllTreatments",
                            nms <- c(nms, objName)
 
                            tst <- ptsSubset %in% objName
+                           if( !any(tst) ) next
                            df <- data[tst,,drop=FALSE]
 
                            tst2 <- which(names(subsets) %in% objName)
@@ -95,14 +102,13 @@ setMethod(f = ".predictAllTreatments",
                            }
                          }
 
-                         singletons <- .getSingleton(object@txInfo)
-
+                         singletons <- .getSingleton(txInfo)
                          if( any(singletons) ) {
                            for( i in 1L:length(subsets) ) {
                              if( names(subsets)[i] %in% nms ) next
                              tst <- ptsSubset == names(subsets)[i] & singletons
                              if( any(tst) ) {
-                               tst2 <- superSet %in% subsets[[i]]
+                               tst2 <- which(superSet %in% subsets[[i]])
                                res[tst, tst2] <- response[tst]
                              }
                            }
@@ -112,9 +118,9 @@ setMethod(f = ".predictAllTreatments",
                        } )
 
 
-setMethod(f = "predict", 
-          signature = c(object = "SubsetListFit"), 
-          definition = function(object, newdata){ 
+setMethod(f = "predict",
+          signature = c(object = "SubsetListFit"),
+          definition = function(object, newdata){
 
                          if( missing(newdata) ) {
 
@@ -126,7 +132,7 @@ setMethod(f = "predict",
                              tst <- ptsSubset %in% objName
 
                              val <- predict(object = object[[i]])
- 
+
                              res[tst] <- val
                            }
 

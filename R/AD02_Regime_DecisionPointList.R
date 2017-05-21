@@ -121,6 +121,7 @@ setMethod(f = ".predictOptimalTx",
                         newdata = "data.frame"),
           definition = function (x, newdata, dp=1L, ...){
                          if( dp > length(x) ) stop("invalid dp")
+
                          tot <- .predictOptimalTx(x@loo[[dp]], 
                                                   newdata)
                          return( tot ) 

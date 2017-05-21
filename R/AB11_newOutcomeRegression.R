@@ -4,7 +4,7 @@
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- #
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ #
 
-setGeneric(name = ".newOutcomeRegression", 
+setGeneric(name = ".newOutcomeRegression",
            def = function(moMain, moCont, txInfo, ...){
                      standardGeneric(".newOutcomeRegression")
                  })
@@ -29,16 +29,16 @@ setGeneric(name = ".newOutcomeRegression",
 # iter    : an integer                                                 #
 # suppress : T/F indicating if prints to screen are to be executed     #
 #----------------------------------------------------------------------#
-setMethod(f = ".newOutcomeRegression", 
+setMethod(f = ".newOutcomeRegression",
           signature = c(moMain = "modelObj",
                         moCont = "modelObj",
-                        txInfo = "TxInfoBasic"), 
+                        txInfo = "TxInfoBasic"),
           definition = function(moMain,
                                 moCont,
-                                txInfo, 
-                                data, 
-                                response, 
-                                iter, 
+                                txInfo,
+                                data,
+                                response,
+                                iter,
                                 suppress){
 
                          #-----------------------------------------#
@@ -46,7 +46,7 @@ setMethod(f = ".newOutcomeRegression",
                          # object must be the same.                #
                          #-----------------------------------------#
                          if( iter <= 0L ){
-                           once <- isTRUE(all.equal(solver(moMain), 
+                           once <- isTRUE(all.equal(solver(moMain),
                                                     solver(moCont)))
 
                            if(!once){
@@ -60,18 +60,18 @@ setMethod(f = ".newOutcomeRegression",
                          }
 
                          if( iter <= 0L ) {
-                           fit <- .newTypedSimpleFit(moMain = moMain, 
-                                                     moCont = moCont, 
+                           fit <- .newTypedSimpleFit(moMain = moMain,
+                                                     moCont = moCont,
                                                      txInfo = txInfo,
-                                                     data = data, 
-                                                     response = response, 
+                                                     data = data,
+                                                     response = response,
                                                      suppress = suppress)
                          } else {
-                           fit <- .newIterateFit(moMain = moMain,  
-                                                 moCont = moCont, 
-                                                 response = response,  
+                           fit <- .newIterateFit(moMain = moMain,
+                                                 moCont = moCont,
+                                                 response = response,
                                                  txInfo = txInfo,
-                                                 data = data, 
+                                                 data = data,
                                                  max.iter = iter,
                                                  suppress = suppress)
                          }
@@ -79,45 +79,45 @@ setMethod(f = ".newOutcomeRegression",
                          return(fit)
                        } )
 
-setMethod(f = ".newOutcomeRegression", 
+setMethod(f = ".newOutcomeRegression",
           signature = c(moMain = "modelObj",
                         moCont = "NULL",
-                        txInfo = "TxInfoBasic"), 
+                        txInfo = "TxInfoBasic"),
           definition = function(moMain,
                                 moCont,
-                                txInfo, 
-                                data, 
-                                response, 
-                                iter, 
+                                txInfo,
+                                data,
+                                response,
+                                iter,
                                 suppress){
 
-                         fit <- .newTypedSimpleFit(moMain = moMain, 
-                                                   moCont = moCont, 
+                         fit <- .newTypedSimpleFit(moMain = moMain,
+                                                   moCont = moCont,
                                                    txInfo = txInfo,
-                                                   data = data, 
-                                                   response = response, 
+                                                   data = data,
+                                                   response = response,
                                                    suppress = suppress)
 
                          return(fit)
                        } )
 
-setMethod(f = ".newOutcomeRegression", 
+setMethod(f = ".newOutcomeRegression",
           signature = c(moMain = "NULL",
                         moCont = "modelObj",
-                        txInfo = "TxInfoBasic"), 
+                        txInfo = "TxInfoBasic"),
           definition = function(moMain,
                                 moCont,
-                                txInfo, 
-                                data, 
-                                response, 
-                                iter, 
+                                txInfo,
+                                data,
+                                response,
+                                iter,
                                 suppress){
 
-                         fit <- .newTypedSimpleFit(moMain = moMain, 
-                                                   moCont = moCont, 
+                         fit <- .newTypedSimpleFit(moMain = moMain,
+                                                   moCont = moCont,
                                                    txInfo = txInfo,
-                                                   data = data, 
-                                                   response = response, 
+                                                   data = data,
+                                                   response = response,
                                                    suppress = suppress)
 
                          return(fit)
@@ -138,12 +138,12 @@ setMethod(f = ".newOutcomeRegression",
 # an object of class SubsetListFit containing all key results of all   #
 # regressions.                                                         #
 #----------------------------------------------------------------------#
-.subsetMEC <- function(moMain, 
-                       moCont,  
-                       txInfo,  
-                       data,  
-                       response,  
-                       iter,  
+.subsetMEC <- function(moMain,
+                       moCont,
+                       txInfo,
+                       data,
+                       response,
+                       iter,
                        suppress){
 
   res <- list()
@@ -196,7 +196,7 @@ setMethod(f = ".newOutcomeRegression",
 
   }
 
-  return( new("SubsetListFit", 
+  return( new("SubsetListFit",
               "txInfo" = txInfo,
               "loo" = res) )
 
@@ -209,12 +209,12 @@ setMethod(f = ".newOutcomeRegression",
           definition = .subsetMEC )
 
 
-.subsetME <- function(moMain, 
-                      moCont,  
-                      txInfo,  
-                      data,  
-                      response,  
-                      iter,  
+.subsetME <- function(moMain,
+                      moCont,
+                      txInfo,
+                      data,
+                      response,
+                      iter,
                       suppress){
 
   res <- list()
@@ -233,7 +233,7 @@ setMethod(f = ".newOutcomeRegression",
                                      suppress = suppress)
   }
 
-  return( new("SubsetListFit", 
+  return( new("SubsetListFit",
               "txInfo" = txInfo,
               "loo" = res) )
 
@@ -245,12 +245,12 @@ setMethod(f = ".newOutcomeRegression",
                         txInfo = "TxInfoWithSubsets"),
           definition = .subsetME)
 
-.subsetC <- function(moMain, 
-                     moCont,  
-                     txInfo,  
-                     data,  
-                     response,  
-                     iter,  
+.subsetC <- function(moMain,
+                     moCont,
+                     txInfo,
+                     data,
+                     response,
+                     iter,
                      suppress){
 
   res <- list()
@@ -269,7 +269,7 @@ setMethod(f = ".newOutcomeRegression",
                                      suppress = suppress)
   }
 
-  return( new("SubsetListFit", 
+  return( new("SubsetListFit",
               "txInfo" = txInfo,
               "loo" = res) )
 }
@@ -281,12 +281,12 @@ setMethod(f = ".newOutcomeRegression",
           definition = .subsetC )
 
 
-.newSubsetFit <- function(moMain, 
-                          moCont, 
-                          data, 
-                          response, 
-                          txInfo, 
-                          iter, 
+.newSubsetFit <- function(moMain,
+                          moCont,
+                          data,
+                          response,
+                          txInfo,
+                          iter,
                           modelSubset,
                           suppress){
 
@@ -317,8 +317,8 @@ setMethod(f = ".newOutcomeRegression",
 
   if( length(isubset) == 0L ) {
     UserError("input",
-              paste("unable to match subset", 
-                    paste(modelSubset,collapse=", "), 
+              paste("unable to match subset",
+                    paste(modelSubset,collapse=", "),
                     "to a subset defined by fSet"))
   }
 
@@ -333,7 +333,7 @@ setMethod(f = ".newOutcomeRegression",
    }
 
   if( !suppress ) {
-    cat("Fitting models for ", paste(modelSubset, collapse=" ,"), 
+    cat("Fitting models for ", paste(modelSubset, collapse=" ,"),
         "using", sum(use4fit), "patient records.\n")
   }
 
@@ -344,11 +344,11 @@ setMethod(f = ".newOutcomeRegression",
   #------------------------------------------------------------------#
   # Fit model                                                        #
   #------------------------------------------------------------------#
-  fitO <- .newOutcomeRegression(moMain = moMain, 
-                                moCont = moCont, 
+  fitO <- .newOutcomeRegression(moMain = moMain,
+                                moCont = moCont,
                                 txInfo = txTemp,
-                                data = data[use4fit,,drop=FALSE], 
-                                response = response[use4fit], 
+                                data = data[use4fit,,drop=FALSE],
+                                response = response[use4fit],
                                 iter = iter,
                                 suppress = suppress)
 
@@ -369,10 +369,10 @@ setMethod(f = ".newOutcomeRegression",
 #----------------------------------------------------------------------#
 .qLearnDP1 <- function(moMain,
                        moCont,
-                       txInfo, 
-                       data, 
-                       response, 
-                       iter, 
+                       txInfo,
+                       data,
+                       response,
+                       iter,
                        suppress) {
   #------------------------------------------------------------------#
   # The number decision points.                                      #
@@ -385,12 +385,12 @@ setMethod(f = ".newOutcomeRegression",
   #------------------------------------------------------------------#
   # Obtain outcome regression for final dp                           #
   #------------------------------------------------------------------#
-  QfitObj[[nDP]] <- .newOutcomeRegression(moMain = moMain[[nDP]], 
-                                          moCont = moCont[[nDP]], 
-                                          response = response, 
-                                          txInfo = txInfo[[nDP]], 
+  QfitObj[[nDP]] <- .newOutcomeRegression(moMain = moMain[[nDP]],
+                                          moCont = moCont[[nDP]],
+                                          response = response,
+                                          txInfo = txInfo[[nDP]],
                                           data = data,
-                                          iter = iter, 
+                                          iter = iter,
                                           suppress = suppress)
 
   vals <- .predictAllTreatments(object = QfitObj[[nDP]],
@@ -398,9 +398,9 @@ setMethod(f = ".newOutcomeRegression",
 
   takeResp <- apply(X = vals$vals, MARGIN = 1L, FUN = function(x){all(is.na(x))})
   hold <- response
-  hold[!takeResp] <- apply(X = vals$vals[!takeResp,,drop=FALSE], 
-                           MARGIN = 1L,  
-                           FUN = max,  
+  hold[!takeResp] <- apply(X = vals$vals[!takeResp,,drop=FALSE],
+                           MARGIN = 1L,
+                           FUN = max,
                            na.rm=TRUE)
   response <- hold
   #------------------------------------------------------------------#
@@ -411,21 +411,21 @@ setMethod(f = ".newOutcomeRegression",
     #--------------------------------------------------------------#
     # Obtain outcome regression                                    #
     #--------------------------------------------------------------#
-    QfitObj[[j]] <- .newOutcomeRegression(moMain = moMain[[j]], 
-                                          moCont = moCont[[j]], 
-                                          response = response, 
-                                          txInfo = txInfo[[j]], 
+    QfitObj[[j]] <- .newOutcomeRegression(moMain = moMain[[j]],
+                                          moCont = moCont[[j]],
+                                          response = response,
+                                          txInfo = txInfo[[j]],
                                           data = data,
-                                          iter = iter, 
+                                          iter = iter,
                                           suppress = suppress)
 
     vals <- .predictAllTreatments(object = QfitObj[[j]],
                                   data = data, response = response)
 
     hold <- response
-    hold[!takeResp] <- apply(X = vals$vals[!takeResp,,drop=FALSE], 
-                             MARGIN = 1L,  
-                             FUN = max,  
+    hold[!takeResp] <- apply(X = vals$vals[!takeResp,,drop=FALSE],
+                             MARGIN = 1L,
+                             FUN = max,
                              na.rm=TRUE)
     response <- hold
 
@@ -449,10 +449,10 @@ setMethod(f = ".newOutcomeRegression",
 #----------------------------------------------------------------------#
 .qLearnDP <- function(moMain,
                       moCont,
-                      txInfo, 
-                      data, 
-                      response, 
-                      iter, 
+                      txInfo,
+                      data,
+                      response,
+                      iter,
                       suppress, ...) {
 
   QfitObj <- .qLearnDP1(moMain = moMain,
@@ -471,22 +471,22 @@ setMethod(f = ".newOutcomeRegression",
   return(result)
 
 }
-setMethod(f = ".newOutcomeRegression", 
+setMethod(f = ".newOutcomeRegression",
           signature = c(moMain = "ModelObj_DecisionPointList",
                         moCont = "ModelObj_DecisionPointList",
-                        txInfo   = "TxInfoList"), 
+                        txInfo   = "TxInfoList"),
           definition = .qLearnDP )
 
-setMethod(f = ".newOutcomeRegression", 
+setMethod(f = ".newOutcomeRegression",
           signature = c(moMain = "ModelObj_DecisionPointList",
                         moCont = NULL,
-                        txInfo   = "TxInfoList"), 
+                        txInfo   = "TxInfoList"),
           definition = .qLearnDP )
 
-setMethod(f = ".newOutcomeRegression", 
+setMethod(f = ".newOutcomeRegression",
           signature = c(moMain = "NULL",
                         moCont = "ModelObj_DecisionPointList",
-                        txInfo   = "TxInfoList"), 
+                        txInfo   = "TxInfoList"),
           definition = .qLearnDP )
 
 #----------------------------------------------------------------------#
@@ -503,10 +503,10 @@ setMethod(f = ".newOutcomeRegression",
 #----------------------------------------------------------------------#
 .qLearnSSDP <- function(moMain,
                         moCont,
-                        txInfo, 
-                        data, 
-                        response, 
-                        iter, 
+                        txInfo,
+                        data,
+                        response,
+                        iter,
                         suppress, ...) {
 
 
@@ -525,20 +525,20 @@ setMethod(f = ".newOutcomeRegression",
 
 }
 
-setMethod(f = ".newOutcomeRegression", 
+setMethod(f = ".newOutcomeRegression",
           signature = c(moMain = "ModelObj_SubsetList_DecisionPointList",
                         moCont = "ModelObj_SubsetList_DecisionPointList",
-                        txInfo   = "TxInfoList"), 
+                        txInfo   = "TxInfoList"),
           definition = .qLearnSSDP )
 
-setMethod(f = ".newOutcomeRegression", 
+setMethod(f = ".newOutcomeRegression",
           signature = c(moMain = "ModelObj_SubsetList_DecisionPointList",
                         moCont = NULL,
-                        txInfo   = "TxInfoList"), 
+                        txInfo   = "TxInfoList"),
           definition = .qLearnSSDP )
 
-setMethod(f = ".newOutcomeRegression", 
+setMethod(f = ".newOutcomeRegression",
           signature = c(moMain = "NULL",
                         moCont = "ModelObj_SubsetList_DecisionPointList",
-                        txInfo   = "TxInfoList"), 
+                        txInfo   = "TxInfoList"),
           definition = .qLearnSSDP )

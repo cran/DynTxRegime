@@ -142,7 +142,6 @@ setMethod(f = ".validTx",
           signature = c(object = "TxSubset",
                         txVec = "ANY"),
           definition = function(object, txVec) {
-
                          for( i in 1L:length(object@subsets) ) {
                            inss <- object@ptsSubset %in% names(object@subsets)[i]
                            tst <- txVec[inss] %in% object@subsets[[i]]

@@ -16,8 +16,8 @@ and efficient augmentation and relaxation learning (EARL).
 \tabular{ll}{
 Package: \tab DynTxRegime\cr
 Type: \tab Package\cr
-Version: \tab 3.0\cr
-Date: \tab 2017-05-12\cr
+Version: \tab 3.01\cr
+Date: \tab 2017-05-21\cr
 License: \tab GPL-2\cr
 Depends:  \tab methods, modelObj, stats\cr
 Suggests:  \tab MASS, rpart, nnet\cr

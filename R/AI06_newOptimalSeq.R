@@ -727,7 +727,7 @@ setMethod(f = ".newOptimalSeq",
     #--------------------------------------------------------------#
     # Verify that value returned by regime is allowed by fSet      #
     #--------------------------------------------------------------#
-    .validTx(txInfo[[i]], optTx)
+#    .validTx(txInfo[[i]], optTx)
 
     #--------------------------------------------------------------#
     # Retrieve treatment variable column header                    #

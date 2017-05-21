@@ -25,7 +25,7 @@
     errors <- c(errors,msg)
   }
 
-  if( nrow(object@decisionFunc) == 0L || 
+  if( nrow(object@decisionFunc) == 0L ||
       ncol(object@decisionFunc) == 0L ) {
     msg <- "decisionFunc not defined properly"
     errors <- c(errors, msg)
@@ -52,16 +52,16 @@ setClass(Class = "QLearn",
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ #
 
 #----------------------------------------------------------------------#
-# Retrieve a string describing the method                              # 
+# Retrieve a string describing the method                              #
 #----------------------------------------------------------------------#
 #   params                                                             #
 # object : an object of class QLearn                                   #
 #   returns                                                            #
 # a string describing method                                           #
 #----------------------------------------------------------------------#
-setMethod(f = "DTRstep", 
-          signature = c(object = "QLearn"), 
-          definition = function(object){ 
+setMethod(f = "DTRstep",
+          signature = c(object = "QLearn"),
+          definition = function(object){
                          res <- paste("Q-Learning: step", object@step)
                          return( res )
                        } )
@@ -79,17 +79,17 @@ setMethod(f = "DTRstep",
 # and the q-functions at each treatment.                               #
 #----------------------------------------------------------------------#
 setMethod(f = "optTx",
-          signature = c(x = "QLearn", 
+          signature = c(x = "QLearn",
                         newdata = "data.frame"),
           definition = function(x, newdata,...) {
 
-                         qf <- .predictAllTreatments(object = x@outcome, 
+          	               qf <- .predictAllTreatments(object = x@outcome,
                                                      data = newdata,
                                                      response = rep(1/0,nrow(newdata)))
 
 
-                         single <- apply(X = qf$vals, 
-                                         MARGIN = 1L,  
+                         single <- apply(X = qf$vals,
+                                         MARGIN = 1L,
                                          FUN = function(x){any(is.infinite(x))})
 
                          opt <- apply(X = qf$vals, MARGIN = 1L, FUN = which.max)
@@ -114,7 +114,7 @@ setMethod(f = "optTx",
 # and the q-functions at each treatment.                               #
 #----------------------------------------------------------------------#
 setMethod(f = "optTx",
-          signature = c(x = "QLearn", 
+          signature = c(x = "QLearn",
                         newdata = "missing"),
           definition = function(x, newdata,...) {
 
@@ -123,7 +123,7 @@ setMethod(f = "optTx",
                        } )
 
 #----------------------------------------------------------------------#
-# Print the key results of method.                                     # 
+# Print the key results of method.                                     #
 #----------------------------------------------------------------------#
 #   params                                                             #
 # x : an object of class QLearn                                        #
@@ -137,7 +137,7 @@ setMethod(f = "print",
           } )
 
 #----------------------------------------------------------------------#
-# Show the key results of method.                                      # 
+# Show the key results of method.                                      #
 #----------------------------------------------------------------------#
 #   params                                                             #
 # object : an object of class QLearn                                   #

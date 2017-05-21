@@ -1,4 +1,4 @@
-setGeneric(name = ".newBOWL", 
+setGeneric(name = ".newBOWL",
            def = function(moPropen, regime, BOWLObj, fSet, ...){
                    standardGeneric(".newBOWL")
                  } )
@@ -22,17 +22,17 @@ setGeneric(name = ".newBOWL",
 #   returns                                                            #
 # an BOWL object                                                       #
 #----------------------------------------------------------------------#
-.BOWLFirst <- function(moPropen, 
-                       regime,  
-                       BOWLObj,  
+.BOWLFirst <- function(moPropen,
+                       regime,
+                       BOWLObj,
                        fSet,
-                       data,  
-                       reward,  
+                       data,
+                       reward,
                        txName,
-                       cvFolds,  
-                       lambdas,  
-                       kernel,  
-                       kparam,  
+                       cvFolds,
+                       lambdas,
+                       kernel,
+                       kparam,
                        suppress, ...) {
 
   #------------------------------------------------------------------#
@@ -45,7 +45,7 @@ setGeneric(name = ".newBOWL",
   #------------------------------------------------------------------#
   shift <- min(reward)
   holdReward <- reward
-  if( shift < 0.0 ) {
+  if( shift <= 0.0 ) {
     shift <- shift - 0.001
     reward <- reward - shift
     shift <- -shift
@@ -75,8 +75,8 @@ setGeneric(name = ".newBOWL",
     cat("Step 1 of BOWL Algorithm\n")
   }
 
-  result <- .BOWLAlgorithm(moPropen = moPropen,  
-                           data = data, 
+  result <- .BOWLAlgorithm(moPropen = moPropen,
+                           data = data,
                            txName = txName,
                            regime = regime,
                            ind = ind,
@@ -97,39 +97,39 @@ setGeneric(name = ".newBOWL",
 
 }
 
-setMethod(f = ".newBOWL",    
-          signature = c(moPropen = "ModelObj_SubsetList",  
+setMethod(f = ".newBOWL",
+          signature = c(moPropen = "ModelObj_SubsetList",
                         regime   = "formula",
                         BOWLObj  = "NULL",
-                        fSet     = "function"), 
+                        fSet     = "function"),
           definition = .BOWLFirst)
 
-setMethod(f = ".newBOWL",    
-          signature = c(moPropen = "modelObj",  
+setMethod(f = ".newBOWL",
+          signature = c(moPropen = "modelObj",
                         regime   = "formula",
                         BOWLObj  = "NULL",
-                        fSet     = "NULL"), 
+                        fSet     = "NULL"),
           definition = .BOWLFirst)
 
-setMethod(f = ".newBOWL",    
-          signature = c(moPropen = "modelObj",  
+setMethod(f = ".newBOWL",
+          signature = c(moPropen = "modelObj",
                         regime   = "formula",
                         BOWLObj  = "NULL",
-                        fSet     = "function"), 
+                        fSet     = "function"),
           definition = .BOWLFirst)
 
-setMethod(f = ".newBOWL",    
-          signature = c(moPropen = "ModelObj_SubsetList",  
+setMethod(f = ".newBOWL",
+          signature = c(moPropen = "ModelObj_SubsetList",
                         regime   = "list",
                         BOWLObj  = "NULL",
-                        fSet     = "function"), 
+                        fSet     = "function"),
           definition = .BOWLFirst)
 
-setMethod(f = ".newBOWL",    
-          signature = c(moPropen = "modelObj",  
+setMethod(f = ".newBOWL",
+          signature = c(moPropen = "modelObj",
                         regime   = "list",
                         BOWLObj  = "NULL",
-                        fSet     = "function"), 
+                        fSet     = "function"),
           definition = .BOWLFirst)
 
 
@@ -153,17 +153,17 @@ setMethod(f = ".newBOWL",
 #   returns                                                            #
 # an BOWL object                                                       #
 #----------------------------------------------------------------------#
-.BOWLNext <- function(moPropen, 
-                      regime, 
-                      BOWLObj, 
+.BOWLNext <- function(moPropen,
+                      regime,
+                      BOWLObj,
                       fSet,
-                      data, 
-                      reward, 
+                      data,
+                      reward,
                       txName,
-                      cvFolds, 
-                      lambdas, 
-                      kernel, 
-                      kparam, 
+                      cvFolds,
+                      lambdas,
+                      kernel,
+                      kparam,
                       suppress) {
 
   #------------------------------------------------------------------#
@@ -185,7 +185,7 @@ setMethod(f = ".newBOWL",
   #------------------------------------------------------------------#
   shift <- min(sumR)
   holdReward <- sumR
-  if( shift < 0.0 ) {
+  if( shift <= 0.0 ) {
     shift <- shift - 0.001
     sumR <- sumR - shift
     shift <- -shift
@@ -210,8 +210,8 @@ setMethod(f = ".newBOWL",
     cat("Step", nStep, "of BOWL Algorithm\n")
   }
 
-  result <- .BOWLAlgorithm(moPropen = moPropen,  
-                           data = data, 
+  result <- .BOWLAlgorithm(moPropen = moPropen,
+                           data = data,
                            txName = txName,
                            regime = regime,
                            ind = ind,
@@ -232,54 +232,54 @@ setMethod(f = ".newBOWL",
 
 }
 
-setMethod(f = ".newBOWL",    
-          signature = c(moPropen = "ModelObj_SubsetList",  
+setMethod(f = ".newBOWL",
+          signature = c(moPropen = "ModelObj_SubsetList",
                         regime   = "formula",
                         BOWLObj  = "BOWL",
-                        fSet     = "function"), 
+                        fSet     = "function"),
           definition = .BOWLNext)
 
-setMethod(f = ".newBOWL",    
-          signature = c(moPropen = "modelObj",  
+setMethod(f = ".newBOWL",
+          signature = c(moPropen = "modelObj",
                         regime   = "formula",
                         BOWLObj  = "BOWL",
-                        fSet     = "NULL"), 
+                        fSet     = "NULL"),
           definition = .BOWLNext)
 
-setMethod(f = ".newBOWL",    
-          signature = c(moPropen = "modelObj",  
+setMethod(f = ".newBOWL",
+          signature = c(moPropen = "modelObj",
                         regime   = "formula",
                         BOWLObj  = "BOWL",
-                        fSet     = "function"), 
+                        fSet     = "function"),
           definition = .BOWLNext)
 
-setMethod(f = ".newBOWL",    
-          signature = c(moPropen = "ModelObj_SubsetList",  
+setMethod(f = ".newBOWL",
+          signature = c(moPropen = "ModelObj_SubsetList",
                         regime   = "list",
                         BOWLObj  = "BOWL",
-                        fSet     = "function"), 
+                        fSet     = "function"),
           definition = .BOWLNext)
 
-setMethod(f = ".newBOWL",    
-          signature = c(moPropen = "modelObj",  
+setMethod(f = ".newBOWL",
+          signature = c(moPropen = "modelObj",
                         regime   = "list",
                         BOWLObj  = "BOWL",
-                        fSet     = "function"), 
+                        fSet     = "function"),
           definition = .BOWLNext)
 
-.BOWLAlgorithm <- function(moPropen, 
-                           data, 
-                           txName, 
+.BOWLAlgorithm <- function(moPropen,
+                           data,
+                           txName,
                            regime,
-                           ind, 
-                           sumR, 
-                           prodPr, 
-                           nStep, 
-                           cvFolds, 
+                           ind,
+                           sumR,
+                           prodPr,
+                           nStep,
+                           cvFolds,
                            lambdas,
-                           kernel, 
-                           kparam, 
-                           fSet, 
+                           kernel,
+                           kparam,
+                           fSet,
                            suppress) {
 
   #------------------------------------------------------------------#
@@ -290,16 +290,16 @@ setMethod(f = ".newBOWL",
   #------------------------------------------------------------------#
   # Process treatment and feasibility input                          #
   #------------------------------------------------------------------#
-  txInfo <- .newTxInfo(fSet = fSet, 
-                       txName = txName, 
+  txInfo <- .newTxInfo(fSet = fSet,
+                       txName = txName,
                        data = data,
                        suppress = suppress)
 
   #------------------------------------------------------------------#
   # Fit propensity models                                            #
   #------------------------------------------------------------------#
-  propen <- .newPropensityRegression(moPropen = moPropen, 
-                                     txInfo = txInfo, 
+  propen <- .newPropensityRegression(moPropen = moPropen,
+                                     txInfo = txInfo,
                                      data = data,
                                      suppress = suppress)
 
@@ -325,11 +325,11 @@ setMethod(f = ".newBOWL",
   #------------------------------------------------------------------#
   # Perform weighted learning                                        #
   #------------------------------------------------------------------#
-  result <- .newBOWLOptimization(regime = regime, 
-                                 txInfo = txInfo, 
-                                 ind = ind, 
-                                 prWgt = prodPr, 
-                                 response = sumR, 
+  result <- .newBOWLOptimization(regime = regime,
+                                 txInfo = txInfo,
+                                 ind = ind,
+                                 prWgt = prodPr,
+                                 response = sumR,
                                  txVec = txVec,
                                  data = data,
                                  kernel = kernel,
@@ -356,10 +356,10 @@ setMethod(f = ".newBOWL",
   #------------------------------------------------------------------#
   ind <- ind & ind2
 
-  value <- .valueFuncOWL(subset = 1L:ns, 
-                         optTx = optVec, 
+  value <- .valueFuncOWL(subset = 1L:ns,
+                         optTx = optVec,
                          txVec = txVec,
-                         prWgt = prodPr, 
+                         prWgt = prodPr,
                          response = sumR*ind)
 
   optVec <- ( optVec + 1 ) / 2

@@ -139,7 +139,7 @@ setMethod(f = ".predictOptimalTx",
                          #-------------------------------------------#
                          reg.g <- do.call(what = x@func, args = argList)
 
-                         return( reg.g )
+                         return( drop(reg.g) )
                        } )
 
 #----------------------------------------------------------------------#

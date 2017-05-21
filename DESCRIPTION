@@ -1,8 +1,8 @@
 Package: DynTxRegime
 Type: Package
 Title: Methods for Estimating Optimal Dynamic Treatment Regimes
-Version: 3.0
-Date: 2017-04-15
+Version: 3.01
+Date: 2017-04-21
 Author: S. T. Holloway, E. B. Laber, K. A. Linn, B. Zhang, M. Davidian, and A. A. Tsiatis
 Maintainer: Shannon T. Holloway <sthollow@ncsu.edu>
 Description: Methods to estimate dynamic treatment regimes using Interactive Q-Learning, Q-Learning, weighted learning, and value-search methods based on Augmented Inverse Probability Weighted Estimators and Inverse Probability Weighted Estimators.
@@ -11,6 +11,6 @@ Depends: methods, modelObj, stats
 Suggests: MASS, rpart, nnet
 Imports: kernlab, rgenoud, dfoptim
 NeedsCompilation: no
-Packaged: 2017-05-15 20:55:13 UTC; sthollow
+Packaged: 2017-05-21 21:18:07 UTC; sthollow
 Repository: CRAN
-Date/Publication: 2017-05-15 23:32:14 UTC
+Date/Publication: 2017-05-21 23:04:11 UTC

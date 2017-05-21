@@ -1,4 +1,4 @@
-setGeneric(name = ".newQLearn", 
+setGeneric(name = ".newQLearn",
            def = function(moMain, moCont, fSet, response, ...){
                    standardGeneric(".newQLearn")
                  })
@@ -19,26 +19,26 @@ setGeneric(name = ".newQLearn",
 #   returns                                                            #
 # an object of class QLearn.                                           #
 #----------------------------------------------------------------------#
-.firstQLearn <- function(moMain, 
-                         moCont, 
-                         fSet, 
-                         response, 
+.firstQLearn <- function(moMain,
+                         moCont,
+                         fSet,
+                         response,
                          data,
-                         txName, 
-                         iter, 
+                         txName,
+                         iter,
                          suppress){
 
   if( !suppress ) cat("First step of the Q-Learning Algorithm.\n")
 
   step <- 1L
 
-  result <- .qLearn(moMain = moMain, 
-                    moCont = moCont,  
-                    data = data,  
-                    response = response, 
-                    txName = txName,  
-                    fSet = fSet,  
-                    iter = iter,  
+  result <- .qLearn(moMain = moMain,
+                    moCont = moCont,
+                    data = data,
+                    response = response,
+                    txName = txName,
+                    fSet = fSet,
+                    iter = iter,
                     step = step,
                     suppress = suppress)
 
@@ -46,79 +46,79 @@ setGeneric(name = ".newQLearn",
 
 }
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain   = "modelObj",
                         moCont   = "modelObj",
                         fSet     = "function",
-                        response = "vector"), 
+                        response = "vector"),
           definition = .firstQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain   = "modelObj",
                         moCont   = "NULL",
                         fSet     = "function",
-                        response = "vector"), 
+                        response = "vector"),
           definition = .firstQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain   = "NULL",
                         moCont   = "modelObj",
                         fSet     = "function",
-                        response = "vector"), 
+                        response = "vector"),
           definition = .firstQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain   = "modelObj",
                         moCont   = "modelObj",
                         fSet     = "NULL",
-                        response = "vector"), 
+                        response = "vector"),
           definition = .firstQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain   = "modelObj",
                         moCont   = "NULL",
                         fSet     = "NULL",
-                        response = "vector"), 
+                        response = "vector"),
           definition = .firstQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain   = "NULL",
                         moCont   = "modelObj",
                         fSet     = "NULL",
-                        response = "vector"), 
+                        response = "vector"),
           definition = .firstQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain   = "ModelObj_SubsetList",
                         moCont   = "ModelObj_SubsetList",
                         fSet     = "function",
-                        response = "vector"), 
+                        response = "vector"),
           definition = .firstQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain   = "ModelObj_SubsetList",
                         moCont   = "NULL",
                         fSet     = "function",
-                        response = "vector"), 
+                        response = "vector"),
           definition = .firstQLearn)
 
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain   = "NULL",
                         moCont   = "ModelObj_SubsetList",
                         fSet     = "function",
-                        response = "vector"), 
+                        response = "vector"),
           definition = .firstQLearn)
 
 
 # Q-Learning Method for Single Decision Point non-final dp
-.nextQLearn <- function(moMain, 
-                        moCont, 
-                        fSet, 
-                        response, 
+.nextQLearn <- function(moMain,
+                        moCont,
+                        fSet,
+                        response,
                         data,
-                        txName, 
-                        iter, 
+                        txName,
+                        iter,
                         suppress){
 
   step <- response@step + 1L
@@ -133,13 +133,13 @@ setMethod(f = ".newQLearn",
                     MARGIN = 1L,
                     FUN = max, na.rm = TRUE)
 
-  result <- .qLearn(moMain = moMain, 
-                    moCont = moCont,  
-                    data = data,  
-                    response = response, 
-                    txName = txName,  
-                    fSet = fSet,  
-                    iter = iter,  
+  result <- .qLearn(moMain = moMain,
+                    moCont = moCont,
+                    data = data,
+                    response = response,
+                    txName = txName,
+                    fSet = fSet,
+                    iter = iter,
                     step = step,
                     suppress = suppress)
 
@@ -147,67 +147,67 @@ setMethod(f = ".newQLearn",
 
 }
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain = "modelObj",
                         moCont = "modelObj",
                         fSet   = "function",
-                        response = "QLearn"), 
+                        response = "QLearn"),
           definition = .nextQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain = "modelObj",
                         moCont = "NULL",
                         fSet   = "function",
-                        response = "QLearn"), 
+                        response = "QLearn"),
           definition = .nextQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain = "NULL",
                         moCont = "modelObj",
                         fSet = "function",
-                        response = "QLearn"), 
+                        response = "QLearn"),
           definition = .nextQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain = "modelObj",
                         moCont = "modelObj",
                         fSet   = "NULL",
-                        response = "QLearn"), 
+                        response = "QLearn"),
           definition = .nextQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain = "modelObj",
                         moCont = "NULL",
                         fSet   = "NULL",
-                        response = "QLearn"), 
+                        response = "QLearn"),
           definition = .nextQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain = "NULL",
                         moCont = "modelObj",
                         fSet = "NULL",
-                        response = "QLearn"), 
+                        response = "QLearn"),
           definition = .nextQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain = "ModelObj_SubsetList",
                         moCont = "ModelObj_SubsetList",
                         fSet = "function",
-                        response = "QLearn"), 
+                        response = "QLearn"),
           definition = .nextQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain = "ModelObj_SubsetList",
                         moCont = "NULL",
                         fSet = "function",
-                        response = "QLearn"), 
+                        response = "QLearn"),
           definition = .nextQLearn)
 
-setMethod(f = ".newQLearn",    
+setMethod(f = ".newQLearn",
           signature = c(moMain = "NULL",
                         moCont = "ModelObj_SubsetList",
                         fSet = "function",
-                        response = "QLearn"), 
+                        response = "QLearn"),
           definition = .nextQLearn)
 
 #----------------------------------------------------------------------#
@@ -227,25 +227,25 @@ setMethod(f = ".newQLearn",
 #   returns                                                            #
 # an object of class QLearn.                                           #
 #----------------------------------------------------------------------#
-.qLearn <- function(moMain, moCont, data, response, 
+.qLearn <- function(moMain, moCont, data, response,
                     txName, fSet, iter, step, suppress){
 
   #------------------------------------------------------------------#
   # Generate tx information for calculation.                         #
   #------------------------------------------------------------------#
-  txInfo <- .newTxInfo(fSet = fSet, 
-                       txName = txName,   
-                       data = data, 
+  txInfo <- .newTxInfo(fSet = fSet,
+                       txName = txName,
+                       data = data,
                        suppress = suppress)
 
   #------------------------------------------------------------------#
   # Outcome regression analysis.                                     #
   #------------------------------------------------------------------#
-  est <- .newOutcomeRegression(moMain = moMain, 
+  est <- .newOutcomeRegression(moMain = moMain,
                                moCont = moCont,
-                               data = data, 
-                               response = response, 
-                               iter = iter, 
+                               data = data,
+                               response = response,
+                               iter = iter,
                                txInfo = txInfo,
                                suppress = suppress)
 
@@ -253,7 +253,7 @@ setMethod(f = ".newQLearn",
   # Retrieve Q-Functions at each treatment                           #
   #------------------------------------------------------------------#
   qf <- .predictAllTreatments(object = est, data = data, response = response)
-
+  tst <- apply(qf$vals,1,function(x){all(is.na(x))})
   #------------------------------------------------------------------#
   # Determine optimal treatment in terms of original tx variable     #
   #------------------------------------------------------------------#
@@ -267,7 +267,7 @@ setMethod(f = ".newQLearn",
 
   if( !suppress ) cat("Estimated value:", val, "\n")
 
-  result <- new("QLearn", 
+  result <- new("QLearn",
                 "step"           = step,
                 "decisionFunc"   = qf$vals,
                 "outcome"        = est,
