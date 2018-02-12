@@ -203,7 +203,12 @@ setMethod(f = "summary",
 
   if( !suppress ) {
     cat("\nOptimization results\n")
-    print(optimResults)
+    cat("primal\n")
+    print(optimResults@primal)
+    cat("dual\n")
+    print(optimResults@dual)
+    cat("how\n")
+    print(optimResults@how)
   }
 
   res <- new("OWLOptim",

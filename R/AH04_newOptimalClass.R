@@ -132,7 +132,8 @@ setMethod(f = ".newOptimalClass",
   # Add weights to formal arguments of classification method         #
   #------------------------------------------------------------------#
   cArgs <- solverArgs(moClass)
-  cArgs[[ "weights" ]] <- norm.weights
+  cArgs[[ "weights" ]] <- quote(wgt)
+  data$wgt <- norm.weights
   solverArgs(moClass) <- cArgs
 
   #------------------------------------------------------------------#

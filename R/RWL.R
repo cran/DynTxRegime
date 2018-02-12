@@ -136,6 +136,10 @@ rwl <- function(...,
   # Treatment vector coded as -1.0/1.0                               #
   #------------------------------------------------------------------#
   txVec <- .checkBinaryTx(txName, data)
+  if( !isTRUE(all.equal(txVec, data[,txName])) ) {
+    cat("Treatment variable converted to {-1,1}\n")
+    data[,txName] <- as.integer(round(txVec,0))
+  }
 
   #------------------------------------------------------------------#
   # regime must be a formula.                                        #

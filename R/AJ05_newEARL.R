@@ -32,6 +32,8 @@ setGeneric(name = ".newEARL",
                       txVec,
                       suppress,...){
 
+  if( !suppress ) cat("Efficient Augmentation and Relaxation Learning - IPWE\n")
+
   #------------------------------------------------------------------#
   # Obtain model matrix for decision rule                            #
   #------------------------------------------------------------------#
@@ -181,6 +183,8 @@ setMethod(f = ".newEARL",
                        txVec,
                        guess,
                        suppress){
+
+  if( !suppress ) cat("Efficient Augmentation and Relaxation Learning - AIPWE\n")
 
   #------------------------------------------------------------------#
   # Obtain model matrix for decision function.                       #

@@ -56,5 +56,8 @@
     UserError("input", "Kernel is not recognized.")
   }
 
+  if( !is.matrix(Kern) ) Kern <- matrix(Kern, nrow = nrow(X1))
+  if( nrow(Kern) != nrow(X1) ) Kern <- t(Kern)
+
   return(Kern)
 }

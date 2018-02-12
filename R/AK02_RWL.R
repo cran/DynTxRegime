@@ -255,6 +255,8 @@ setMethod(f = "summary",
                  cvFolds, kernel, kparam, responseType,
                  txVec, guess, suppress) { 
 
+  if( !suppress ) cat("Residual Weighted Learning\n")
+
   #------------------------------------------------------------------#
   # Obtain model matrix for decision function                        #
   #------------------------------------------------------------------#

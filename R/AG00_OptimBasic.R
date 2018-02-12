@@ -35,7 +35,14 @@ setMethod(f = "optimObj",
           signature = c(object="OptimBasic"),
           definition = function(object, ...) { 
                          res <- list()
-                         res[[ "optim" ]]   <- object@optim
+                         if( is(object@optim, 'ipop') ) {
+                           res[[ "optim" ]] <- list(
+                             "primal" = object@optim@primal,
+                             "dual" = object@optim@dual,
+                             "how" = object@optim@how)
+                         } else {
+                           res[[ "optim" ]] <- object@optim
+                         }
                          res[[ "lambda" ]]  <- object@lambda
                          return( res )  
                        } )
@@ -81,7 +88,15 @@ setMethod(f = "summary",
           definition = function(object, ...){
                          res <- list()
                          res[[ "lambda" ]]  <- object@lambda
-                         res[[ "optim" ]] <- object@optim
+
+                         if( is(object@optim, 'ipop') ) {
+                           res[[ "optim" ]] <- list(
+                             "primal" = object@optim@primal,
+                             "dual" = object@optim@dual,
+                             "how" = object@optim@how)
+                         } else {
+                           res[[ "optim" ]] <- object@optim
+                         }
                          return(res)
                        } )
 

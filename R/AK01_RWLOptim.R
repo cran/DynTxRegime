@@ -99,6 +99,7 @@ setMethod(f = ".predictOptimalTx",
                          # Calculate decision function               #
                          #-------------------------------------------#
                          fx <- colSums(x@optim$par[-1L] * kern) - x@optim$par[1L]
+
                          names(fx) <- NULL
 
                          #-------------------------------------------#
@@ -115,7 +116,9 @@ setMethod(f = ".predictOptimalTx",
           signature = c(x = "RWLOptim", 
                         newdata = "data.frame"),
           definition = function (x, newdata,...){
-                         return(.predictOptimalTx(x, data.matrix(newdata)))
+                         newdata2 <- data.matrix(newdata)
+                         if( !is.matrix(newdata2) ) newdata2 <- matrix(newdata2,nrow=nrow(newdata))
+                         return(.predictOptimalTx(x, newdata2))
                        } )
 
 #----------------------------------------------------------------------#
