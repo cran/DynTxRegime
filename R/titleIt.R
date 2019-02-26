@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------#
 .titleIt <- function(argList, nm) {
 
-  if( is(argList[[ "main" ]], "NULL") ) {
+  if (is.null(x = argList[[ "main" ]])) {
     argList[[ "main" ]] <- nm
   } else {
     argList[[ "main" ]] <- paste(argList[[ "main" ]], 

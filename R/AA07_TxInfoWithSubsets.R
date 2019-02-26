@@ -1,4 +1,0 @@
-setClass(Class = "TxInfoWithSubsets")
-
-          
-

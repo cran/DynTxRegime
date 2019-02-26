@@ -1,8 +1,8 @@
 Package: DynTxRegime
 Type: Package
 Title: Methods for Estimating Optimal Dynamic Treatment Regimes
-Version: 3.2
-Date: 2018-02-10
+Version: 4.0
+Date: 2019-2-26
 Author: S. T. Holloway, E. B. Laber, K. A. Linn, B. Zhang, M. Davidian, and A. A. Tsiatis
 Maintainer: Shannon T. Holloway <sthollow@ncsu.edu>
 Description: Methods to estimate dynamic treatment regimes using Interactive Q-Learning, Q-Learning, weighted learning, and value-search methods based on Augmented Inverse Probability Weighted Estimators and Inverse Probability Weighted Estimators.
@@ -12,5 +12,44 @@ Suggests: MASS, rpart, nnet
 Imports: kernlab, rgenoud, dfoptim
 NeedsCompilation: no
 Repository: CRAN
-Packaged: 2018-02-12 16:22:43 UTC; sthollow
-Date/Publication: 2018-02-12 20:31:33 UTC
+Encoding: UTF-8
+RoxygenNote: 6.1.1
+Collate: 'A_generics.R' 'A_List.R' 'A_DecisionPointList.R'
+        'A_OptimalInfo.R' 'A_OptimalObj.R' 'A_DynTxRegime.R'
+        'A_ModelObjSubset.R' 'A_SubsetList.R' 'A_ModelObj_SubsetList.R'
+        'A_ModelObj_DecisionPointList.R' 'A_newModelObjSubset.R'
+        'B_TxInfoBasic.R' 'B_TxInfoFactor.R' 'B_TxInfoInteger.R'
+        'B_TxObj.R' 'B_TxInfoNoSubsets.R' 'B_TxSubset.R'
+        'B_TxSubsetInteger.R' 'B_TxSubsetFactor.R'
+        'B_TxInfoWithSubsets.R' 'B_TxInfoList.R' 'C_TypedFit.R'
+        'C_TypedFit_SubsetList.R' 'C_TypedFit_fSet.R' 'C_TypedFitObj.R'
+        'D_OutcomeNoFit.R' 'D_newModel.R' 'D_OutcomeSimpleFit.R'
+        'D_OutcomeSimpleFit_fSet.R' 'D_OutcomeIterateFit.R'
+        'D_OutcomeSimpleFit_SubsetList.R' 'D_OutcomeObj.R'
+        'E_class_QLearn.R' 'E_class_IQLearnSS.R' 'E_class_IQLearnFS.R'
+        'E_class_IQLearnFS_C.R' 'E_class_IQLearnFS_ME.R'
+        'E_class_IQLearnFS_VHet.R' 'E_iqLearnFSC.R' 'E_iqLearnFSM.R'
+        'E_iqLearnFSV.R' 'E_iqLearnSS.R' 'E_qLearn.R'
+        'F_PropensityFit.R' 'F_PropensityFit_fSet.R'
+        'F_PropensityFit_SubsetList.R' 'F_PropensityObj.R' 'G_Regime.R'
+        'G_RegimeObj.R' 'H_class_OptimalSeq.R'
+        'H_class_OptimalSeqCoarsened.R' 'H_class_OptimalSeqMissing.R'
+        'H_optimalSeq.R' 'I_ClassificationFit.R'
+        'I_ClassificationFit_SubsetList.R' 'I_ClassificationFit_fSet.R'
+        'I_ClassificationObj.R' 'J_class_OptimalClass.R'
+        'J_optimalClass.R' 'K_Kernel.R' 'K_MultiRadialKernel.R'
+        'K_RadialKernel.R' 'K_PolyKernel.R' 'K_LinearKernel.R'
+        'K_KernelObj.R' 'L_Surrogate.R' 'L_ExpSurrogate.R'
+        'L_HingeSurrogate.R' 'L_HuberHingeSurrogate.R'
+        'L_LogitSurrogate.R' 'L_SmoothRampSurrogate.R'
+        'L_SqHingeSurrogate.R' 'M_MethodObject.R' 'M_OptimBasic.R'
+        'M_OptimKernel.R' 'M_OptimObj.R' 'N_CVBasic.R' 'N_CVInfo.R'
+        'N_CVInfoLambda.R' 'N_CVInfokParam.R' 'N_CVInfo2Par.R'
+        'N_CVInfoObj.R' 'N_OptimStep.R' 'O_LearningObject.R'
+        'O_Learning.R' 'O_LearningMulti.R' 'P_class_.owl.R'
+        'P_class_OWL.R' 'P_owl.R' 'Q_class_.rwl.R' 'Q_class_RWL.R'
+        'Q_rwl.R' 'R_class_BOWLBasic.R' 'R_class_BOWL.R' 'R_bowl.R'
+        'S_class_.earl.R' 'S_class_EARL.R' 'S_earl.R' 'checkInputs.R'
+        'internalTest.R' 'titleIt.R'
+Packaged: 2019-02-26 22:22:05 UTC; sthollow
+Date/Publication: 2019-02-26 22:50:12 UTC
