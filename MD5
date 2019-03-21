@@ -1,4 +1,4 @@
-186ee8e396b1e273a63dea2524fad208 *DESCRIPTION
+25f60b9664fca5adfcf05299e53965a1 *DESCRIPTION
 6d6984950c44ebd959f7ad46932564d7 *NAMESPACE
 fa5a15c0f5d8c53606d3d288052983d4 *R/A_DecisionPointList.R
 22ba63c7d969d9ba4dc2b243eceefe51 *R/A_DynTxRegime.R
@@ -57,7 +57,7 @@ ba2859ce7d758583cf13346a6660e3d7 *R/I_ClassificationFit.R
 93497846b79e4d42afb0be0744b9ed46 *R/I_ClassificationFit_SubsetList.R
 ad17a8861437c3519e427e502500943d *R/I_ClassificationFit_fSet.R
 ab160e2a177a36c1d3291cff2b9629f9 *R/I_ClassificationObj.R
-feec52318d31e3150fcbdd13b4b470f2 *R/J_class_OptimalClass.R
+7f151d3cbfaeca31b04c703bed3ab687 *R/J_class_OptimalClass.R
 9fc47d0fac35df39c04e12145c84f307 *R/J_optimalClass.R
 06f32ba96d539b242b58a36a7c123c41 *R/K_Kernel.R
 a50483c2b8a618b585c14229bba62290 *R/K_KernelObj.R

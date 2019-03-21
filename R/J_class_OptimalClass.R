@@ -138,9 +138,21 @@ NULL
   data$wgt <- abs(x = contrast)
 
   # add weights variable to regression input
-  cArgs <- modelObj::solverArgs(moClass)
-  cArgs[[ "weights" ]] <- quote(expr = wgt)
-  modelObj::solverArgs(moClass) <- cArgs
+  if (is(object = moClass, class2 = "ModelObj_SubsetList")) {
+    nms <- names(x = moClass)
+    moC <- list()
+    for (i in 1L:length(x = moClass)) {
+      cArgs <- modelObj::solverArgs(moClass[[ i ]])
+      cArgs[[ "weights" ]] <- quote(expr = wgt)
+      modelObj::solverArgs(moClass[[ i ]]) <- cArgs
+      moC[[ nms[i]] ] <- moClass[[ i ]]
+    }
+    moClass <- new(class = "ModelObj_SubsetList", moC)
+  } else {
+    cArgs <- modelObj::solverArgs(moClass)
+    cArgs[[ "weights" ]] <- quote(expr = wgt)
+    modelObj::solverArgs(moClass) <- cArgs
+  }
 
   # convert contrast to 0/1 category
   ZinternalZ <- as.integer(x = {contrast > -1.5e-8})
