@@ -80,6 +80,10 @@ setMethod(f = ".newBOWL",
                                 suppress, 
                                 guess, ...) {
 
+              if (suppress != 0L) {
+                cat("BOWL optimization step 1\n")
+              }
+
               index <- !logical(length = nrow(x = data))
               prodPi <- rep(x = 1.0, times = nrow(x = data))
 
@@ -120,6 +124,10 @@ setMethod(f = ".newBOWL",
               if ({length(x = BOWLObj@sumR) != length(x = response)} ||
                   {length(x = response) != nrow(x = data)}) {
                 stop("length of reward/response does not match previous steps")
+              }
+
+              if (suppress != 0L) {
+                cat("BOWL optimization step", BOWLObj@step + 1L, "\n")
               }
 
               response <- BOWLObj@sumR + response

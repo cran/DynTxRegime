@@ -8,7 +8,7 @@
       !is(object = object@fit, class2 = "TypedFit_fSet") &&
       !is(object = object@fit, class2 = "TypedFit_SubsetList") &&
       !is(object = object@fit, class2 = "DecisionPointList") &&
-      !is.na(x = object)) {
+      !is.na(x = object@fit)) {
     return( "incorrect object for @fit" )
   }
 

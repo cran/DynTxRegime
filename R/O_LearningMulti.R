@@ -114,6 +114,7 @@ setMethod(f = ".newLearning",
 
               # storage objects for optimal tx and decision function
               optVec <- txVec
+              optVec[!index] <- NA
               df <- rep(x = NA, times = nrow(x = data))
 
               res <- list()

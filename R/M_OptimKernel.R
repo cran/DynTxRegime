@@ -75,6 +75,11 @@ setMethod(f = ".newOptim",
                 return( NULL )
               }
 
+              if (!is.list(x = test)) {
+                cat("optimization did not converge.\n")
+                return( NULL )
+              }
+
               if (suppress == 2L) {
                 cat("\nResults returned by optimization method\n")
                 print(x = test)

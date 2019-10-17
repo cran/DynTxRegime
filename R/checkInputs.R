@@ -87,23 +87,29 @@
 
 .checkModelObjOrListModelObjSubsetOrList <- function(object, nm) {
 
+  # if object is null, return object unchanged
   if (is.null(x = object)) return(object)
 
+  # if object is a single modelObj, return object unchanged
   if (is(object = object, class2 = "modelObj")) return(object)
 
-  if (is(object = object, class2 = "ModelObjSubset")) {
-    object <- list(object)
-  }
+  # if object is a single modelObjSubset object, convert to a list
+  if (is(object = object, class2 = "ModelObjSubset")) object <- list(object)
 
+  # if object is now not a list or has zero length, stop with error
   if (!is.list(x = object) || length(x = object) == 0L) {
     stop("single modelObj, a list of modelObj, or a list of ModelObjSubset objects expected")
   }
 
+  # if only one object is in the list and it is a modelObj, return object as 
+  # a modelObj
   if (length(x = object) == 1L && 
       is(object = object[[ 1L ]], class2 = "modelObj")) {
     return( object[[ 1L ]] )
   }
 
+  # ensure that all elements of the list are modelObj or that all elements
+  # of the list are ModelObjSubset
   firstClass <- class(x = object[[ 1L ]])
   if (!is(object = object[[ 1L ]], class2 = "modelObj") && 
       !is(object = object[[ 1L ]], class2 = "ModelObjSubset")) {
@@ -116,6 +122,7 @@
     }
   }
 
+  # if the list contains only modelObj, return as a ModelObj_DecisionPointList
   if (!is(object = object[[ 1L ]], class2 = "ModelObjSubset")) {
     return( new("ModelObj_DecisionPointList", object) )
   }

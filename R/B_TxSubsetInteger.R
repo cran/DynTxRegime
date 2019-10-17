@@ -54,9 +54,11 @@ setMethod(f = ".newTxSubset",
 setMethod(f = ".convertFromBinary",
           signature = c("txObj" = "TxSubsetInteger"),
           definition = function(txObj, txVec, ...){
+
               optVec <- .convertFromBinary(txObj = as(object  = txObj,
                                                       Class = "TxSubset"),
-                                         txVec = txVec, ...)
+                                           txVec = txVec, ...)
+
               optVec <- .convertTx(object = txObj, txVec = optVec)
 
               return( optVec )

@@ -1,0 +1,10 @@
+DynTxRegime v4.2 (Release date: 2019-10-16)
+==============
+
+Changes:
+
+* Changes to B_TxSubset.R to fix NA treatments
+* Changes to C_TypedFitObj.R to check NA status of fit
+* Changes to F_PropensityFit.R to remove stray code
+* Changes to M_OptimKernel.R to add test for maxit failure
+* Changes to O_LearningMulti.R and O_Learning.R to correct bug in value estimation

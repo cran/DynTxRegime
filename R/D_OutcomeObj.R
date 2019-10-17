@@ -58,7 +58,7 @@ setClass(Class = "OutcomeObj",
 #' @keywords internal
 setGeneric(name = ".newOutcomeObj",
            def = function(moMain, moCont, txObj, iter, ...) {
-                   standardGeneric(".newOutcomeObj")
+                   standardGeneric(f = ".newOutcomeObj")
                  })
 
 ##########

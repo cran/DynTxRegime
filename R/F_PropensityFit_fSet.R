@@ -185,6 +185,7 @@ setMethod(f = "propen",
           definition = function(object, ...) {
               return( fitObject(object = object) )
             })
+
 #' @rdname PropensityFit_fSet-methods
 setMethod(f = "summary",
           signature = c(object = "PropensityFit_fSet"),

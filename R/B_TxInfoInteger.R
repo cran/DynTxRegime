@@ -50,9 +50,7 @@ setMethod(f = ".compareTx",
 setMethod(f = ".convertFromBinary",
           signature = c("txObj" = "TxInfoInteger"),
           definition = function(txObj, txVec, ...){
-
               optVec <- callNextMethod()
-
               optVec <- .convertTx(object = txObj, txVec = optVec)
 
               return( optVec )
@@ -66,6 +64,7 @@ setMethod(f = ".convertTx",
           signature = c(object = "TxInfoInteger",
                         txVec = "ANY"),
           definition = function(object, txVec) {
+
               if (!is.numeric(x = txVec)) {
                 stop("inappropriate vector provided to convertTx")
               }

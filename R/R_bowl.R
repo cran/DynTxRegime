@@ -195,7 +195,7 @@ bowl <- function(...,
   response <- .verifyResponseReward(response = response, reward = reward)
 
   # response must be a vector
-  response <- .verifyVectorResponse(response = response) - 1e-6
+  response <- .verifyVectorResponse(response = response) + 1e-6
 
   # verify treatment is appropriately coded.
   data <- .checkTxData(txName = txName, data = data)

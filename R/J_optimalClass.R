@@ -12,6 +12,7 @@
 #' method. For multiple decision points, can be called repeatedly. 
 #' 
 #'
+#' @param ... Included to require named inputs
 #' @param moPropen An object of class modelObj, which defines the models and R
 #'           methods to be used to obtain parameter estimates and
 #'           predictions for the propensity for treatment. 

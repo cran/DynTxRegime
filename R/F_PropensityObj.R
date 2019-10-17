@@ -2,8 +2,8 @@
 
 .validity_PropensityObj <- function(object) {
 
-  # @propen must be NA, PropensitySimpleFit, PropensitySimpleFit_fSet, 
-  # PropensitySimpleFit_SubsetList, or DecisionPointList
+  # @propen must be NA, PropensityFit, PropensityFit_fSet, 
+  # PropensityFit_SubsetList, or DecisionPointList
   if (!is(object = object@propen, class2 = "PropensityFit") &&
       !is(object = object@propen, class2 = "PropensityFit_fSet") &&
       !is(object = object@propen, class2 = "PropensityFit_SubsetList") &&
@@ -12,8 +12,8 @@
     return( "incorrect object for @propen" )
   }
 
-  # elements of @propen must be PropensitySimpleFit, PropensitySimpleFit_fSet, 
-  # or PropensitySimpleFit_SubsetList
+  # elements of @propen must be PropensityFit, PropensityFit_fSet, 
+  # or PropensityFit_SubsetList
   if (is(object = object@propen, class2 = "DecisionPointList")) {
     for (i in 1L:length(x = object@propen)) {
       if (!is(object = object@propen[[ i ]], class2 = "PropensityFit") &&
@@ -34,8 +34,8 @@
 #'
 #' @name PropensityObj-class
 #'
-#' @slot Propensity ANY - expected to be \code{PropensitySimpleFit},
-#'   \code{PropensitySimpleFit_fSet}, \code{PropensitySimpleFit_SubsetList}, 
+#' @slot Propensity ANY - expected to be \code{PropensityFit},
+#'   \code{PropensityFit_fSet}, \code{PropensityFit_SubsetList}, 
 #'   or \code{DecisionPointList}.
 #'
 #' @include F_PropensityFit.R F_PropensityFit_fSet.R
@@ -124,7 +124,6 @@ setMethod(f = ".newPropensityObj",
                                                    txObj = txObj@txInfo[[ i ]],
                                                    data = data,
                                                    suppress = suppress)
-
               }
 
               result <- new(Class = "DecisionPointList", fitObj)

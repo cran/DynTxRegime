@@ -87,12 +87,6 @@ setMethod(f = ".newPropensityFit",
 
               if (is(object = fitResult, class2 = "try-error")) {
                 cat("converting response to factor and trying again\n")
-                fitResult <- .newTypedFit(modelObj = moPropen,
-                                          data = data,
-                                          response = ,
-                                          type = "moPropen",
-                                          txObj = txObj,
-                                          suppress = suppress)
                 fitResult <- tryCatch(expr = .newTypedFit(modelObj = moPropen,
                                                           data = data,
                                                           response = factor(x = data[,txName]),

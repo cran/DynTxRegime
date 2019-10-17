@@ -96,10 +96,6 @@ setClass(Class = "BOWLBasic",
                          prodPi,
                          index, ...) {
 
-  if (suppress != 0L) {
-    cat("BOWL optimization step\n")
-  }
-
   if (sum(index) <= 1L) stop("Too few patients to perform analysis")
 
   analysis <- .newLearning(moPropen = moPropen,

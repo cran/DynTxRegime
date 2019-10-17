@@ -147,7 +147,7 @@ owl <- function(...,
 
   # response must be vector
   response <- .verifyVectorResponse(response = response)
-  response <- response - 1e-6
+  response <- response + 1e-6
 
   # verify treatment is appropriately coded.
   data <- .checkTxData(txName = txName, data = data)

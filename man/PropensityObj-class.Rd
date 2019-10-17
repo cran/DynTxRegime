@@ -11,8 +11,8 @@ Class \code{PropensityObj} groups Propensity regression results under a
 \section{Slots}{
 
 \describe{
-\item{\code{Propensity}}{ANY - expected to be \code{PropensitySimpleFit},
-\code{PropensitySimpleFit_fSet}, \code{PropensitySimpleFit_SubsetList}, 
+\item{\code{Propensity}}{ANY - expected to be \code{PropensityFit},
+\code{PropensityFit_fSet}, \code{PropensityFit_SubsetList}, 
 or \code{DecisionPointList}.}
 }}
 

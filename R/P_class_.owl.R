@@ -266,10 +266,10 @@ setMethod(f = ".optimFunc",
               # c is a negative sign
               argList[[ "c" ]] <- matrix(-1.0, nrow = n, ncol = 1L)
 
-              # equality condition: sum of abs(Y) treatments * parameters = 0.0
+              # equality condition: sum of sign(Y) treatments * parameters = 0.0
               argList[[ "A" ]] <- matrix(methodObject@txSignR, nrow = 1L, ncol = n)
 
-              # H = abs(Y) txVec * kernel matrix * txVec abs(Y)
+              # H = sign(Y) txVec * kernel matrix * txVec sign(Y)
               h1 <- methodObject@txSignR %o% methodObject@txSignR
 
               if (is(object = methodObject@kernel, class2 = "LinearKernel")) {
@@ -288,12 +288,12 @@ setMethod(f = ".optimFunc",
                                                       args = argList),
                                        error = function(e){
                                                    print(e$message)
-                                                   stop("kerfnlab::ipop() encountered errors\n")
+                                                   stop("kernlab::ipop() encountered errors\n")
                                                  })
 
               # stop if method did not converge
               if (optimResults@how != "converged") {
-                stop("kerfnlab::ipop() did not converge\n")
+                stop("kernlab::ipop() did not converge\n")
               }
 
               # create list return object to match expectations of optim classes

@@ -127,7 +127,8 @@ setMethod(f = ".convertFromBinary",
               ptsSubsets <- .getPtsSubset(object = txObj)
 
               optVec <- rep(x = NA, times = length(x = txVec))
-              txVec[is.na(x = txVec)] <- 0.0
+              tst <- is.na(x = txVec)
+              txVec[tst] <- 0.0
 
               for (i in 1L:length(x = subsets)) {
                 levs <- subsets[[ i ]]
@@ -140,7 +141,7 @@ setMethod(f = ".convertFromBinary",
                   optVec[usePts & txVec >  0.5] <- levs[2L]
                 }
               }
-
+              optVec[tst] <- NA
               return( optVec )
             })
 

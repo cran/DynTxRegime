@@ -75,7 +75,7 @@ NULL
 
 #' Perform Classification Step
 #'
-#' @name optimalClass
+#' @name .optimalClass
 #'
 #' @param moPropen model object(s) for propensity regression
 #' @param moMain model object(s) for main effects of outcome regression or NULL
@@ -147,7 +147,7 @@ NULL
       modelObj::solverArgs(moClass[[ i ]]) <- cArgs
       moC[[ nms[i]] ] <- moClass[[ i ]]
     }
-    moClass <- new(class = "ModelObj_SubsetList", moC)
+    moClass <- new(Class = "ModelObj_SubsetList", moC)
   } else {
     cArgs <- modelObj::solverArgs(moClass)
     cArgs[[ "weights" ]] <- quote(expr = wgt)

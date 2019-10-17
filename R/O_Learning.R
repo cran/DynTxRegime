@@ -137,6 +137,7 @@ NULL
   # ensure that singletons are included in optVec
   optVec <- txVec
   optVec[!isSingle & index] <- opt$optimalTx
+  optVec[!isSingle & !index] <- NA
 
   # extend decision function to include singletons
   df <- rep(x = NA, times = nrow(x = data))
