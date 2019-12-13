@@ -103,7 +103,6 @@ setMethod(f = ".predictAll",
                                 newdata,  
                                 suppress = TRUE) {
 
-
               txNew <- .newTxObj(fSet = .getSubsetRule(object = object@txInfo),
                                  txName = .getTxName(object = object@txInfo),
                                  data = newdata,
@@ -112,42 +111,45 @@ setMethod(f = ".predictAll",
 
               singles <- .getSingleton(object = txNew)
 
-              res <- predict(object = as(object = object, Class = "TypedFit_fSet"), 
-                             newdata = newdata[!singles,])
-
-              if (is.null(x = ncol(x = res)) ) {
-                res <- matrix(data = res, ncol = 1L)
-              }
-
-              if (is.character(x = res[1L])) {
-                stop("propensities returned as characters")
-              }
-
-              if (any(res < -1.5e-8, na.rm = TRUE)) {
-                stop("cannot have negative probabilities")
-              }
-
               levs <- object@levs
 
-              if (ncol(x = res) != length(x = levs)) {
+              if (all(singles)) {
+                res <- 0.0
+              } else {
+                res <- predict(object = as(object = object, Class = "TypedFit_fSet"), 
+                               newdata = newdata[!singles,])
 
-                correction <- 1.0 - rowSums(x = res)
-
-                if (object@small) {
-                  if (!suppress ) {
-                    cat("assumed missing prediction for", levs[1L],"\n")
-                  }
-                  res <- cbind(correction, res)
-                } else {
-                  if (!suppress ) {
-                    cat("assumed missing prediction for", 
-                        levs[length(x = levs)],"\n")
-                  }
-                  res <- cbind(res, correction)
+                if (is.null(x = ncol(x = res)) ) {
+                  res <- matrix(data = res, ncol = 1L)
                 }
 
-              }
+                if (is.character(x = res[1L])) {
+                  stop("propensities returned as characters")
+                }
 
+                if (any(res < -1.5e-8, na.rm = TRUE)) {
+                  stop("cannot have negative probabilities")
+                }
+
+                if (ncol(x = res) != length(x = levs)) {
+
+                  correction <- 1.0 - rowSums(x = res)
+
+                  if (object@small) {
+                    if (!suppress ) {
+                      cat("assumed missing prediction for", levs[1L],"\n")
+                    }
+                    res <- cbind(correction, res)
+                  } else {
+                    if (!suppress ) {
+                      cat("assumed missing prediction for", 
+                          levs[length(x = levs)],"\n")
+                    }
+                    res <- cbind(res, correction)
+                  }
+
+                }
+              }
               n <- nrow(x = newdata)
 
               superset <- .getSuperset(object = object@txInfo)

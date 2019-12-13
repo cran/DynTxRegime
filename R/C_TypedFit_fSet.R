@@ -108,7 +108,6 @@ setMethod(f = "predict",
           definition = function(object, newdata, ...) {
 
               if (!missing(newdata)) {
-
                 txNew <- .newTxObj(fSet = .getSubsetRule(object = object@txInfo),
                                    txName = .getTxName(object = object@txInfo),
                                    data = newdata,

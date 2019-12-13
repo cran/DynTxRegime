@@ -393,6 +393,7 @@ setMethod(f = ".seqFunc",
 
               # predict propensity to receive recommended tx
               for (i in 1L:nDP) {
+
                 prWgt <- .getPrWgt(propenObj = propenObj@propen[[ i ]], 
                                    txObj = txObj@txInfo[[ i ]],  
                                    data = l.data)
