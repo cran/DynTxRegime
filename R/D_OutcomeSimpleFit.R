@@ -192,6 +192,23 @@ setMethod(f = ".predictAll",
                            "decisionFunc" = prediction) )
             })
 
+#' Make Predictions Regression for All Tx
+#'
+#' \code{.predictMu(object, newdata)}
+#'   predicts outcome for all tx options.
+#'   Returns the matrix of outcomes predicted for all tx. 
+#'   Predicted outcomes for tx not available to a pt are NA.
+#'
+#' @rdname OutcomeSimpleFit-methods
+setMethod(f = ".predictMu",
+          signature = c(object = "OutcomeSimpleFit",
+                        data = "data.frame"),
+          definition = function(object, data, ...) {
+
+              return( .predictAll(object = object, 
+                                  newdata = data)$decisionFunc )
+            })
+
 #' @rdname OutcomeSimpleFit-methods
 setMethod(f = "print",
           signature = c(x = "OutcomeSimpleFit"),

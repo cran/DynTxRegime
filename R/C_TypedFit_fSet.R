@@ -37,6 +37,10 @@ setMethod(f = ".newTypedFit",
                               type,
                               suppress) {
 
+              # this combination of modelObj and TxInfoWithSubsets
+              # is only used when singletons are not included in
+              # models. When singletons are included in models,
+              # ModelObjSubset must be used.
               singles <- .getSingleton(object = txObj)
 
               if (all(singles) ) stop("no data provided")
@@ -114,11 +118,18 @@ setMethod(f = "predict",
                                    suppress = TRUE,
                                    verify = FALSE)
 
+                # this combination of modelObj and TxInfoWithSubsets
+                # is only used when singletons are not included in
+                # models; and thus they should not be sent to prediction methods
                 singles <- .getSingleton(object = txNew)
 
                 pred <- predict(object = as(object = object, Class = "TypedFit"),
                                 newdata = newdata[!singles,,drop=FALSE], ...)
               } else {
+                # this combination of modelObj and TxInfoWithSubsets
+                # is only used when singletons are not included in
+                # models; they were not included in the original fit so do
+                # do not need to be excluded from predict
                 singles <- .getSingleton(object = object@txInfo)
 
                 pred <- predict(object = as(object = object, Class = "TypedFit"))

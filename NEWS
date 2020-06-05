@@ -1,3 +1,16 @@
+DynTxRegime v4.4 (Release date: 2020-06-02)
+==============
+
+Changes:
+
+* Changes to all fSet based methods to include logic for observational data that does not comply with feasible tx rules
+
+DynTxRegime v4.3 (Release date: 2019-12-13)
+==============
+
+Changes:
+
+* Changes to F_PropensityFit_fSet.R to allow for case of all singletons
 DynTxRegime v4.2 (Release date: 2019-10-16)
 ==============
 
@@ -9,9 +22,4 @@ Changes:
 * Changes to M_OptimKernel.R to add test for maxit failure
 * Changes to O_LearningMulti.R and O_Learning.R to correct bug in value estimation
 
-DynTxRegime v4.3 (Release date: 2019-12-13)
-==============
 
-Changes:
-
-* Changes to F_PropensityFit_fSet.R to allow for case of all singletons

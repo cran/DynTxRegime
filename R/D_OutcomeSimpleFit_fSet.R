@@ -168,12 +168,17 @@ setMethod(f = ".predictAll",
 
               for (i in 1L:length(x = subsets)) {
 
-                nms <- unlist(x = strsplit(x = names(x = subsets)[i], split = ","))
+                nms <- unlist(x = strsplit(x = names(x = subsets)[i], 
+                                           split = ","))
 
                 usePts <- ptsSubset %in% nms
                 if (!any(usePts) ) next
 
                 if (length(x = subsets[[ i ]]) == 1L) {
+                  # this combination of modelObj and TxInfoWithSubsets
+                  # is only used when singletons are not included in
+                  # models; and thus they should not be sent to prediction 
+                  # methods
                   optimalTx[usePts] <- subsets[[ i ]]
                   next
                 }
@@ -196,4 +201,21 @@ setMethod(f = ".predictAll",
 
               return( list("optimalTx"    = optimalTx,
                            "decisionFunc" = dFunc) )
+            })
+
+#' Make Predictions Regression for All Tx
+#'
+#' \code{.predictMu(object, newdata)}
+#'   predicts outcome for all tx options.
+#'   Returns the matrix of outcomes predicted for all tx. 
+#'   Predicted outcomes for tx not available to a pt are NA.
+#'
+#' @rdname OutcomeSimpleFit_fSet-methods
+setMethod(f = ".predictMu",
+          signature = c(object = "OutcomeSimpleFit_fSet",
+                        data = "data.frame"),
+          definition = function(object, data, ...) {
+
+              return( .predictAll(object = object, 
+                                  newdata = data)$decisionFunc )
             })

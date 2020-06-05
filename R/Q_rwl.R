@@ -159,7 +159,6 @@ rwl <- function(...,
       stop("if subset structure in moPropen, fSet must be provided")
     }
   }
-
   # verify moMain provided and is modelObj
   if (missing(x = moMain)) moMain <- NULL
   if (is.null(x = moMain)) stop("moMain must be provided")

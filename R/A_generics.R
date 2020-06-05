@@ -348,14 +348,24 @@ NULL
 #' A = (1,2). Patients with covariate responder = 1 receive treatment 
 #' from subset 'subB' or 'subC' depending on the first stage treatment
 #' received. If
-#' \code{fSet} is specified in this way, 
-#' \code{moPropen} must be a \code{"modelObj"};
+#' \code{fSet} is specified in this way, the form of the model object depends
+#' on the training data. Specifically, if the training data obeys the feasible
+#' treatment rule (here, all individuals with responder = 1 received tx
+#' in accordance with fSet), \code{moPropen} would be a \code{"modelObj"};
 #' the propensity model will be fit using only those patients with 
-#' responder = 0. If outcome regression is used by the method,
+#' responder = 0; those with responder = 1 always receive the appropriate
+#' second stage treatment with probability 1.0. However, if the data
+#' are from an observation study and the training data do not obey the
+#' feasible treatment rules (here, some individuals with responder = 1 received 
+#' tx = 0; others tx = 1), the responder = 1 data must be modeled and moPropen
+#' must be provided as one or more ModelObjSubset() objects.
+#'
+#' If outcome regression is used by the method,
 #' \code{moMain} and \code{moCont} can be either objects
-#' of class \code{"modelObj"} if all all patients are to be used
-#' to obtain parameter estimates or lists of objects of class \code{"ModelObjSubset"}
-#' if subsets are to be analyzed individually.
+#' of class \code{"modelObj"} if only responder = 0 patients are to be used
+#' to obtain parameter estimates or as lists of objects of class 
+#' \code{"ModelObjSubset"} if subsets are to be analyzed individually or
+#' combined for a single fit of all data.
 #' 
 #' For a scenario where all patients have the same set of treatment
 #' options available, but subsets of patients are to be analyzed using 

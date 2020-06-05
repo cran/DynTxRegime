@@ -221,8 +221,11 @@ setMethod(f = ".predictAll",
                 if (!any(usePts) ) next
 
                 if (length(x = subsets[[ i ]]) == 1L) {
+                  # this combination of ModelObjSubset and TxInfoWithSubsets
+                  # can be used when singletons are to be included in
+                  # models; and thus every subset must be sent to prediction 
+                  # methods (why we don't cycle here as opposed to fSet method)
                   optimalTx[usePts] <- subsets[[ i ]][1L]
-                  next
                 }
 
                 useFit <- NULL
@@ -235,9 +238,15 @@ setMethod(f = ".predictAll",
                   }
                 }
 
+                # in instances when a singleton is not included in fits,
+                # useFit will never be reset from NULL, thus cycle
+                # if used for fits, useFit will be TRUE for those patients
                 if (is.null(x = useFit) ) next
 
                 for (j in 1L:length(x = superset)) {
+                  # in instances when a singleton is included in fit,
+                  # the following if statement ensures that the outcome
+                  # for only the allowed treatment is estimated
                   if (!(superset[j] %in% subsets[[ i ]]) ) next
                   newdata[usePts,txName] <- superset[j]
                   dFunc[usePts,j] <- predict(object = object@fits[[ useFit ]],
@@ -253,4 +262,57 @@ setMethod(f = ".predictAll",
 
               return( list("optimalTx"    = optimalTx,
                            "decisionFunc" = dFunc) )
+            })
+
+#' Make Predictions Regression for All Tx
+#'
+#' \code{.predictMu(object, data)}
+#'   predicts outcome for all tx options.
+#'   Returns the matrix of outcomes predicted for all tx. 
+#'   Predicted outcomes for tx not available to a pt are NA.
+#'
+#' @rdname OutcomeSimpleFit_SubsetList-methods
+setMethod(f = ".predictMu",
+          signature = c(object = "OutcomeSimpleFit_SubsetList",
+                        data = "data.frame"),
+          definition = function(object, data, ...) {
+
+              # predict outcome for all tx
+              superset <- .getSuperset(object = object@txInfo)
+
+              or <- matrix(data = NA,
+                           nrow = nrow(x = data),
+                           ncol = length(x = superset),
+                           dimnames = list(NULL, superset))
+
+              txName <- .getTxName(object = object@txInfo)
+
+              subsets <- .getSubsets(object = object@txInfo)
+              ptsSubset <- .getPtsSubset(object = object@txInfo)
+
+              for (i in 1L:length(x = object@fits)) {
+
+                nms <- names(x = object@fits)[i]
+                fitNames <- unlist(x = strsplit(x = nms, split = ","))
+
+                usePts <- ptsSubset %in% fitNames
+
+                if (!any(usePts) ) next
+
+                txOpts <- NULL
+                for (j in 1L:length(x = fitNames)) {
+                  txOpts <- c(txOpts, subsets[[ fitNames[j] ]])
+                }
+                txOpts <- sort(x = unique(x = txOpts))
+
+                for (j in 1L:length(x = superset)) {
+                  if (!(superset[j] %in% txOpts)) next
+                  data[usePts,txName] <- superset[j]
+                  or[usePts,j] <- predict(object = object@fits[[ i ]],
+                                          newdata = data[usePts,])
+                }
+
+              }
+
+              return( or )
             })

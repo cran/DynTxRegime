@@ -136,14 +136,16 @@ setMethod(f = ".convertFromBinary",
 #' @rdname TxInfoBasic-methods
 setMethod(f = ".convertToBinary",
           signature = c("txObj" = "TxInfoBasic"),
-          definition = function(txObj, data, ...){
+          definition = function(txObj, ..., txVec){
 
               superset <- .getSuperset(object = txObj)
               if (length(x = superset) != 2L) stop("non-binary tx")
-              txVec <- rep(x = -1.0, times = nrow(x = data))
-              txVec[data[,.getTxName(object = txObj)] == superset[2L]] <- 1.0
 
-              return( txVec )
+              newTx <- rep(x = -1.0, times = length(x = txVec))
+              nonBase <- txVec == superset[2L]
+              newTx[nonBase] <- 1.0
+
+              return( newTx )
             })
 
 #' \code{.convertTx(object, txVec)}

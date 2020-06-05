@@ -104,7 +104,7 @@ NULL
                           suppress,
                           step) {
 
-  if (!suppress) cat("Classification Perspective.\n")
+  if (!suppress) message("Classification Perspective.")
 
   # process tx information
   txObj <- .newTxObj(fSet = fSet,
@@ -184,20 +184,18 @@ NULL
                     txObj = txObj, 
                     data = data)
 
+  tstNA <- is.na(x = mu)
+  mu[tstNA] <- 0.0
+
   # get propensity for recommended tx
   prWgt <- .getPrWgt(propenObj = propenObj, 
                      txObj = txObj,  
                      data = data)
 
   # convert received tx to binary -1/1
-  txVec <- .convertToBinary(txObj = txObj, data = data)
-
-  # component of value not included in contrast
-  added <- {txVec < 0.0} / prWgt * {response - {1.0 - prWgt} * mu[,1L]} +
-           {txVec > 0.0} * mu[,1L]
-
-  # estimated values
-  value <- {opt %in% list(1,"1")} * contrast + added
+  txVec <- .convertToBinary(txObj = txObj, 
+                            txVec = data[,txName],
+                            data = data)
 
   if (is(object = txObj@txInfo, class2 = "TxSubset")) {
     optTx <- NULL
@@ -211,7 +209,6 @@ NULL
         optTx[usePts & !base] <- subsets[[ i ]][2L]
       } else {
         optTx[usePts] <- subsets[[ i ]][1L]
-        value[usePts] <- response[usePts]
       }
     }
   } else {
@@ -222,6 +219,23 @@ NULL
     optTx[!base] <- superset[2L]
   }
 
+  cTilde <- optTx == data[,txName]
+
+  qTilde <- .predictMu(object = outcomeObj, data = data)
+  qTilde <- qTilde[cbind(1L:nrow(x = data), 
+                         match(x = optTx, table = colnames(x = qTilde)))]
+
+  # contrast function
+  value <- cTilde * response / prWgt - {cTilde - prWgt}/prWgt * qTilde
+
+  if (is(object = txObj, class2 = "TxInfoWithSubsets")) {
+    singles <- .getSingleton(object = txObj)
+    singles <- singles & rowSums(abs(x = mu)) <= 1e-8 & cTilde
+    value[singles] <- {response / prWgt}[singles]
+  }
+
+  if (is.null(x = moMain) && is.null(x = moCont)) value[!cTilde] <- NA
+
   optObj <- new(Class = "OptimalObj",
                 optimal = new(Class = "OptimalInfo",
                               "decisionFunc"   = NA,
@@ -229,7 +243,6 @@ NULL
                               "optimalTx"      = optTx))
 
   if (!suppress) {
-    cat('\n')
     print(x = optObj)
   }
 
@@ -261,7 +274,7 @@ setMethod(f = ".newOptimalClass",
                                 fSet,
                                 suppress, ...) {
 
-              if (!suppress) cat("First step of the Classification Algorithm.\n")
+              if (!suppress) message("First step of the Classification Algorithm.")
 
               analysis <- .optimalClass(moPropen = moPropen,
                                         moMain = moMain,
@@ -295,20 +308,38 @@ setMethod(f = ".newOptimalClass",
               step <- response@step + 1L
 
               if (!suppress) {
-                cat("Step", step, "of the Classification Algorithm.\n")
+                message("Step ", step, " of the Classification Algorithm")
+              }
+
+              tst <- is.na(x = response@analysis@optimal@estimatedValue)
+              if (sum(tst) > 0L) {
+                message("removed ", sum(tst), 
+                        " individuals that did not follow estimated optimal",
+                        " tx in preceeding step(s)")
               }
 
               analysis <- .optimalClass(moPropen = moPropen,
                                         moMain = moMain,
                                         moCont = moCont,
                                         moClass = moClass,
-                                        data = data,
-                                        response = response@analysis@optimal@estimatedValue,
+                                        data = data[!tst,],
+                                        response = response@analysis@optimal@estimatedValue[!tst],
                                         txName = txName,
                                         iter = iter,
                                         fSet = fSet,
                                         suppress = suppress,
                                         step = step)
+
+              if (any(tst)) {
+                estV <- rep(x = NA, times = nrow(x = data))
+                estV[!tst] <- analysis@analysis@optimal@estimatedValue
+                analysis@analysis@optimal@estimatedValue <- estV
+
+                estTx <- rep(x = NA, times = nrow(x = data))
+                estTx[!tst] <- analysis@analysis@optimal@optimalTx
+                analysis@analysis@optimal@optimalTx <- estTx
+              }
+
               return( analysis )
 
             })
@@ -326,15 +357,17 @@ setMethod(f = ".newOptimalClass",
 
   # get estimated outcome for each tx; matrix is in binary coding;
   # may contain NA if singletons present in data
-  mu <- .getOutcome(outcomeObj = outcomeObj, 
-                    txObj = txObj, 
-                    data = data)
+  mu <- .getOutcome2(outcomeObj = outcomeObj, 
+                     txObj = txObj, 
+                     data = data)
 
   mu[is.na(x = mu)] <- 0.0
 
 
   # convert received tx to binary -1/1
-  txVec <- .convertToBinary(txObj = txObj, data = data)
+  txVec <- .convertToBinary(txObj = txObj, 
+                            txVec = data[,.getTxName(object = txObj)],
+                            data = data)
 
   n <- nrow(x = data)
 
@@ -349,6 +382,10 @@ setMethod(f = ".newOptimalClass",
   # contrast function
   ym <- txVec / prWgt * { response - 
         {1.0 - prWgt} * mu[cbind(1L:n,rTx)] - prWgt * mu[cbind(1L:n,sTx)]}
+
+  if (is(object = txObj, class2 = "TxInfoWithSubsets")) {
+    ym[.getSingleton(object = txObj)] <- 0.0
+  }
 
   return( ym )
 }
@@ -498,7 +535,59 @@ setMethod(f = "summary",
 #' @keywords internal
 .getOutcome <- function(outcomeObj, txObj, data) {
 
-  # predict outcome for all tx
+  or <- .predictMu(object = outcomeObj, data = data)
+
+  # if only 2 tx, return as is
+  if (ncol(x = or) == 2L) return( or )
+
+  if (!is(object = txObj, class2 = "TxSubset") &&
+      !is(object = txObj, class2 = "TxInfoWithSubsets")) stop("wrong txObj")
+
+  # extract subsets
+  subsets <- .getSubsets(object = txObj)
+
+  # extract patient subset
+  ptsSubset <- .getPtsSubset(object = txObj)
+
+  orWgt <- matrix(data = 0.0, nrow = nrow(x = data), ncol = 2L)
+
+  for (i in 1L:length(x = subsets)) {
+
+    # identify patients in the current subset
+    usePts <- ptsSubset == names(x = subsets)[i]
+
+    # match all tx values of the current subset to a column of or
+    tst <- match(x = subsets[[ i ]], table = colnames(x = or))
+
+    if (length(x = tst) > 2L) stop("dim problem")
+    # if a tx is not matched, throw error
+    if (any(is.na(x = tst))) {
+      stop("unable to match tx to outcome")
+    }
+    if (length(x = tst) != length(x = subsets[[ i ]])) stop("dim problem")
+    if (length(x = tst) > 2L) stop("dim problem")
+
+    for (j in 1L:length(x = tst)) {
+      orWgt[usePts, j] <- or[usePts, tst[j]]
+    }
+  }
+
+  return( orWgt )
+}
+
+#' Retrieve Outcome for Both Tx Options When Tx is Binary
+#'
+#' @param outcomeObj a OutcomeObj
+#' @param txObj a TxObj
+#' @param data a data.frame
+#'
+#' @return matrix of outcome under binary tx.
+#'
+#' @name getOutcome
+#'
+#' @keywords internal
+.getOutcome2 <- function(outcomeObj, txObj, data) {
+
   or <- .predictAll(object = outcomeObj, newdata = data)$decisionFunc
 
   # if only 2 tx, return as is

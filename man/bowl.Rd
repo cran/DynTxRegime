@@ -4,9 +4,23 @@
 \alias{bowl}
 \title{Backwards Outcome Weighted Learning.}
 \usage{
-bowl(..., moPropen, data, reward, txName, regime, response,
-  BOWLObj = NULL, lambdas = 2, cvFolds = 0L, kernel = "linear",
-  kparam = NULL, fSet = NULL, surrogate = "hinge", verbose = 2L)
+bowl(
+  ...,
+  moPropen,
+  data,
+  reward,
+  txName,
+  regime,
+  response,
+  BOWLObj = NULL,
+  lambdas = 2,
+  cvFolds = 0L,
+  kernel = "linear",
+  kparam = NULL,
+  fSet = NULL,
+  surrogate = "hinge",
+  verbose = 2L
+)
 }
 \arguments{
 \item{...}{Used primarily to require named input. However, inputs for
@@ -175,17 +189,25 @@ Yingqi Zhao, Donglin Zeng, Eric B. Laber, Michael R. Kosorok
    110:510, 583--598.
 }
 \seealso{
-Other statistical methods: \code{\link{earl}},
-  \code{\link{iqLearn}}, \code{\link{optimalClass}},
-  \code{\link{optimalSeq}}, \code{\link{owl}},
-  \code{\link{qLearn}}, \code{\link{rwl}}
+Other statistical methods: 
+\code{\link{earl}()},
+\code{\link{iqLearn}},
+\code{\link{optimalClass}()},
+\code{\link{optimalSeq}()},
+\code{\link{owl}()},
+\code{\link{qLearn}()},
+\code{\link{rwl}()}
 
-Other weighted learning methods: \code{\link{earl}},
-  \code{\link{owl}}, \code{\link{rwl}}
+Other weighted learning methods: 
+\code{\link{earl}()},
+\code{\link{owl}()},
+\code{\link{rwl}()}
 
-Other multiple decision point methods: \code{\link{iqLearn}},
-  \code{\link{optimalClass}}, \code{\link{optimalSeq}},
-  \code{\link{qLearn}}
+Other multiple decision point methods: 
+\code{\link{iqLearn}},
+\code{\link{optimalClass}()},
+\code{\link{optimalSeq}()},
+\code{\link{qLearn}()}
 }
 \concept{multiple decision point methods}
 \concept{statistical methods}

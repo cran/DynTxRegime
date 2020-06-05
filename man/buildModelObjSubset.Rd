@@ -4,8 +4,16 @@
 \alias{buildModelObjSubset}
 \title{Create Model Objects for Subsets of Data}
 \usage{
-buildModelObjSubset(..., model, solver.method, solver.args = NULL,
-  predict.method = NULL, predict.args = NULL, dp = 1L, subset = NA)
+buildModelObjSubset(
+  ...,
+  model,
+  solver.method,
+  solver.args = NULL,
+  predict.method = NULL,
+  predict.args = NULL,
+  dp = 1L,
+  subset = NA
+)
 }
 \arguments{
 \item{...}{ignored. Included to require named input.}
@@ -83,7 +91,7 @@ In some settings, an analyst may want to use different models for unique
   subsets of the data. \code{buildModelObjSubset()} provides a mechanism for 
   users to define models for such subset. Specifically, models are specified 
   in connection with the decision point and subset to which they are to be 
-  applied.
+  applied. 
 
 See ?modelObj for further details
 }

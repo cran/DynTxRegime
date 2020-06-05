@@ -3,9 +3,12 @@
 \name{getOutcome}
 \alias{getOutcome}
 \alias{.getOutcome}
+\alias{.getOutcome2}
 \title{Retrieve Outcome for Both Tx Options When Tx is Binary}
 \usage{
 .getOutcome(outcomeObj, txObj, data)
+
+.getOutcome2(outcomeObj, txObj, data)
 }
 \arguments{
 \item{outcomeObj}{a OutcomeObj}
@@ -16,8 +19,12 @@
 }
 \value{
 matrix of outcome under binary tx.
+
+matrix of outcome under binary tx.
 }
 \description{
+Retrieve Outcome for Both Tx Options When Tx is Binary
+
 Retrieve Outcome for Both Tx Options When Tx is Binary
 }
 \keyword{internal}

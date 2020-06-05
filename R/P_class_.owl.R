@@ -1,5 +1,3 @@
-# October 26, 2018
-
 #' Class \code{.owl}
 #'
 #' Class \code{.owl} stores parameters required for OWL optimization step
@@ -43,7 +41,7 @@ setMethod(f = ".subsetObject",
                                                        Class = "LearningObject"),
                                      subset = subset)
 
-              return( new(".owl",
+              return( new(Class = ".owl",
                           "txSignR"   = methodObject@txSignR[subset],
                           "absRinvPi" = methodObject@absRinvPi[subset],
                           newLO) )
@@ -58,7 +56,8 @@ setMethod(f = ".objFn",
           definition = function(par,
                                 methodObject, 
                                 kernel,
-                                lambda, ...) {
+                                ..., 
+                                lambda) {
 
               bee <- par[ 1L]
               vee <- par[-1L]
@@ -83,7 +82,8 @@ setMethod(f = ".dobjFn",
           definition = function(par,
                                 methodObject, 
                                 kernel,
-                                lambda, ...) {
+                                ...,
+                                lambda) {
 
               bee <- par[ 1L]
               vee <- par[-1L]
@@ -110,7 +110,8 @@ setMethod(f = ".objFn",
           definition = function(par,
                                 methodObject, 
                                 kernel,
-                                lambda, ...) {
+                                ...,
+                                lambda) {
 
               bee <- par[ 1L]
               vee <- par[-1L]
@@ -136,7 +137,8 @@ setMethod(f = ".dobjFn",
           definition = function(par,
                                 methodObject, 
                                 kernel,
-                                lambda, ...) {
+                                ...,
+                                lambda) {
 
               bee <- par[ 1L]
               vee <- par[-1L]
@@ -166,7 +168,8 @@ setMethod(f = ".objFn",
           definition = function(par,
                                 methodObject, 
                                 kernel,
-                                lambda, ...) { stop("not allowed") })
+                                ...,
+                                lambda) { stop("not allowed") })
 
 #' code{.dobjFn} is not allowed for OWL with multiple radial kernels
 #'
@@ -178,12 +181,13 @@ setMethod(f = ".dobjFn",
           definition = function(par,
                                 methodObject, 
                                 kernel,
-                                lambda, ...) { stop("not allowed") })
+                                ...,
+                                lambda) { stop("not allowed") })
 
 #' @rdname internal-owl-methods
 setMethod(f = ".valueFunc",
           signature = c("methodObject" = ".owl"),
-          definition = function(methodObject, optTx, ...) {
+          definition = function(methodObject, ..., optTx) {
 
               val <- methodObject@response * methodObject@invPi *
                      {{sign(x = optTx) * sign(x = methodObject@txVec)} > 0.0}
@@ -212,13 +216,14 @@ setMethod(f = ".valueFunc",
 #' @name createowl
 #'
 #' @keywords internal
-.createowl <- function(kernel, 
+.createowl <- function(...,
+                       kernel, 
                        txVec,  
                        response,  
                        prWgt,  
                        surrogate,  
                        guess = NULL, 
-                       mu, ...) {
+                       mu) {
 
   newLO <- .createLearningObject(kernel = kernel,
                                  surrogate = surrogate,
@@ -231,7 +236,7 @@ setMethod(f = ".valueFunc",
   tsr <- txVec
   tsr[response <= 0] <- -tsr[response <= 0]
 
-  return( new(".owl",
+  return( new(Class = ".owl",
               "txSignR"   = tsr,
               "absRinvPi" = abs(x = response) / prWgt,
               newLO) )
@@ -242,9 +247,10 @@ setMethod(f = ".valueFunc",
 setMethod(f = ".optimFunc",
           signature = c("methodObject" = ".owl"),
           definition = function(methodObject, 
+                                ...,
                                 par,
                                 lambda,
-                                suppress, ...) {
+                                suppress) {
 
             if (is(object = methodObject@surrogate, 
                    class2 = "HingeSurrogate")) {
@@ -287,13 +293,13 @@ setMethod(f = ".optimFunc",
               optimResults <- tryCatch(expr = do.call(what = kernlab::ipop,
                                                       args = argList),
                                        error = function(e){
-                                                   print(e$message)
-                                                   stop("kernlab::ipop() encountered errors\n")
+                                                   stop("kernlab::ipop() encountered errors\n", 
+                                                        e$message, call. = FALSE)
                                                  })
 
               # stop if method did not converge
               if (optimResults@how != "converged") {
-                stop("kernlab::ipop() did not converge\n")
+                stop("kernlab::ipop() did not converge", call. = FALSE)
               }
 
               # create list return object to match expectations of optim classes
@@ -330,4 +336,3 @@ setMethod(f = ".optimFunc",
             }
 
           })
-

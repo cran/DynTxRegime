@@ -2,7 +2,6 @@
 % Please edit documentation in R/D_OutcomeNoFit.R, R/D_OutcomeSimpleFit.R,
 %   R/D_OutcomeSimpleFit_fSet.R, R/D_OutcomeIterateFit.R,
 %   R/D_OutcomeSimpleFit_SubsetList.R
-\docType{methods}
 \name{newOutcomeFit}
 \alias{newOutcomeFit}
 \alias{.newOutcomeFit,NULL,NULL,TxObj,NULL-method}
@@ -22,54 +21,31 @@
 \usage{
 .newOutcomeFit(moMain, moCont, txObj, iter, ...)
 
-\S4method{.newOutcomeFit}{`NULL`,`NULL`,TxObj,`NULL`}(moMain, moCont,
-  txObj, iter, data, response, suppress)
+\S4method{.newOutcomeFit}{`NULL`,`NULL`,TxObj,`NULL`}(moMain, moCont, txObj, iter, data, response, suppress)
 
+\S4method{.newOutcomeFit}{modelObj,modelObj,TxInfoNoSubsets,`NULL`}(moMain, moCont, txObj, iter, data, response, suppress)
 
-  \S4method{.newOutcomeFit}{modelObj,modelObj,TxInfoNoSubsets,`NULL`}(moMain,
-  moCont, txObj, iter, data, response, suppress)
+\S4method{.newOutcomeFit}{modelObj,`NULL`,TxInfoNoSubsets,`NULL`}(moMain, moCont, txObj, iter, data, response, suppress)
 
-\S4method{.newOutcomeFit}{modelObj,`NULL`,TxInfoNoSubsets,`NULL`}(moMain,
-  moCont, txObj, iter, data, response, suppress)
+\S4method{.newOutcomeFit}{`NULL`,modelObj,TxInfoNoSubsets,`NULL`}(moMain, moCont, txObj, iter, data, response, suppress)
 
-\S4method{.newOutcomeFit}{`NULL`,modelObj,TxInfoNoSubsets,`NULL`}(moMain,
-  moCont, txObj, iter, data, response, suppress)
+\S4method{.newOutcomeFit}{modelObj,modelObj,TxInfoWithSubsets,`NULL`}(moMain, moCont, txObj, iter, data, response, suppress)
 
+\S4method{.newOutcomeFit}{modelObj,`NULL`,TxInfoWithSubsets,`NULL`}(moMain, moCont, txObj, iter, data, response, suppress)
 
-  \S4method{.newOutcomeFit}{modelObj,modelObj,TxInfoWithSubsets,`NULL`}(moMain,
-  moCont, txObj, iter, data, response, suppress)
+\S4method{.newOutcomeFit}{`NULL`,modelObj,TxInfoWithSubsets,`NULL`}(moMain, moCont, txObj, iter, data, response, suppress)
 
+\S4method{.newOutcomeFit}{modelObj,modelObj,TxInfoWithSubsets,integer}(moMain, moCont, response, txObj, data, iter, suppress)
 
-  \S4method{.newOutcomeFit}{modelObj,`NULL`,TxInfoWithSubsets,`NULL`}(moMain,
-  moCont, txObj, iter, data, response, suppress)
+\S4method{.newOutcomeFit}{modelObj,modelObj,TxInfoNoSubsets,integer}(moMain, moCont, response, txObj, data, iter, suppress)
 
+\S4method{.newOutcomeFit}{ModelObj_SubsetList,ModelObj_SubsetList,TxInfoWithSubsets,integer}(moMain, moCont, response, txObj, data, iter, suppress)
 
-  \S4method{.newOutcomeFit}{`NULL`,modelObj,TxInfoWithSubsets,`NULL`}(moMain,
-  moCont, txObj, iter, data, response, suppress)
+\S4method{.newOutcomeFit}{ModelObj_SubsetList,ModelObj_SubsetList,TxInfoWithSubsets,ANY}(moMain, moCont, txObj, data, response, iter, suppress)
 
+\S4method{.newOutcomeFit}{ModelObj_SubsetList,`NULL`,TxInfoWithSubsets,ANY}(moMain, moCont, txObj, data, response, iter, suppress)
 
-  \S4method{.newOutcomeFit}{modelObj,modelObj,TxInfoWithSubsets,integer}(moMain,
-  moCont, response, txObj, data, iter, suppress)
-
-
-  \S4method{.newOutcomeFit}{modelObj,modelObj,TxInfoNoSubsets,integer}(moMain,
-  moCont, response, txObj, data, iter, suppress)
-
-
-  \S4method{.newOutcomeFit}{ModelObj_SubsetList,ModelObj_SubsetList,TxInfoWithSubsets,integer}(moMain,
-  moCont, response, txObj, data, iter, suppress)
-
-
-  \S4method{.newOutcomeFit}{ModelObj_SubsetList,ModelObj_SubsetList,TxInfoWithSubsets,ANY}(moMain,
-  moCont, txObj, data, response, iter, suppress)
-
-
-  \S4method{.newOutcomeFit}{ModelObj_SubsetList,`NULL`,TxInfoWithSubsets,ANY}(moMain,
-  moCont, txObj, data, response, iter, suppress)
-
-
-  \S4method{.newOutcomeFit}{`NULL`,ModelObj_SubsetList,TxInfoWithSubsets,ANY}(moMain,
-  moCont, txObj, data, response, iter, suppress)
+\S4method{.newOutcomeFit}{`NULL`,ModelObj_SubsetList,TxInfoWithSubsets,ANY}(moMain, moCont, txObj, data, response, iter, suppress)
 }
 \arguments{
 \item{moMain}{A modeling object for main effects or NULL}

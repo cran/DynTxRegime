@@ -5,8 +5,20 @@
 \alias{.newOWL}
 \title{Complete an OWL Analysis}
 \usage{
-.newOWL(moPropen, data, response, txName, lambdas, cvFolds, kernel, fSet,
-  surrogate, suppress, guess, ...)
+.newOWL(
+  moPropen,
+  data,
+  response,
+  txName,
+  lambdas,
+  cvFolds,
+  kernel,
+  fSet,
+  surrogate,
+  suppress,
+  guess,
+  ...
+)
 }
 \arguments{
 \item{moPropen}{modelObj for propensity modeling}

@@ -1,5 +1,3 @@
-# October 24, 2018
-
 .validity_TxSubset <- function(object) {
 
   # ensure that subsets identified for each patient are in the list of subsets
@@ -89,7 +87,7 @@ NULL
 setMethod(f = ".newTxSubset",
           signature = c(fSet = "function",
                         superset = "ANY"),
-          definition = function(fSet, data, superset, verify, suppress, ...) {
+          definition = function(fSet, superset, ..., data, verify, suppress) {
 
               pro <- .feasibleTx(fSet = fSet, 
                                  superset = superset, 
@@ -105,7 +103,7 @@ setMethod(f = ".newTxSubset",
                 }
               }
 
-              res <- new("TxSubset",
+              res <- new(Class = "TxSubset",
                          subsets = pro$subset,
                          ptsSubset = pro$ptsSubset,
                          subsetRule = fSet,
@@ -120,29 +118,43 @@ setMethod(f = ".newTxSubset",
 #' @rdname TxSubset-methods
 setMethod(f = ".convertFromBinary",
           signature = c("txObj" = "TxSubset"),
-          definition = function(txObj, txVec, ...){
+          definition = function(txObj, ..., txVec){
 
+              # subsets idenfied in input fSet
               subsets <- .getSubsets(object = txObj)
 
+              # subset to which each patient in training data belongs
               ptsSubsets <- .getPtsSubset(object = txObj)
 
+              # default the original coding to NA
               optVec <- rep(x = NA, times = length(x = txVec))
+
+              # remove NA from txVec by setting to zero 
+              # (logic is based on +/-0.5)
               tst <- is.na(x = txVec)
               txVec[tst] <- 0.0
 
               for (i in 1L:length(x = subsets)) {
-                levs <- subsets[[ i ]]
+
+                # individuals that are in subset i
                 usePts <- ptsSubsets == names(x = subsets)[i]
 
-                if (length(x = levs) == 1L) {
-                  optVec[usePts] <- levs[1L]
-                } else if (length(x = levs) == 2L) {
-                  optVec[usePts & txVec < -0.5] <- levs[1L]
-                  optVec[usePts & txVec >  0.5] <- levs[2L]
+                if (length(x = subsets[[ i ]]) == 1L) {
+
+                  # if only 1 feasible tx and training data received more than
+                  # 1 tx, assign all non-NA individuals to appropriate tx
+                  optVec[usePts & {txVec < -0.5 || txVec > 0.5}] <- subsets[[ i ]]
+
+                } else if (length(x = subsets[[ i ]]) == 2L) {
+
+                  optVec[usePts & txVec < -0.5] <- subsets[[ i ]][1L]
+                  optVec[usePts & txVec >  0.5] <- subsets[[ i ]][2L]
+
                 }
               }
-              optVec[tst] <- NA
+
               return( optVec )
+
             })
 
 #' \code{.convertToBinary(txObj, data)}
@@ -151,7 +163,7 @@ setMethod(f = ".convertFromBinary",
 #' @rdname TxSubset-methods
 setMethod(f = ".convertToBinary",
           signature = c("txObj" = "TxSubset"),
-          definition = function(txObj, data, ...){ stop("not allowed") })
+          definition = function(txObj, ...){ stop("not allowed") })
 
 #' \code{.getPtsSubset(object)}
 #'  retrieve subset name for which each pt is a member.
@@ -200,13 +212,13 @@ setMethod(f = ".validTx",
           definition = function(object, txVec){
 
               if (length(x = txVec) != length(x = object@ptsSubset)) {
-                stop("cannot evaluate validity of tx")
+                stop("cannot evaluate validity of tx", call. = FALSE)
               }
 
               for (i in 1L:length(x = object@subsets)) {
                 inss <- object@ptsSubset %in% names(x = object@subsets)[i]
                 tst <- txVec[inss] %in% object@subsets[[ i ]]
-                if (!all(tst)) stop("tx value not allowed by fSet")
+                if (!all(tst)) stop("tx value not allowed by fSet", call. = FALSE)
               }
 
               return( NULL )
@@ -233,7 +245,7 @@ setGeneric(name = ".identifySubsets",
 setMethod(f = ".identifySubsets",
           signature = c(fSetResult = "list",
                         input = "data.frame"),
-          definition = function(fSetResult, input, fSet) {
+          definition = function(fSetResult, input, ..., fSet) {
 
               subsets <- list()
 
@@ -241,9 +253,11 @@ setMethod(f = ".identifySubsets",
 
               for (i in 1L:length(x = tt$subsets)) {
                 if (!is.list(x = tt$subsets[[ i ]])) {
-                  stop("verify fSet")
+                  stop("verify fSet", call. = FALSE)
                 }
-                if (length(x = tt$subsets[[ i ]]) != 2L) stop("verify fSet")
+                if (length(x = tt$subsets[[ i ]]) != 2L) {
+                  stop("verify fSet", call. = FALSE)
+                }
                 subsets[[ tt$subsets[[ i ]][[ 1L ]] ]] <- tt$subsets[[ i ]][[ 2L ]]
               }
 
@@ -258,7 +272,7 @@ setMethod(f = ".identifySubsets",
 setMethod(f = ".identifySubsets",
           signature = c(fSetResult = "list",
                         input = "list"),
-          definition = function(fSetResult, input, fSet) {
+          definition = function(fSetResult, input, ..., fSet) {
 
               subsets <- list()
 
@@ -283,7 +297,7 @@ setMethod(f = ".identifySubsets",
 setMethod(f = ".identifySubsets",
           signature = c(fSetResult = "ANY",
                         input = "data.frame"),
-          definition = function(fSetResult, input, fSet) {
+          definition = function(fSetResult, input, ..., fSet) {
               subsets <- list()
               ptsSubset <- character(nrow(x = input))
 
@@ -309,7 +323,7 @@ setMethod(f = ".identifySubsets",
 setMethod(f = ".identifySubsets",
           signature = c(fSetResult = "ANY",
                         input = "list"),
-          definition = function(fSetResult, input, fSet) {
+          definition = function(fSetResult, input, ..., fSet) {
               subsets <- list()
               ptsSubset <- character(length(x = input[[ 1L ]]))
 
@@ -319,7 +333,7 @@ setMethod(f = ".identifySubsets",
 
                 tt <- do.call(what = fSet, args = args)
 
-                if (length(x = tt) != 2L) stop("verify fSet")
+                if (length(x = tt) != 2L) stop("verify fSet", call. = FALSE)
 
                 subsets[[ tt[[ 1L ]] ]] <- tt[[ 2L ]]
 
@@ -337,8 +351,8 @@ setMethod(f = ".identifySubsets",
 setMethod(f = ".identifySubsets",
           signature = c(fSetResult = "ANY",
                         input = "ANY"),
-          definition = function(fSetResult, input, fSet) {
-              stop("unexpected returned value from fSet")
+          definition = function(fSetResult, input, ..., fSet) {
+              stop("unexpected returned value from fSet", call. = FALSE)
             })
 
 
@@ -346,7 +360,7 @@ setMethod(f = ".identifySubsets",
 
   txvec <- tryCatch(expr = rule(x),
                     condition = function(c){
-                        stop("unable to execute fSet")
+                        stop("unable to execute fSet", call. = FALSE)
                       })
   if (verify) txvec <- .verifyTxvec(txvec = txvec)
 
@@ -357,7 +371,7 @@ setMethod(f = ".identifySubsets",
   txvec <- tryCatch(expr = do.call(what = rule, 
                             args = as.list(x = x)),
                     condition = function(c){
-                        stop("unable to execute fSet")
+                        stop("unable to execute fSet", call. = FALSE)
                       })
 
   if (verify) txvec <- .verifyTxvec(txvec = txvec)
@@ -373,12 +387,12 @@ setMethod(f = ".identifySubsets",
 # @param suppress A logical indicating if print statements are executed
 # @param verify A logical indicating of verification should be performed
 #
-.feasibleTx <- function(fSet, superset, data, suppress, verify) {
+.feasibleTx <- function(..., fSet, superset, data, suppress, verify) {
 
   fSetFormals <- names(x = formals(fun = fSet))
 
   if (length(x = fSetFormals) == 0L || is.null(x = fSetFormals)) {
-    stop("formal arguments of fSet could not be identified")
+    stop("formal arguments of fSet could not be identified", call. = FALSE)
   }
 
   # identify if formals match the column names of the dataset
@@ -412,9 +426,9 @@ setMethod(f = ".identifySubsets",
 
   } else {
 
-    stop(paste("fSet formal arguments", 
-               paste(fSetFormals[unmatched], collapse = ", "), 
-               "could not be found in dataset"))
+    stop("fSet formal arguments ", 
+         paste(fSetFormals[unmatched], collapse = ", "), 
+         " could not be found in dataset", call. = FALSE)
 
   }
 
@@ -422,12 +436,12 @@ setMethod(f = ".identifySubsets",
     ssOpts <- NULL
     for (i in 1L:length(x = res$subsets)) {
       if (!all(res$subsets[[ i ]] %in% superset)) {
-        stop("subset has treatments not in data")
+        stop("subset has treatments not in data", call. = FALSE)
       }
       ssOpts <- c(ssOpts, res$subsets[[ i ]])
     }
     if (any(!{superset %in% ssOpts})) {
-      stop("data has treatments not in subsets")
+      stop("data has treatments not in subsets", call. = FALSE)
     }
   }
 
@@ -452,7 +466,7 @@ setMethod(f = ".identifySubsets",
 #
 # @param txvec An object returned by a call to user defined fSet.
 #
-.verifyTxvec <- function(txvec){
+.verifyTxvec <- function(..., txvec){
 
   # fSet must return a list object. 
   #
@@ -465,9 +479,11 @@ setMethod(f = ".identifySubsets",
   # the second is txOpts and contains the tx options for each indv.
   #
   if (is.list(x = txvec)) {
-    if (length(x = txvec) != 2L) stop("fSet must return a list of length 2")
+    if (length(x = txvec) != 2L) {
+      stop("fSet must return a list of length 2", call. = FALSE)
+    }
   } else {
-    stop("fSet must return a list")
+    stop("fSet must return a list", call. = FALSE)
   }
 
   if (length(x = names(x = txvec)) > 0 && 
@@ -476,11 +492,13 @@ setMethod(f = ".identifySubsets",
     for (i in 1L:length(x = txvec[[ "subsets" ]])) {
       tmp <- txvec[[ "subsets" ]][[ i ]]
       if (length(x = tmp) != 2L) {
-        stop("each subset should be provided as a list of length 2")
+        stop("each subset should be provided as a list of length 2",
+             call. = FALSE)
       }
       nms <- c(nms, tmp[[ 1L ]])
       if (length(x = tmp[[ 2L ]]) < 1L) {
-        stop("subsets must contain at least one treatment option")
+        stop("subsets must contain at least one treatment option", 
+             call. = FALSE)
       }
       if (class(x = tmp[[ 2L ]]) == "factor") {
         # if provided as a factor vector, convert to character
@@ -491,27 +509,29 @@ setMethod(f = ".identifySubsets",
       } else if (class(x = tmp[[ 2L ]]) != "factor" && 
                  class(x = tmp[[ 2L ]]) != "integer" &&
                  class(x = tmp[[ 2L ]]) != "character") {
-        stop("fSet defined treatment must be factor/character or integer")
+        stop("fSet defined treatment must be factor/character or integer",
+             call. = FALSE)
       }
 
     }
     if (!all(txvec[[ "txOpts" ]] %in% nms)) {
-      stop("txOpts returns a subset not identified in subsets")
+      stop("txOpts returns a subset not identified in subsets", call. = FALSE)
     }
   } else if (!is.null(x = names(x = txvec))) {
-    stop(paste("fSet must return a list with elements named 'subsets' and 'txOpts' or\n",
-               "fSet must return an unnamed list with a subset name in the 1st element",
-               "and a vector of treatment options in the 2nd element"))
+    stop("fSet must return a list with elements named 'subsets' and 'txOpts' or\n",
+         "fSet must return an unnamed list with a subset name in the 1st element",
+         " and a vector of treatment options in the 2nd element", call. = FALSE)
   } else {
     # the first element must be a character description of subset
     if (!is.character(x = txvec[[ 1L ]])) {
-      stop("first element of list returned by fSet must be a character")
+      stop("first element of list returned by fSet must be a character",
+           call. = FALSE)
     }
 
     # second must be a vector of treatment options available
     if (length(x = txvec[[ 2L ]]) == 0L) {
-      stop(paste("at least one tx option must be available ",
-                 "to every patient --- verify fSet", sep=""))
+      stop("at least one tx option must be available",
+           " to every patient --- verify fSet", call. = FALSE)
     }
 
     if (class(x = txvec[[ 2L ]]) == "factor") {
@@ -523,7 +543,8 @@ setMethod(f = ".identifySubsets",
     } else if (class(x = txvec[[ 2L ]]) != "factor" && 
                class(x = txvec[[ 2L ]]) != "integer" &&
                class(x = txvec[[ 2L ]]) != "character") {
-      stop("fSet defined treatment must be factor/character or integer")
+      stop("fSet defined treatment must be factor/character or integer",
+           call. = FALSE)
     }
   }
 

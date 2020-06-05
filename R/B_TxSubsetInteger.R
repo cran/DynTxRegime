@@ -54,7 +54,6 @@ setMethod(f = ".newTxSubset",
 setMethod(f = ".convertFromBinary",
           signature = c("txObj" = "TxSubsetInteger"),
           definition = function(txObj, txVec, ...){
-
               optVec <- .convertFromBinary(txObj = as(object  = txObj,
                                                       Class = "TxSubset"),
                                            txVec = txVec, ...)
@@ -71,27 +70,43 @@ setMethod(f = ".convertFromBinary",
 #' @rdname TxSubsetInteger-methods
 setMethod(f = ".convertToBinary",
           signature = c("txObj" = "TxSubsetInteger"),
-          definition = function(txObj, data, ...){
-              txVec <- rep(x = -1.0, times = nrow(x = data))
+          definition = function(txObj, ..., txVec, data){
 
+              # default all individuals to base level
+              newTx <- rep(x = -1.0, times = nrow(x = data))
+
+              # subsets identified through fSet
               subsets <- .getSubsets(object = txObj)
 
+              # subset to which each individuals belongs
               ptsSubsets <- .getPtsSubset(object = txObj)
 
               for (i in 1L:length(x = subsets)) {
-                levs <- subsets[[ i ]]
 
-                if (length(x = levs) == 1L) {
-                  next
-                } else if (length(x = levs) == 2L) {
+                if (length(x = subsets[[ i ]]) == 1L) {
+                  # if the subset is a singlet determine if training data
+                  # received tx in accordance with set
+                  txInData <- sort(x = unique(x = data[,.getTxName(object = txObj)]))
+
+                  # if there is only 1 tx in data, keep default -1 value
+                  if (length(x = txInData) == 1L) next
+
+                  # if there is > 1 tx in data, set appropriately
                   usePts <- ptsSubsets == names(x = subsets)[i]
-                  txVec[usePts & {data[,.getTxName(object = txObj)] == levs[2L]}] <- 1.0
+                  nonBase <- txVec == txInData[2L]
+                  newTx[usePts & nonBase] <- 1.0
+
+                } else if (length(x = subsets[[ i ]]) == 2L) {
+                  # if the subset is a binary set appropriately
+                  usePts <- ptsSubsets == names(x = subsets)[i]
+                  nonBase <- txVec == subsets[[ i ]][2L]
+                  newTx[usePts & nonBase] <- 1.0
                 } else { 
-                  stop("non-binary tx")
+                  stop("non-binary tx", call. = FALSE)
                 }
               }
 
-              return( txVec )
+              return( newTx )
             })
 
 #' \code{.getPtsSubset(object)}

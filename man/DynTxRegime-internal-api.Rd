@@ -8,7 +8,6 @@
 %   R/H_class_OptimalSeq.R, R/J_class_OptimalClass.R, R/K_Kernel.R,
 %   R/L_Surrogate.R, R/M_MethodObject.R, R/N_CVBasic.R, R/N_CVInfo.R,
 %   R/P_class_OWL.R, R/Q_class_RWL.R, R/R_class_BOWL.R, R/S_class_EARL.R
-\docType{methods}
 \name{DynTxRegime-internal-api}
 \alias{DynTxRegime-internal-api}
 \alias{tmp}
@@ -42,6 +41,7 @@
 \alias{.identifySubsets,ANY,ANY-method}
 \alias{initialize,TxInfoList-method}
 \alias{.predictAll}
+\alias{.predictMu}
 \alias{Call,QLearn-method}
 \alias{coef,QLearn-method}
 \alias{DTRstep,QLearn-method}
@@ -210,19 +210,21 @@ tmp(x)
 
 .identifySubsets(fSetResult, input, ...)
 
-\S4method{.identifySubsets}{list,data.frame}(fSetResult, input, fSet)
+\S4method{.identifySubsets}{list,data.frame}(fSetResult, input, ..., fSet)
 
-\S4method{.identifySubsets}{list,list}(fSetResult, input, fSet)
+\S4method{.identifySubsets}{list,list}(fSetResult, input, ..., fSet)
 
-\S4method{.identifySubsets}{ANY,data.frame}(fSetResult, input, fSet)
+\S4method{.identifySubsets}{ANY,data.frame}(fSetResult, input, ..., fSet)
 
-\S4method{.identifySubsets}{ANY,list}(fSetResult, input, fSet)
+\S4method{.identifySubsets}{ANY,list}(fSetResult, input, ..., fSet)
 
-\S4method{.identifySubsets}{ANY,ANY}(fSetResult, input, fSet)
+\S4method{.identifySubsets}{ANY,ANY}(fSetResult, input, ..., fSet)
 
 \S4method{initialize}{TxInfoList}(.Object, ...)
 
 .predictAll(object, newdata, ...)
+
+.predictMu(object, data, ...)
 
 \S4method{Call}{QLearn}(name, ...)
 
@@ -484,6 +486,8 @@ Retrieve Superset
 Retrieve Treatment Variable Name
 
 Ensure Validity of Provided Treatment Vector
+
+Make Predictions for all Treatments.
 
 Make Predictions for all Treatments.
 

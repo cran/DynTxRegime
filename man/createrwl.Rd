@@ -6,27 +6,20 @@
 \alias{.createrwlcount}
 \title{Create method object for Residual Weighted Learning}
 \usage{
-.createrwl(kernel, txVec, response, prWgt, surrogate, guess = NULL, mu,
-  ...)
+.createrwl(kernel, txVec, response, prWgt, surrogate, guess = NULL, mu, ...)
 
-.createrwlcount(kernel, txVec, response, prWgt, surrogate, guess = NULL,
-  mu, ...)
+.createrwlcount(
+  kernel,
+  txVec,
+  response,
+  prWgt,
+  surrogate,
+  guess = NULL,
+  mu,
+  ...
+)
 }
 \arguments{
-\item{kernel}{Kernel object}
-
-\item{txVec}{Vector of tx coded as -1/1}
-
-\item{response}{Vector of responses}
-
-\item{prWgt}{Vector of propensity for tx received}
-
-\item{surrogate}{Surrogate object indicating surrogate loss-function}
-
-\item{guess}{Vector of estimated regime parameters}
-
-\item{mu}{Matrix of outcome regression}
-
 \item{kernel}{Kernel object}
 
 \item{txVec}{Vector of tx coded as -1/1}

@@ -40,6 +40,14 @@ setGeneric(name = ".predictAll",
                standardGeneric(".predictAll")
              })
 
+#' Make Predictions for all Treatments.
+#'
+#' @rdname DynTxRegime-internal-api
+setGeneric(name = ".predictMu",
+           def = function(object, data, ...) {
+               standardGeneric(".predictMu")
+             })
+
 #' Retrieve Outcome Regression Analysis
 #'
 #' For statistical methods that require an outcome regression analysis,
@@ -112,6 +120,23 @@ setMethod(f = ".predictAll",
 
               return( list("optimalTx"    = optimalTx,
                            "decisionFunc" = prediction) )
+            })
+
+#' Make Predictions Regression for All Tx
+#'
+#' \code{.predictMu(object, newdata)}
+#'   predicts outcome for all tx options.
+#'   Returns the matrix of outcomes predicted for all tx. 
+#'   Predicted outcomes for tx not available to a pt are NA.
+#'
+#' @rdname OutcomeNoFit-methods
+setMethod(f = ".predictMu",
+          signature = c(object = "OutcomeNoFit",
+                        data = "data.frame"),
+          definition = function(object, data, ...) {
+
+              return( .predictAll(object = object, 
+                                  newdata = data)$decisionFunc )
             })
 
 #' @rdname OutcomeNoFit-methods

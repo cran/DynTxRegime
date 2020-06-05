@@ -20,6 +20,7 @@ each subset of patients. The combination of inputs \code{moPropen},
 determines which of these scenarios is 
 being considered. We cover some common situations below.
 
+
 Regardless of the purpose for specifying \code{fSet}, it must be a 
 function that returns a list. There are two options for defining the 
 function. Version 1 is that of the original \pkg{DynTxRegime} package. 
@@ -67,7 +68,7 @@ fSet <- function(a1) \{
   txOpts <- rep('subB', length(x = a1))
   txOpts[a1 > 1] <- 'subA'
 
-return(list("subsets" = subsets,
+  return(list("subsets" = subsets,
               "txOpts" = txOpts))
 \}}
 
@@ -87,7 +88,7 @@ have all treatment options available to them at the second stage.
 In this case, the 
 propensity score models for the second stage
 are fit using only 'non-responders' for whom 
-more than 1 treatment option is available.
+more than 1 treatment option is available. 
 
 An example of an appropriate \code{fSet} function for
 the second-stage is
@@ -113,23 +114,34 @@ fSet <- function(data) \{
   txOpts[data$tx1 == 2L] <- 'subC'
   txOpts[data$responder == 0L] <- 'subA'
 
-return(list("subsets" = subsets,
+  return(list("subsets" = subsets,
               "txOpts" = txOpts))
 \}}
+
 
 The functions above specify that patients with covariate responder = 0 
 receive treatments from subset 'subA,' which comprises treatments 
 A = (1,2). Patients with covariate responder = 1 receive treatment 
 from subset 'subB' or 'subC' depending on the first stage treatment
 received. If
-\code{fSet} is specified in this way, 
-\code{moPropen} must be a \code{"modelObj"};
+\code{fSet} is specified in this way, the form of the model object depends
+on the training data. Specifically, if the training data obeys the feasible
+treatment rule (here, all individuals with responder = 1 received tx
+in accordance with fSet), \code{moPropen} would be a \code{"modelObj"};
 the propensity model will be fit using only those patients with 
-responder = 0. If outcome regression is used by the method,
+responder = 0; those with responder = 1 always receive the appropriate
+second stage treatment with probability 1.0. However, if the data
+are from an observation study and the training data do not obey the
+feasible treatment rules (here, some individuals with responder = 1 received 
+tx = 0; others tx = 1), the responder = 1 data must be modeled and moPropen
+must be provided as one or more ModelObjSubset() objects.
+
+If outcome regression is used by the method,
 \code{moMain} and \code{moCont} can be either objects
-of class \code{"modelObj"} if all all patients are to be used
-to obtain parameter estimates or lists of objects of class \code{"ModelObjSubset"}
-if subsets are to be analyzed individually.
+of class \code{"modelObj"} if only responder = 0 patients are to be used
+to obtain parameter estimates or as lists of objects of class 
+\code{"ModelObjSubset"} if subsets are to be analyzed individually or
+combined for a single fit of all data.
 
 For a scenario where all patients have the same set of treatment
 options available, but subsets of patients are to be analyzed using 
@@ -152,7 +164,7 @@ fSet <- function(data)
   txOpts <- rep('subB', nrow(x = data))
   txOpts[data$a1 == 1L] <- 'subA'
 
-return(list("subsets" = subsets,
+  return(list("subsets" = subsets,
               "txOpts" = txOpts))
 \}}
 
@@ -170,14 +182,14 @@ Perhaps,
                                  predict.args = list(type='response'),
                                  subset = 'subA')
 
-propenB <- buildModelObjSubset(model = ~1,
+  propenB <- buildModelObjSubset(model = ~1,
                                  solver.method = 'glm',
                                  solver.args = list('family'='binomial'),
                                  predict.method = 'predict.glm',
                                  predict.args = list(type='response'),
                                  subset = 'subB')
 
-moPropen <- list(propenA, propenB)
+  moPropen <- list(propenA, propenB)
  }
 If different decision function models are to be fit, \code{regimes}
 would take a form similar to
@@ -189,6 +201,7 @@ Notice that the names of the elements of \code{regimes} and the subsets passed t
 buildModelObjSubset() correspond to the names defined by \code{fSet},
 i.e., 'subA' or 'subB.' These nicknames are used for bookkeeping and 
 link subsets to the appropriate models.
+
 
 For a single-decision-point analysis, \code{fSet}
 is a single function. For multiple-decision-point analyses,

@@ -5,8 +5,7 @@
 \alias{.createowl}
 \title{Create method object for Outcome Weighted Learning}
 \usage{
-.createowl(kernel, txVec, response, prWgt, surrogate, guess = NULL, mu,
-  ...)
+.createowl(..., kernel, txVec, response, prWgt, surrogate, guess = NULL, mu)
 }
 \arguments{
 \item{kernel}{Kernel object}

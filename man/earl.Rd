@@ -4,10 +4,24 @@
 \alias{earl}
 \title{Efficient Augmentation and Relaxation Learning}
 \usage{
-earl(..., moPropen, moMain, moCont, data, response, txName, regime,
-  iter = 0L, fSet = NULL, lambdas = 0.5, cvFolds = 0L,
-  surrogate = "hinge", kernel = "linear", kparam = NULL,
-  verbose = 2L)
+earl(
+  ...,
+  moPropen,
+  moMain,
+  moCont,
+  data,
+  response,
+  txName,
+  regime,
+  iter = 0L,
+  fSet = NULL,
+  lambdas = 0.5,
+  cvFolds = 0L,
+  surrogate = "hinge",
+  kernel = "linear",
+  kparam = NULL,
+  verbose = 2L
+)
 }
 \arguments{
 \item{...}{Used primarily to require named input. However, inputs for
@@ -160,17 +174,26 @@ Ying-Qi Zhao, Eric Laber, Sumona Saha and Bruce E. Sands
    regimes using observational data
 }
 \seealso{
-Other statistical methods: \code{\link{bowl}},
-  \code{\link{iqLearn}}, \code{\link{optimalClass}},
-  \code{\link{optimalSeq}}, \code{\link{owl}},
-  \code{\link{qLearn}}, \code{\link{rwl}}
+Other statistical methods: 
+\code{\link{bowl}()},
+\code{\link{iqLearn}},
+\code{\link{optimalClass}()},
+\code{\link{optimalSeq}()},
+\code{\link{owl}()},
+\code{\link{qLearn}()},
+\code{\link{rwl}()}
 
-Other single decision point methods: \code{\link{optimalClass}},
-  \code{\link{optimalSeq}}, \code{\link{owl}},
-  \code{\link{qLearn}}, \code{\link{rwl}}
+Other single decision point methods: 
+\code{\link{optimalClass}()},
+\code{\link{optimalSeq}()},
+\code{\link{owl}()},
+\code{\link{qLearn}()},
+\code{\link{rwl}()}
 
-Other weighted learning methods: \code{\link{bowl}},
-  \code{\link{owl}}, \code{\link{rwl}}
+Other weighted learning methods: 
+\code{\link{bowl}()},
+\code{\link{owl}()},
+\code{\link{rwl}()}
 }
 \concept{single decision point methods}
 \concept{statistical methods}

@@ -4,8 +4,19 @@
 \alias{optimalClass}
 \title{Classification Perspective}
 \usage{
-optimalClass(..., moPropen, moMain, moCont, moClass, data, response,
-  txName, iter = 0L, fSet = NULL, verbose = TRUE)
+optimalClass(
+  ...,
+  moPropen,
+  moMain,
+  moCont,
+  moClass,
+  data,
+  response,
+  txName,
+  iter = 0L,
+  fSet = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{...}{Included to require named inputs}
@@ -181,18 +192,27 @@ Note that this method is a single decision point, binary treatment
 method. For multiple decision points, can be called repeatedly.
 }
 \seealso{
-Other statistical methods: \code{\link{bowl}},
-  \code{\link{earl}}, \code{\link{iqLearn}},
-  \code{\link{optimalSeq}}, \code{\link{owl}},
-  \code{\link{qLearn}}, \code{\link{rwl}}
+Other statistical methods: 
+\code{\link{bowl}()},
+\code{\link{earl}()},
+\code{\link{iqLearn}},
+\code{\link{optimalSeq}()},
+\code{\link{owl}()},
+\code{\link{qLearn}()},
+\code{\link{rwl}()}
 
-Other single decision point methods: \code{\link{earl}},
-  \code{\link{optimalSeq}}, \code{\link{owl}},
-  \code{\link{qLearn}}, \code{\link{rwl}}
+Other single decision point methods: 
+\code{\link{earl}()},
+\code{\link{optimalSeq}()},
+\code{\link{owl}()},
+\code{\link{qLearn}()},
+\code{\link{rwl}()}
 
-Other multiple decision point methods: \code{\link{bowl}},
-  \code{\link{iqLearn}}, \code{\link{optimalSeq}},
-  \code{\link{qLearn}}
+Other multiple decision point methods: 
+\code{\link{bowl}()},
+\code{\link{iqLearn}},
+\code{\link{optimalSeq}()},
+\code{\link{qLearn}()}
 }
 \concept{multiple decision point methods}
 \concept{single decision point methods}

@@ -1,11 +1,11 @@
-# October 25, 2018
+# May 31, 2020
 #
 #' A Step of the Q-Learning Algorithm
 #' 
 #'  Performs a single step of the Q-Learning algorithm.
 #'    If an object of class \code{QLearn} is passed through input response, 
 #'    it is assumed that the \code{QLearn} object is the value object returned
-#'    in preceding step of the Q-Learning algorithm, and
+#'    from the preceding step of the Q-Learning algorithm, and
 #'    the value fit by the regression is taken from the \code{QLearn} object.
 #'    If a vector is passed through input response, it is assumed that the
 #'    call if for the first step in the Q-Learning algorithm, and 
@@ -15,27 +15,35 @@
 #' @name qLearn
 #'
 #' @param ... ignored. Provided to require named inputs.
+#'
 #' @param moMain  An object of class modelObj or a list of objects of class
 #'   modelObjSubset, which define the models and R methods to be used to
 #'   obtain parameter estimates and predictions for the main effects component 
 #'   of the outcome regression. \cr
 #'   See ?modelObj and/or ?modelObjSubset for details. \cr
 #'   NULL is an acceptable value if moCont is defined.
+#'
 #' @param moCont An object of class modelObj or a list of objects of class
 #'   modelObjSubset, which define the models and R methods to be used to 
 #'   obtain parameter estimates and predictions for the contrasts component 
 #'   of the outcome regression. \cr
 #'   See ?modelObj and/or ?modelObjSubset for details. \cr
 #'   NULL is an acceptable value if moMain is defined.
+#'
 #' @param data A data frame of covariates and treatment history.
+#'
 #' @param response A response vector or object of class QLearn from a previous
 #'   Q-Learning step.
+#'
 #' @param txName A character string giving column header of treatment variable
 #'   in data
+#'
 #' @param fSet NULL or a function. This argument allows the user to specify 
 #'   the subset of treatment options available to a patient. 
 #'   See ?fSet for details of allowed structure
+#'
 #' @param iter An integer. See ?iter for details
+#'
 #' @param verbose A logical. If TRUE, screen prints are generated.
 #'
 #' @return An object of class \link{QLearn-class}
@@ -130,23 +138,9 @@ qLearn <- function(...,
   if (missing(x = moMain)) moMain <- NULL
   moMain <- .checkModelObjOrListModelObjSubset(object = moMain, nm = 'moMain')
 
-  # if subset structure specified in moMain, ensure fSet is a function
-  if (is(object = moMain, class2 = "ModelObj_SubsetList")) {
-    if (!is.function(x = fSet)) {
-      stop("if subset structure in moMain, fSet must be provided")
-    }
-  }
-
   # verify moCont is NULL, modelObj, or list of ModelObjSubset
   if (missing(x = moCont)) moCont <- NULL
   moCont <- .checkModelObjOrListModelObjSubset(object = moCont, nm = 'moCont')
-
-  # if subset structure specified in moCont, ensure fSet is a function
-  if (is(object = moCont, class2 = "ModelObj_SubsetList")) {
-    if (!is.function(x = fSet)) {
-      stop("if subset structure in moCont, fSet must be provided")
-    }
-  }
 
   # if both moCont and moMain are provided, must both be of same class
   if (is.null(x = moMain) && is.null(x = moCont)) {
@@ -164,6 +158,14 @@ qLearn <- function(...,
       stop("moMain and moCont must both be modelObj")
     }
   } 
+
+  # if subset structure specified in moMain, ensure fSet is a function
+  if (is(object = moMain, class2 = "ModelObj_SubsetList") ||
+      is(object = moCont, class2 = "ModelObj_SubsetList")) {
+    if (!is.function(x = fSet)) {
+      stop("if subset structure in moMain/moCont, fSet must be provided")
+    }
+  }
 
   # data must be provided as a data.frame object.
   data <- .verifyDataFrame(data = data)

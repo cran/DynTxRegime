@@ -93,6 +93,10 @@ setMethod(f = ".newPropensityObj",
 
               if (!suppress ) cat("\nPropensity for treatment regression.\n")
 
+              .checkFSetAndPropensityModels(txObj = txObj, 
+                                            moPropen = moPropen,  
+                                            data = data)
+
               return( new(Class = "PropensityObj",
                           propen = .newPropensityFit(moPropen = moPropen,
                                                      txObj = txObj,
@@ -119,6 +123,10 @@ setMethod(f = ".newPropensityObj",
               for (i in 1L:nDP) {
 
                 if (!suppress && nDP > 1L) cat("Decision point", i, "\n")
+
+                .checkFSetAndPropensityModels(txObj = txObj@txInfo[[ i ]], 
+                                              moPropen = moPropen[[ i ]],
+                                              data = data)
 
                 fitObj[[ i ]] <- .newPropensityFit(moPropen = moPropen[[ i ]],
                                                    txObj = txObj@txInfo[[ i ]],

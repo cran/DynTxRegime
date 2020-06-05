@@ -5,8 +5,7 @@
 \alias{.createearl}
 \title{Create method object for EARL}
 \usage{
-.createearl(kernel, txVec, response, prWgt, surrogate, guess = NULL, mu,
-  ...)
+.createearl(kernel, txVec, response, prWgt, surrogate, guess = NULL, mu, ...)
 }
 \arguments{
 \item{kernel}{Kernel object}

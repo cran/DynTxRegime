@@ -218,13 +218,31 @@ optimalClass <- function(...,
   moClass <- .checkModelObjOrListModelObjSubset(object = moClass, 
                                                 nm = 'moClass')
 
-  if (is(object = moPropen, class2 = "ModelObj_SubsetList") ||
-      is(object = moMain, class2 = "ModelObj_SubsetList") || 
-      is(object = moCont, class2 = "ModelObj_SubsetList") || 
-      is(object = moClass, class2 = "ModelObj_SubsetList")) {
+  if (is(object = moClass, class2 = "ModelObj_SubsetList")) {
     if (is.null(x = fSet)) {
       stop("fSet must be provided when subset modeling requested")
     }
+  }
+  if (is(object = moPropen, class2 = "ModelObj_SubsetList")) {
+    if (!is.function(x = fSet)) {
+      stop("if subset structure in moPropen, fSet must be provided")
+    }
+  }
+  if (is(object = moMain, class2 = "ModelObj_SubsetList")) {
+    if (!is.function(x = fSet)) {
+      stop("if subset structure in moMain, fSet must be provided")
+    }
+  }
+  if (is(object = moCont, class2 = "ModelObj_SubsetList")) {
+    if (!is.function(x = fSet)) {
+      stop("if subset structure in moCont, fSet must be provided")
+    }
+  }
+
+  if (is(object = moMain, class2 = "DecisionPointList") ||
+      is(object = moCont, class2 = "DecisionPointList") ||
+      is(object = moClass, class2 = "DecisionPointList")) {
+    stop("this is a single decision point method -- error in moMain, moCont, or moClass")
   }
 
   # data must be provided as a data.frame object.

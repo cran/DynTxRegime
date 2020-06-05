@@ -1,5 +1,3 @@
-# October 26, 2018
-
 #' Class \code{Learning}
 #'
 #' Class \code{Learning} contains results for a learning analysis with one 
@@ -48,6 +46,7 @@ NULL
 
 .newLearningFunc <- function(fSet, 
                              kernel,
+                             ..., 
                              moPropen,
                              moMain,
                              moCont,
@@ -62,7 +61,7 @@ NULL
                              guess, 
                              createObj, 
                              prodPi = 1.0,
-                             index = NULL, ...) {
+                             index = NULL) {
 
   # generate default index, which includes all data
   if (is.null(x = index)) {
@@ -76,13 +75,15 @@ NULL
                      suppress = suppress == 0L)
 
   # recast tx as -1/1
-  txVec <- .convertToBinary(txObj = txObj, data = data)
+  txVec <- .convertToBinary(txObj = txObj, 
+                            txVec = data[,txName],
+                            data = data)
 
   # complete propensity regression
   propenObj <- .newPropensityObj(moPropen = moPropen,
                                  txObj = txObj,
                                  data = data,
-                                 suppress = suppress == 0L)
+                                 suppress = {suppress == 0L})
 
   # get propensity for tx received
   prWgt <- .getPrWgt(propenObj = propenObj, txObj = txObj, data = data)
@@ -97,7 +98,7 @@ NULL
                                response = response,
                                txObj = txObj,
                                iter = iter,
-                               suppress = suppress  == 0L)
+                               suppress = {suppress  == 0L})
 
   # get estimated outcome for each tx
   mu <- .getOutcome(outcomeObj = outcomeObj, txObj = txObj, data = data)
@@ -121,6 +122,7 @@ NULL
   } else {
     isSingle <- FALSE
   }
+
   methodObj <- .subsetObject(methodObject = methodObj,
                              subset = !isSingle & index)
 
@@ -134,23 +136,48 @@ NULL
   # retrieve optimal tx and decision function
   opt <- optTx(x = optimStep)
 
-  # ensure that singletons are included in optVec
-  optVec <- txVec
+  # extend to full size of data
+  optVec <- rep(x = NA, times = nrow(x = data))
   optVec[!isSingle & index] <- opt$optimalTx
-  optVec[!isSingle & !index] <- NA
 
-  # extend decision function to include singletons
   df <- rep(x = NA, times = nrow(x = data))
   df[!isSingle & index] <- opt$decisionFunc
+
+
+  # optimal tx is returned as -1/1. Singles not included in
+  # fit of regime parameters are currently NA
+  optOrg <- .convertFromBinary(txObj = txObj, 
+                               txVec = optVec)
+
+  # ensure that singletons are included appropriately in optVec
+  optVec <- rep(x = NA, times = nrow(x = data))
+  if (is(object = optOrg, class2 = "factor")) {
+    optVec[!isSingle & index] <- levels(optOrg)[optOrg][!isSingle & index]
+  } else {
+    optVec[!isSingle & index] <- optOrg[!isSingle & index]
+  }
+  if (is(object = txObj, class2 = "TxInfoWithSubsets")) {
+    subsets <- .getSubsets(object = txObj)
+    ptsSubset <- .getPtsSubset(object = txObj)
+    for (i in 1L:length(x = subsets)) {
+      if (length(x = subsets[[ i ]]) != 1L) next
+      usePts <- ptsSubset == names(subsets)[i]
+
+      optVec[usePts & index] <- subsets[[ i ]]
+    }
+  }
+
+  # value functions expect -1/1 notation convert full data back to binary
+  txVec <- .convertToBinary(txObj = txObj, 
+                            txVec = optVec,
+                            data = data)
+  txVec[is.na(x = optVec)] <- NA
 
   # create method object with full data
   methodObj <- do.call(what = createObj, args = argList)
 
   # re-calculate estimated value
-  value <- .valueFunc(methodObject = methodObj, optTx = optVec)
-
-  # optimal tx is returned as -1/1. convert to original coding
-  optVec <- .convertFromBinary(txObj = txObj, txVec = optVec)
+  value <- .valueFunc(methodObject = methodObj, optTx = txVec)
 
   # replace optimal estimates
   optimStep@optimal@optimalTx <- optVec

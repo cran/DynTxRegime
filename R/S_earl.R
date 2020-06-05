@@ -167,6 +167,7 @@ earl <- function(...,
     }
   }
 
+
   # verify moMain provided and is modelObj
   if (missing(x = moMain)) moMain <- NULL
   moMain <- .checkModelObjOrListModelObjSubset(object = moMain, nm = 'moMain')

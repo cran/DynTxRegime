@@ -4,8 +4,20 @@
 \alias{optimalSeq}
 \title{Missing or Coarsened Data Perspective - Genetic Algorithm}
 \usage{
-optimalSeq(..., moPropen, moMain, moCont, data, response, txName, regimes,
-  fSet = NULL, refit = FALSE, iter = 0L, verbose = TRUE)
+optimalSeq(
+  ...,
+  moPropen,
+  moMain,
+  moCont,
+  data,
+  response,
+  txName,
+  regimes,
+  fSet = NULL,
+  refit = FALSE,
+  iter = 0L,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{...}{Additional arguments required by rgenoud. At a minimum this
@@ -253,18 +265,27 @@ Baqun Zhang, Anastasios A. Tsiatis, Eric B. Laber & Marie Davidian,
   treatment decisions", Biometrika (2013) pp.1-14.
 }
 \seealso{
-Other statistical methods: \code{\link{bowl}},
-  \code{\link{earl}}, \code{\link{iqLearn}},
-  \code{\link{optimalClass}}, \code{\link{owl}},
-  \code{\link{qLearn}}, \code{\link{rwl}}
+Other statistical methods: 
+\code{\link{bowl}()},
+\code{\link{earl}()},
+\code{\link{iqLearn}},
+\code{\link{optimalClass}()},
+\code{\link{owl}()},
+\code{\link{qLearn}()},
+\code{\link{rwl}()}
 
-Other single decision point methods: \code{\link{earl}},
-  \code{\link{optimalClass}}, \code{\link{owl}},
-  \code{\link{qLearn}}, \code{\link{rwl}}
+Other single decision point methods: 
+\code{\link{earl}()},
+\code{\link{optimalClass}()},
+\code{\link{owl}()},
+\code{\link{qLearn}()},
+\code{\link{rwl}()}
 
-Other multiple decision point methods: \code{\link{bowl}},
-  \code{\link{iqLearn}}, \code{\link{optimalClass}},
-  \code{\link{qLearn}}
+Other multiple decision point methods: 
+\code{\link{bowl}()},
+\code{\link{iqLearn}},
+\code{\link{optimalClass}()},
+\code{\link{qLearn}()}
 }
 \concept{multiple decision point methods}
 \concept{single decision point methods}

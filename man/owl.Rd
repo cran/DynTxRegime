@@ -4,9 +4,21 @@
 \alias{owl}
 \title{Outcome Weighted Learning}
 \usage{
-owl(..., moPropen, data, reward, txName, regime, response, lambdas = 2,
-  cvFolds = 0L, kernel = "linear", kparam = NULL,
-  surrogate = "hinge", verbose = 2L)
+owl(
+  ...,
+  moPropen,
+  data,
+  reward,
+  txName,
+  regime,
+  response,
+  lambdas = 2,
+  cvFolds = 0L,
+  kernel = "linear",
+  kparam = NULL,
+  surrogate = "hinge",
+  verbose = 2L
+)
 }
 \arguments{
 \item{...}{Used primarily to require named input. However, inputs for
@@ -135,17 +147,26 @@ Yingqi Zhao, Donglin Zeng, A. John Rush,
  107(409): 1106-1118. PMCID: 3636816
 }
 \seealso{
-Other statistical methods: \code{\link{bowl}},
-  \code{\link{earl}}, \code{\link{iqLearn}},
-  \code{\link{optimalClass}}, \code{\link{optimalSeq}},
-  \code{\link{qLearn}}, \code{\link{rwl}}
+Other statistical methods: 
+\code{\link{bowl}()},
+\code{\link{earl}()},
+\code{\link{iqLearn}},
+\code{\link{optimalClass}()},
+\code{\link{optimalSeq}()},
+\code{\link{qLearn}()},
+\code{\link{rwl}()}
 
-Other weighted learning methods: \code{\link{bowl}},
-  \code{\link{earl}}, \code{\link{rwl}}
+Other weighted learning methods: 
+\code{\link{bowl}()},
+\code{\link{earl}()},
+\code{\link{rwl}()}
 
-Other single decision point methods: \code{\link{earl}},
-  \code{\link{optimalClass}}, \code{\link{optimalSeq}},
-  \code{\link{qLearn}}, \code{\link{rwl}}
+Other single decision point methods: 
+\code{\link{earl}()},
+\code{\link{optimalClass}()},
+\code{\link{optimalSeq}()},
+\code{\link{qLearn}()},
+\code{\link{rwl}()}
 }
 \concept{single decision point methods}
 \concept{statistical methods}

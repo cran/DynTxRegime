@@ -5,8 +5,22 @@
 \alias{.newBOWLStep}
 \title{Create a BOWL Object}
 \usage{
-.newBOWLStep(moPropen, fSet, data, response, txName, lambdas, cvFolds,
-  kernel, surrogate, suppress, guess, prodPi, index, ...)
+.newBOWLStep(
+  moPropen,
+  fSet,
+  data,
+  response,
+  txName,
+  lambdas,
+  cvFolds,
+  kernel,
+  surrogate,
+  suppress,
+  guess,
+  prodPi,
+  index,
+  ...
+)
 }
 \arguments{
 \item{moPropen}{model object for propensity}

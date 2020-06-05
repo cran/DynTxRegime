@@ -11,15 +11,11 @@
 \usage{
 .newClassificationFit(moClass, txObj, ...)
 
-\S4method{.newClassificationFit}{modelObj,TxInfoNoSubsets}(moClass, txObj,
-  response, data, suppress, ...)
+\S4method{.newClassificationFit}{modelObj,TxInfoNoSubsets}(moClass, txObj, response, data, suppress, ...)
 
+\S4method{.newClassificationFit}{ModelObj_SubsetList,TxInfoWithSubsets}(moClass, data, response, txObj, suppress, ...)
 
-  \S4method{.newClassificationFit}{ModelObj_SubsetList,TxInfoWithSubsets}(moClass,
-  data, response, txObj, suppress, ...)
-
-\S4method{.newClassificationFit}{modelObj,TxInfoWithSubsets}(moClass,
-  txObj, response, data, suppress, ...)
+\S4method{.newClassificationFit}{modelObj,TxInfoWithSubsets}(moClass, txObj, response, data, suppress, ...)
 }
 \arguments{
 \item{moClass}{modeling object(s) defining the classification regression}

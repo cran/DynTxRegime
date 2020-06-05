@@ -4,7 +4,6 @@ setClassUnion("MatrixOrVector",
               members = c("matrix","vector"))
 
 .validity_OptimalInfo <- function(object) {
-
   if (length(x = object@decisionFunc) == 1L) {
     if (!is.na(x = object@decisionFunc)) {
       return( "length 1, non-NA @decisionFunc" )
@@ -53,10 +52,10 @@ setClassUnion("MatrixOrVector",
 #'
 #' @name OptimalInfo-class
 setClass(Class = "OptimalInfo",
-         slots = c(optimalTx      = "vector",
+         slots = c(optimalTx      = "ANY",
                    estimatedValue = "vector",
                    decisionFunc   = "MatrixOrVector"),
-         prototype = list(optimalTx      = integer(),
+         prototype = list(optimalTx      = NA,
                           estimatedValue = numeric(),
                           decisionFunc   = numeric()),
          validity = .validity_OptimalInfo)

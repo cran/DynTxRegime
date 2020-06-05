@@ -1,8 +1,8 @@
 Package: DynTxRegime
 Type: Package
 Title: Methods for Estimating Optimal Dynamic Treatment Regimes
-Version: 4.3
-Date: 2019-12-13
+Version: 4.4
+Date: 2020-06-05
 Author: S. T. Holloway, E. B. Laber, K. A. Linn, B. Zhang, M. Davidian, and A. A. Tsiatis
 Maintainer: Shannon T. Holloway <sthollow@ncsu.edu>
 Description: Methods to estimate dynamic treatment regimes using Interactive Q-Learning, Q-Learning, weighted learning, and value-search methods based on Augmented Inverse Probability Weighted Estimators and Inverse Probability Weighted Estimators.
@@ -13,7 +13,7 @@ Imports: kernlab, rgenoud, dfoptim
 NeedsCompilation: no
 Repository: CRAN
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Collate: 'A_generics.R' 'A_List.R' 'A_DecisionPointList.R'
         'A_OptimalInfo.R' 'A_OptimalObj.R' 'A_DynTxRegime.R'
         'A_ModelObjSubset.R' 'A_SubsetList.R' 'A_ModelObj_SubsetList.R'
@@ -49,7 +49,8 @@ Collate: 'A_generics.R' 'A_List.R' 'A_DecisionPointList.R'
         'O_Learning.R' 'O_LearningMulti.R' 'P_class_.owl.R'
         'P_class_OWL.R' 'P_owl.R' 'Q_class_.rwl.R' 'Q_class_RWL.R'
         'Q_rwl.R' 'R_class_BOWLBasic.R' 'R_class_BOWL.R' 'R_bowl.R'
-        'S_class_.earl.R' 'S_class_EARL.R' 'S_earl.R' 'checkInputs.R'
-        'internalTest.R' 'titleIt.R'
-Packaged: 2019-12-13 14:45:57 UTC; sthollow
-Date/Publication: 2019-12-13 16:40:07 UTC
+        'S_class_.earl.R' 'S_class_EARL.R' 'S_earl.R'
+        'checkFSetAndOutcomeModels.R' 'checkFSetAndPropensityModels.R'
+        'checkInputs.R' 'internalTest.R' 'titleIt.R'
+Packaged: 2020-06-05 18:07:38 UTC; sthollow
+Date/Publication: 2020-06-05 18:50:02 UTC

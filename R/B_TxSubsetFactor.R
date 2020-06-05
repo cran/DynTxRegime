@@ -1,5 +1,3 @@
-# October 24, 2018
-
 #' Class \code{TxSubsetFactor}
 #'
 #' Class \code{TxSubsetFactor} stores subset information for tx when tx is
@@ -28,10 +26,11 @@ setMethod(f = ".newTxSubset",
           signature = c(fSet = "function",
                         superset = "character"),
           definition = function(fSet, 
-                                superset, 
+                                superset,
+                                ...,
                                 txName, 
                                 data,
-                                verify, ...){
+                                verify){
 
               obj2 <- callNextMethod()
               obj1 <- new(Class = "TxInfoFactor",
@@ -50,10 +49,12 @@ setMethod(f = ".newTxSubset",
 #' @rdname TxSubsetFactor-methods
 setMethod(f = ".convertFromBinary",
           signature = c("txObj" = "TxSubsetFactor"),
-          definition = function(txObj, txVec, ...){
+          definition = function(txObj, ..., txVec){
+
               optVec <- .convertFromBinary(txObj = as(object  = txObj,
                                                       Class = "TxSubset"),
-                                         txVec = txVec, ...)
+                                           txVec = txVec, ...)
+
               optVec <- .convertTx(object = txObj, txVec = optVec)
 
               return( optVec )
@@ -66,26 +67,42 @@ setMethod(f = ".convertFromBinary",
 #' @rdname TxSubsetFactor-methods
 setMethod(f = ".convertToBinary",
           signature = c("txObj" = "TxSubsetFactor"),
-          definition = function(txObj, data, ...){
-              txVec <- rep(x = -1.0, times = nrow(x = data))
+          definition = function(txObj, ..., txVec, data){
 
+              # default all individuals to base level
+              newTx <- rep(x = -1.0, times = nrow(x = data))
+
+              # subsets identified through fSet
               subsets <- .getSubsets(object = txObj)
 
+              # subset to which each individuals belongs
               ptsSubsets <- .getPtsSubset(object = txObj)
 
               for (i in 1L:length(x = subsets)) {
-                levs <- subsets[[ i ]]
 
-                if (length(x = levs) == 1L) {
-                  next
-                } else if (length(x = levs) == 2L) {
+                if (length(x = subsets[[ i ]]) == 1L) {
+                  # if the subset is a singlet determine if training data
+                  # received tx in accordance with set
+                  txInData <- levels(x = data[,.getTxName(object = txObj)])
+
+                  # if there is only 1 tx in data, keep default -1 value
+                  if (length(x = txInData) == 1L) next
+
+                  # if there is > 1 tx in data, set appropriately
                   usePts <- ptsSubsets == names(x = subsets)[i]
-                  txVec[usePts & {data[,.getTxName(object = txObj)] == levs[2L]}] <- 1.0
+                  nonBase <- txVec == txInData[2L]
+                  newTx[usePts & nonBase] <- 1.0
+
+                } else if (length(x = subsets[[ i ]]) == 2L) {
+                  # if the subset is a binary set appropriately
+                  usePts <- ptsSubsets == names(x = subsets)[i]
+                  nonBase <- txVec == subsets[[ i ]][2L]
+                  newTx[usePts & nonBase] <- 1.0
                 } else { 
-                  stop("non-binary tx")
+                  stop("non-binary tx", call. = FALSE)
                 }
               }
-              return( txVec )
+              return( newTx )
             })
 
 #' \code{.getPtsSubset(object)}

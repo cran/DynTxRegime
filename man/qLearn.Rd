@@ -4,8 +4,17 @@
 \alias{qLearn}
 \title{A Step of the Q-Learning Algorithm}
 \usage{
-qLearn(..., moMain, moCont, data, response, txName, fSet = NULL,
-  iter = 0L, verbose = TRUE)
+qLearn(
+  ...,
+  moMain,
+  moCont,
+  data,
+  response,
+  txName,
+  fSet = NULL,
+  iter = 0L,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{...}{ignored. Provided to require named inputs.}
@@ -47,7 +56,7 @@ An object of class \link{QLearn-class}
 Performs a single step of the Q-Learning algorithm.
    If an object of class \code{QLearn} is passed through input response, 
    it is assumed that the \code{QLearn} object is the value object returned
-   in preceding step of the Q-Learning algorithm, and
+   from the preceding step of the Q-Learning algorithm, and
    the value fit by the regression is taken from the \code{QLearn} object.
    If a vector is passed through input response, it is assumed that the
    call if for the first step in the Q-Learning algorithm, and 
@@ -124,18 +133,27 @@ fitFS <- qLearn(moMain = moMain, moCont = moCont,
 
 }
 \seealso{
-Other statistical methods: \code{\link{bowl}},
-  \code{\link{earl}}, \code{\link{iqLearn}},
-  \code{\link{optimalClass}}, \code{\link{optimalSeq}},
-  \code{\link{owl}}, \code{\link{rwl}}
+Other statistical methods: 
+\code{\link{bowl}()},
+\code{\link{earl}()},
+\code{\link{iqLearn}},
+\code{\link{optimalClass}()},
+\code{\link{optimalSeq}()},
+\code{\link{owl}()},
+\code{\link{rwl}()}
 
-Other multiple decision point methods: \code{\link{bowl}},
-  \code{\link{iqLearn}}, \code{\link{optimalClass}},
-  \code{\link{optimalSeq}}
+Other multiple decision point methods: 
+\code{\link{bowl}()},
+\code{\link{iqLearn}},
+\code{\link{optimalClass}()},
+\code{\link{optimalSeq}()}
 
-Other single decision point methods: \code{\link{earl}},
-  \code{\link{optimalClass}}, \code{\link{optimalSeq}},
-  \code{\link{owl}}, \code{\link{rwl}}
+Other single decision point methods: 
+\code{\link{earl}()},
+\code{\link{optimalClass}()},
+\code{\link{optimalSeq}()},
+\code{\link{owl}()},
+\code{\link{rwl}()}
 }
 \concept{multiple decision point methods}
 \concept{single decision point methods}

@@ -407,18 +407,38 @@ optimalSeq <- function(...,
     }
   }
 
-  if (is(object = moPropen, class2 = "ModelObj_SubsetList") ||
-      is(object = moMain, class2 = "ModelObj_SubsetList") || 
-      is(object = moCont, class2 = "ModelObj_SubsetList")) {
-    if (is.null(x = fSet)) {
-      stop("fSet must be provided when subset modeling requested")
+  if (nDP == 1L) {
+    if (is(object = moPropen, class2 = "ModelObj_SubsetList")) {
+      if (!is.function(x = fSet)) {
+        stop("if subset structure in moPropen, fSet must be provided")
+      }
     }
-  } else if (nDP > 1L &&
-            {is(object = moPropen[[ 1L ]], class2 = "ModelObj_SubsetList") ||
-             is(object = moMain[[ 1L ]], class2 = "ModelObj_SubsetList") || 
-             is(object = moCont[[ 1L ]], class2 = "ModelObj_SubsetList")}) {
-    if (is.null(x = fSet)) {
-      stop("fSet must be provided when subset modeling requested")
+    if (is(object = moMain, class2 = "ModelObj_SubsetList")) {
+      if (!is.function(x = fSet)) {
+        stop("if subset structure in moMain, fSet must be provided")
+      }
+    }
+    if (is(object = moCont, class2 = "ModelObj_SubsetList")) {
+      if (!is.function(x = fSet)) {
+        stop("if subset structure in moCont, fSet must be provided")
+      }
+    }
+
+  } else if (nDP > 1L) {
+    if (is(object = moPropen[[ 1L ]], class2 = "ModelObj_SubsetList")) {
+      if (!is.function(x = fSet[[ 1L ]])) {
+        stop("if subset structure in moPropen, fSet must be provided")
+      }
+    }
+    if (is(object = moMain[[ 1L ]], class2 = "ModelObj_SubsetList")) {
+      if (!is.function(x = fSet[[ 1L ]])) {
+        stop("if subset structure in moMain, fSet must be provided")
+      }
+    }
+    if (is(object = moCont[[ 1L ]], class2 = "ModelObj_SubsetList")) {
+      if (!is.function(x = fSet[[ 1L ]])) {
+        stop("if subset structure in moCont, fSet must be provided")
+      }
     }
   }
 

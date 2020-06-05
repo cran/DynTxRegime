@@ -63,10 +63,9 @@ setMethod(f = ".compareTx",
 #' @rdname TxObj-methods
 setMethod(f = ".convertFromBinary",
           signature = c("txObj" = "TxObj"),
-          definition = function(txObj, txVec, ...){
+          definition = function(txObj, ...){
 
-              return( .convertFromBinary(txObj = txObj@txInfo,
-                                         txVec = txVec, ...) )
+              return( .convertFromBinary(txObj = txObj@txInfo, ...) )
             })
 
 #' \code{.convertToBinary(txObj, data)}
@@ -75,9 +74,8 @@ setMethod(f = ".convertFromBinary",
 #' @rdname TxObj-methods
 setMethod(f = ".convertToBinary",
           signature = c("txObj" = "TxObj"),
-          definition = function(txObj, data, ...){
-              return( .convertToBinary(txObj = txObj@txInfo,
-                                       data = data, ...) )
+          definition = function(txObj, ...){
+              return( .convertToBinary(txObj = txObj@txInfo, ...) )
             })
 
 #' \code{.compareTx(object, vec1, vec2)}

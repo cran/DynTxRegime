@@ -173,14 +173,20 @@ Laber, EB, Linn, KA, and Stefanski, LA (2014).
   Biometrika, 101, 831--847. PMCID: PMC4274394.
 }
 \seealso{
-Other statistical methods: \code{\link{bowl}},
-  \code{\link{earl}}, \code{\link{optimalClass}},
-  \code{\link{optimalSeq}}, \code{\link{owl}},
-  \code{\link{qLearn}}, \code{\link{rwl}}
+Other statistical methods: 
+\code{\link{bowl}()},
+\code{\link{earl}()},
+\code{\link{optimalClass}()},
+\code{\link{optimalSeq}()},
+\code{\link{owl}()},
+\code{\link{qLearn}()},
+\code{\link{rwl}()}
 
-Other multiple decision point methods: \code{\link{bowl}},
-  \code{\link{optimalClass}}, \code{\link{optimalSeq}},
-  \code{\link{qLearn}}
+Other multiple decision point methods: 
+\code{\link{bowl}()},
+\code{\link{optimalClass}()},
+\code{\link{optimalSeq}()},
+\code{\link{qLearn}()}
 }
 \concept{multiple decision point methods}
 \concept{statistical methods}

@@ -5,8 +5,23 @@
 \alias{.newEARL}
 \title{Complete an EARL Analysis}
 \usage{
-.newEARL(moPropen, moMain, moCont, data, response, txName, lambdas,
-  cvFolds, surrogate, iter, guess, kernel, fSet, suppress, ...)
+.newEARL(
+  moPropen,
+  moMain,
+  moCont,
+  data,
+  response,
+  txName,
+  lambdas,
+  cvFolds,
+  surrogate,
+  iter,
+  guess,
+  kernel,
+  fSet,
+  suppress,
+  ...
+)
 }
 \arguments{
 \item{moPropen}{modelObj for propensity modeling}

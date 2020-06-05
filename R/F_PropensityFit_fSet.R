@@ -109,6 +109,9 @@ setMethod(f = ".predictAll",
                                  suppress = TRUE,
                                  verify = FALSE)
 
+              # this combination of modelObj and TxInfoWithSubsets
+              # is only used when singletons are not included in
+              # models; and thus they should not be sent to prediction methods
               singles <- .getSingleton(object = txNew)
 
               levs <- object@levs
@@ -163,7 +166,12 @@ setMethod(f = ".predictAll",
 
               mm[!singles,cols] <- res
 
-              if (any(.getSingleton(object = txNew))) {
+              if (any(singles)) {
+                # this combination of modelObj and TxInfoWithSubsets
+                # is only used when singletons are not included in
+                # models; and thus they should not be sent to prediction 
+                # methods and their propensity for receiving the 
+                # only feasible tx should be set to 1
 
                 subsets <- .getSubsets(object = object@txInfo)
                 ptsSubset <- .getPtsSubset(object = txNew)

@@ -8,8 +8,7 @@
 \usage{
 .newClassificationObj(moClass, txObj, ...)
 
-\S4method{.newClassificationObj}{ANY}(moClass, txObj, data, response,
-  suppress, ...)
+\S4method{.newClassificationObj}{ANY}(moClass, txObj, data, response, suppress, ...)
 }
 \arguments{
 \item{moClass}{modeling object(s) defining the classification regression}

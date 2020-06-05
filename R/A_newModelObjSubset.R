@@ -29,6 +29,8 @@
   cnt <- 0L
   dpcnt <- 0L
 
+  msg <- NULL
+
   while (cnt < numModels) {
 
     ssList <- list()
@@ -49,7 +51,7 @@
     }
 
     if (length(x = ssList) == 0L) {
-      warning(paste("no subsets found for decision point", dp))
+      msg <- c(msg, paste("no subsets found for decision point", dp))
     } else {
       dptList[[ dp ]] <- new(Class = "ModelObj_SubsetList", ssList)
       dpcnt <- dpcnt + 1L
@@ -61,9 +63,11 @@
   if (dpcnt > 1L) {
     testNULL <- sapply(X = dptList, FUN = is.null)
     if (any(testNULL)) {
-      stop(paste("models for decision point", which(testNULL), "missing"))
+      stop(paste("models for decision point", which(testNULL), "missing"),
+           call. = FALSE)
     }
     obj <- new(Class = "ModelObj_DecisionPointList", dptList)
+    if (!is.null(msg)) warning(msg, call. = FALSE)
   } else {
     obj <- dptList[[ length(x = dptList) ]]
   }

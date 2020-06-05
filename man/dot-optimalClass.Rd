@@ -4,8 +4,19 @@
 \alias{.optimalClass}
 \title{Perform Classification Step}
 \usage{
-.optimalClass(moPropen, moMain, moCont, moClass, data, response, txName,
-  iter, fSet, suppress, step)
+.optimalClass(
+  moPropen,
+  moMain,
+  moCont,
+  moClass,
+  data,
+  response,
+  txName,
+  iter,
+  fSet,
+  suppress,
+  step
+)
 }
 \arguments{
 \item{moPropen}{model object(s) for propensity regression}

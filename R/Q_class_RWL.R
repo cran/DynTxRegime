@@ -139,7 +139,9 @@ setMethod(f = ".newRWL",
                                        index = rep(x = TRUE, times = nrow(x = data)), ...)
 
               # recast tx as -1/1
-              txVec <- .convertToBinary(txObj = analysis@txInfo, data = data)
+              txVec <- .convertToBinary(txObj = analysis@txInfo, 
+                                        txVec = data[,txName],
+                                        data = data)
 
               # get propensity for tx received
               prWgt <- .getPrWgt(propenObj = as(object = analysis, 
@@ -186,8 +188,10 @@ setMethod(f = ".newRWL",
 
               rwlObj@x <- kern
 
-              if (is(analysis@txInfo, "TxSubset")) {
+              if (is(object = analysis@txInfo, class2 = "TxSubset")) {
+
                 singles <- .getSingleton(object = analysis@txInfo)
+
                 rwlObj <- .subsetObject(rwlObj, !singles)
                 if (!is(object = kernel, class2 = "LinearKernel")) {
                   rwlObj@x <- rwlObj@x[,!singles,drop=FALSE]
@@ -246,7 +250,9 @@ setMethod(f = ".newRWL",
                                        index = rep(x = TRUE, times = nrow(x = data)), ...)
 
               # recast tx as -1/1
-              txVec <- .convertToBinary(txObj = analysis@txInfo, data = data)
+              txVec <- .convertToBinary(txObj = analysis@txInfo,
+                                        txVec = data[,txName], 
+                                        data = data)
 
               # extract optimal parameters
               par <- regimeCoef(object = analysis)

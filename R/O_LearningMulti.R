@@ -82,7 +82,9 @@ setMethod(f = ".newLearning",
                                  suppress = suppress == 0L)
 
               # recast tx as -1/1
-              txVec <- .convertToBinary(txObj = txObj, data = data)
+              txVec <- .convertToBinary(txObj = txObj, 
+                                        txVec = data[,txName],
+                                        data = data)
 
               # complete propensity regression
               propenObj <- .newPropensityObj(moPropen = moPropen,

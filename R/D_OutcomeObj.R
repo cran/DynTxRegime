@@ -92,6 +92,11 @@ setMethod(f = ".newOutcomeObj",
 
               if (!suppress ) cat("\nOutcome regression.\n")
 
+              .checkFSetAndOutcomeModels(txObj = txObj, 
+                                         moMain = moMain,  
+                                         moCont = moCont,
+                                         data = data)
+
               return( new(Class = "OutcomeObj",
                           outcome = .newOutcomeFit(moMain = moMain,
                                                    moCont = moCont,
@@ -119,6 +124,11 @@ setMethod(f = ".newOutcomeObj",
   while (nDP > 0L) {
 
     if (!suppress) cat("Decision Point", nDP, "\n")
+
+    .checkFSetAndOutcomeModels(txObj = txObj@txInfo[[ nDP ]], 
+                               moMain = moMain[[ nDP ]],  
+                               moCont = moCont[[ nDP ]],
+                               data = data)
 
     QfitObj[[ nDP ]] <- .newOutcomeFit(moMain = moMain[[ nDP ]],
                                        moCont = moCont[[ nDP ]],
@@ -284,6 +294,22 @@ setMethod(f = ".predictAll",
                                     newdata = newdata, ...) )
               }
             })
+
+#' Make Predictions Regression for All Tx
+#'
+#' \code{.predictMu(object, newdata)}
+#'   predicts outcome for all tx options.
+#'   Returns the matrix of outcomes predicted for all tx. 
+#'   Predicted outcomes for tx not available to a pt are NA.
+#'
+#' @rdname OutcomeObj-methods
+setMethod(f = ".predictMu",
+          signature = c(object = "OutcomeObj",
+                        data = "data.frame"),
+          definition = function(object, data, ...) {
+              return( .predictMu(object = object@outcome, data = data) )
+            })
+
 
 #' Make Predictions
 #'

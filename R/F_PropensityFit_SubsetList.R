@@ -53,6 +53,8 @@ setMethod(f = ".newPropensityFit",
               subsets <- .getSubsets(object = txObj)
               ptsSubset <- .getPtsSubset(object = txObj)
 
+              txReceived <- data[,txName]
+
               small <- NULL
               levs <- list()
 
@@ -69,10 +71,7 @@ setMethod(f = ".newPropensityFit",
                  }
 
                 # identify all tx options for the subset(s)
-                txOpts <- NULL
-                for (j in 1L:length(x = modelSubset)) {
-                  txOpts <- unique(x = c(txOpts, subsets[[ modelSubset[j] ]]))
-                }
+                txOpts <- unique(x = txReceived[use4fit])
 
                 levs[[ i ]] <- superset[superset %in% txOpts]
                 small[i] <- moPropen[[ i ]]@predictor@propenMissing == "smallest"
@@ -175,6 +174,10 @@ setMethod(f = ".predictAll",
                                ncol = length(x = superset),
                                dimnames = list(NULL, superset))
 
+              # track individuals not included in modeling
+              # (i.e. singletons not included)
+              notIncluded <- rep(x = TRUE, times = nrow(x = newdata))
+
               for (i in 1L:length(x = object@fits)) {
 
                 # extract subsets included in regression
@@ -184,6 +187,8 @@ setMethod(f = ".predictAll",
                 # identify any new pts in the subset(s)
                 usePts <- ptsSubset %in% nmSubsets
                 if (!any(usePts) ) next
+
+                notIncluded[usePts] <- FALSE
 
                 # call predict method
                 mm <- predict(object = object@fits[[ i ]], 
@@ -234,13 +239,20 @@ setMethod(f = ".predictAll",
               }
 
               # set prediction to 1 for pts with only 1 tx option
-              if (any(.getSingleton(object = txNew))) {
+              if (any(notIncluded)) {
+                # if individuals not included in modeling, they have only
+                # 1 tx options available and the subset received only 1 tx
+                # identify the subsets and set P(A|X) = 1 for these
                 for (i in 1L:length(x = subsets)) {
                   if (length(x = subsets[[ i ]]) != 1L ) next
-                  reset <- ptsSubset == names(x = subsets)[i]
-                  colMatch <- match(x = subsets[[ i ]][1L], table = superset)
-                  result[reset, colMatch] <- 1.0
+                  reset <- {ptsSubset == names(x = subsets)[i]} & notIncluded
+                  if (any(reset)) {
+                    colMatch <- match(x = subsets[[ i ]][1L], table = superset)
+                    result[reset, colMatch] <- 1.0
+                    notIncluded[reset] <- FALSE
+                  }
                 }
+                if (any(notIncluded)) stop("contact developer code 201")
               }
 
               return( result )
