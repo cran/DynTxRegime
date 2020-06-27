@@ -1,3 +1,13 @@
+DynTxRegime v4.5 (Release date: 2020-06-20)
+==============
+
+Changes:
+
+* Fixed intercept only contrast model redefine
+* Fixed flag for verification for zero propensity in optimalSeq
+* Fixed incorrect message for subsets not modeled in propensity
+
+
 DynTxRegime v4.4 (Release date: 2020-06-02)
 ==============
 

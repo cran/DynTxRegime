@@ -500,7 +500,7 @@ setMethod(f = ".seqFunc",
   prWgt <- pr[cbind(1L:nrow(x = data),tst)]
 
   if (any(is.infinite(x = 1.0/prWgt))) {
-    stop("zero valued propensity encountered")
+    prWgt[is.infinite(x = 1.0/prWgt)] <- 1e-8
   }
 
   if (any(is.na(x = prWgt))) stop("NA valued propensity encountered")

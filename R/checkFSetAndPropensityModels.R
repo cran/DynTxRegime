@@ -190,8 +190,8 @@ setMethod(f = ".checkFSetAndPropensityModels",
                 }
 
                 if (!is.null(x = ssList)) {
-                  message("NOTE: subset(s) ", paste(ssList, collapse = ", "), 
-                          " received tx not in accordance with specified feasible tx sets")
+                  message("subset(s) ", paste(ssList, collapse = ", "), 
+                          " excluded from propensity regression")
                 }
               }
 

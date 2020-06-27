@@ -22,8 +22,11 @@
   tempCont <- stats::terms(x = model)
   contPart <- paste(attr(x = tempCont, which = "term.labels"), collapse="+")
 
-  if (attr(x = tempCont, which = "intercept") > 0.5) {
+  if (attr(x = tempCont, which = "intercept") > 0.5 & nchar(x = contPart) > 0L) {
     contPart <- paste0(txName, " + ", txName, ":(", contPart, ")")
+
+  } else if (attr(x = tempCont, which = "intercept") > 0.5) {
+    contPart <- txName
 
   } else {
     contPart <- paste0(txName, ":(", contPart, ")")

@@ -1,6 +1,6 @@
-33b27ec4ff918d6f68dd9e08479b9f63 *DESCRIPTION
+63208700ab226ca5e1f0e00357ec3741 *DESCRIPTION
 6d6984950c44ebd959f7ad46932564d7 *NAMESPACE
-e353581bdb2fca12e79ad47199df7c94 *NEWS
+7669a4bfdebc82b692a329fe8944d7ee *NEWS
 fa5a15c0f5d8c53606d3d288052983d4 *R/A_DecisionPointList.R
 22ba63c7d969d9ba4dc2b243eceefe51 *R/A_DynTxRegime.R
 2254a7415069c78407b26c949f3730b1 *R/A_List.R
@@ -32,7 +32,7 @@ a2817af7fcba6fee391fb2ad7ad6fa92 *R/D_OutcomeObj.R
 cd667201161f92697b33e032230a08fd *R/D_OutcomeSimpleFit.R
 f6ed2ea585d9f07e806c3bdcc6e1adb3 *R/D_OutcomeSimpleFit_SubsetList.R
 053ecd7b78694fa26ec804ce9b88d418 *R/D_OutcomeSimpleFit_fSet.R
-a0a08696f3fc4215c57c22a7bdf5abb2 *R/D_newModel.R
+6478b9f4f14b69b050a1baa3386ca946 *R/D_newModel.R
 b835a1c1be4eae59a8a309078a980471 *R/E_class_IQLearnFS.R
 ee60ed9dd6cf68d145c9021fdcd35ba8 *R/E_class_IQLearnFS_C.R
 e9bb978663789f141c2b3d07b312b972 *R/E_class_IQLearnFS_ME.R
@@ -52,7 +52,7 @@ c81d1c2ca567a4f807d56752ef80ece6 *R/G_Regime.R
 d3c9095af1f7ab1d54f939731d3a16a7 *R/G_RegimeObj.R
 9de6f6ec10529b0cf273f42623c0cac9 *R/H_class_OptimalSeq.R
 1d3d149b0fca275c998ace751897ffc9 *R/H_class_OptimalSeqCoarsened.R
-32b63d626b08d1505e355f7d10fcaf5e *R/H_class_OptimalSeqMissing.R
+a7173497f757436e4336c8103154f4c0 *R/H_class_OptimalSeqMissing.R
 9287c0df2b9f62b4d71f8d3c2c54e86d *R/H_optimalSeq.R
 ba2859ce7d758583cf13346a6660e3d7 *R/I_ClassificationFit.R
 93497846b79e4d42afb0be0744b9ed46 *R/I_ClassificationFit_SubsetList.R
@@ -100,7 +100,7 @@ b3940b67e855b2b16c8df79f20cfd1aa *R/S_class_.earl.R
 efd463a1a3aa1d6d9099fe53396665b2 *R/S_class_EARL.R
 0167e79b421dd4a23a2409eb397d8cf9 *R/S_earl.R
 ca51330b3fae63321a8de13d21297c2b *R/checkFSetAndOutcomeModels.R
-de0b3cb8f2ec14ab771ee50c31228e1b *R/checkFSetAndPropensityModels.R
+a9418f5875e30ed52765dbc287ffcd87 *R/checkFSetAndPropensityModels.R
 705939998fb804193d7239a409cb6796 *R/checkInputs.R
 ecf6d61a35c5bab265a6ea8de01cddfd *R/internalTest.R
 11832b5d3eaa123276242c50b4e9dd7e *R/titleIt.R
