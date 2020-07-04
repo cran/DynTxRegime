@@ -244,7 +244,7 @@ setMethod(f = "summary",
 
   argList[[ 'fn' ]] <- .seqFunc
   argList[[ 'nvars' ]] <- .getNumPars(object = regimesObj)
-  argList[[ 'print.level' ]] <- 0L
+  argList[[ 'print.level' ]] <- !suppress
   argList[[ 'max' ]] <- TRUE
   argList[[ 'gradient.check' ]] <- FALSE
   argList[[ 'BFGS' ]] <- FALSE

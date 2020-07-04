@@ -425,6 +425,7 @@ setMethod(f = ".seqFunc",
 
                   qFunc[,i] <- mu
                 }
+                qFunc[is.na(qFunc)] <- 0.0
               }
 
               # cumInd = 1 if patient followed tx regime up to the ith dp.
@@ -455,6 +456,7 @@ setMethod(f = ".seqFunc",
               # DR = sum ----------------------------------------------- mu_i
               #       i               Pr(C_{eta} > i)
               DR <- rowSums(x = {C - lambda*cumInd} / pc * qFunc)
+
 
               #     (   I(C_{eta} = infinity)        )
               # mean|   --------------------- Y + DR |
