@@ -106,6 +106,8 @@ NULL
 
   if (!suppress) message("Classification Perspective.")
 
+  isna <- is.na(x = response)
+
   # process tx information
   txObj <- .newTxObj(fSet = fSet,
                      txName = txName,
@@ -118,17 +120,25 @@ NULL
                                  data = data,
                                  suppress = suppress)
 
+  # process tx information for those that have valid responses
+  txObj2 <- .newTxObj(fSet = fSet,
+                      txName = txName,
+                      data = data[!isna,],
+                      suppress = suppress)
+  data <- data[!isna,]
+  response <- response[!isna]
+
   # complete outcome regression
   outcomeObj <- .newOutcomeObj(moMain = moMain,
                                moCont = moCont,
                                data = data,
                                response = response,
-                               txObj = txObj,
+                               txObj = txObj2,
                                iter = iter,
                                suppress = suppress)
 
   # calculate contrasts
-  contrast <- .contrastFunc(txObj = txObj,
+  contrast <- .contrastFunc(txObj = txObj2,
                             outcomeObj = outcomeObj,
                             propenObj = propenObj,
                             data = data,
@@ -162,7 +172,7 @@ NULL
   classObj <- .newClassificationObj(moClass = moClass,
                                     data = data,
                                     response = ZinternalZ,
-                                    txObj = txObj,
+                                    txObj = txObj2,
                                     suppress = suppress)
 
   # recommended tx in coding of prediction method
@@ -175,13 +185,9 @@ NULL
 
   oHold <- opt
 
-  if (any(is.na(x = opt))) {
-    opt[is.na(x = opt)] <- data[is.na(x = opt), txName]
-  }
-
   # get estimated outcome for each tx; matrix is in binary coding
   mu <- .getOutcome(outcomeObj = outcomeObj, 
-                    txObj = txObj, 
+                    txObj = txObj2, 
                     data = data)
 
   tstNA <- is.na(x = mu)
@@ -189,18 +195,19 @@ NULL
 
   # get propensity for recommended tx
   prWgt <- .getPrWgt(propenObj = propenObj, 
-                     txObj = txObj,  
+                     txObj = txObj2,  
                      data = data)
 
   # convert received tx to binary -1/1
-  txVec <- .convertToBinary(txObj = txObj, 
+  txVec <- .convertToBinary(txObj = txObj2, 
                             txVec = data[,txName],
                             data = data)
 
-  if (is(object = txObj@txInfo, class2 = "TxSubset")) {
+  # generate optimal tx in original coding
+  if (is(object = txObj2@txInfo, class2 = "TxSubset")) {
     optTx <- NULL
-    subsets <- .getSubsets(object = txObj)
-    ptsSubset <- .getPtsSubset(object = txObj)
+    subsets <- .getSubsets(object = txObj2)
+    ptsSubset <- .getPtsSubset(object = txObj2)
     for (i in 1L:length(x = subsets)) {
       usePts <- ptsSubset == names(x = subsets)[i]
       if (length(x = subsets[[ i ]]) == 2L) {
@@ -212,7 +219,7 @@ NULL
       }
     }
   } else {
-    superset <- .getSuperset(object = txObj)
+    superset <- .getSuperset(object = txObj2)
     optTx <- NULL
     base <- oHold %in% c("0",0)
     optTx[base] <- superset[1L]
@@ -225,22 +232,27 @@ NULL
   qTilde <- qTilde[cbind(1L:nrow(x = data), 
                          match(x = optTx, table = colnames(x = qTilde)))]
 
-  # contrast function
+  # value function
   value <- cTilde * response / prWgt - {cTilde - prWgt}/prWgt * qTilde
 
-  if (is(object = txObj, class2 = "TxInfoWithSubsets")) {
-    singles <- .getSingleton(object = txObj)
+  if (is(object = txObj2, class2 = "TxInfoWithSubsets")) {
+    singles <- .getSingleton(object = txObj2)
     singles <- singles & rowSums(abs(x = mu)) <= 1e-8 & cTilde
     value[singles] <- {response / prWgt}[singles]
   }
 
   if (is.null(x = moMain) && is.null(x = moCont)) value[!cTilde] <- NA
 
+  val <- rep(x = NA, time = length(x = isna))
+  val[!isna] <- value
+  opt <- rep(x = NA, time = length(x = isna))
+  opt[!isna] <- optTx
+
   optObj <- new(Class = "OptimalObj",
                 optimal = new(Class = "OptimalInfo",
                               "decisionFunc"   = NA,
-                              "estimatedValue" = value,
-                              "optimalTx"      = optTx))
+                              "estimatedValue" = val,
+                              "optimalTx"      = opt))
 
   if (!suppress) {
     print(x = optObj)
@@ -313,8 +325,8 @@ setMethod(f = ".newOptimalClass",
 
               tst <- is.na(x = response@analysis@optimal@estimatedValue)
               if (sum(tst) > 0L) {
-                message("removed ", sum(tst), 
-                        " individuals that did not follow estimated optimal",
+                message(sum(tst), 
+                        " individuals did not follow estimated optimal",
                         " tx in preceeding step(s)")
               }
 
@@ -322,23 +334,13 @@ setMethod(f = ".newOptimalClass",
                                         moMain = moMain,
                                         moCont = moCont,
                                         moClass = moClass,
-                                        data = data[!tst,],
-                                        response = response@analysis@optimal@estimatedValue[!tst],
+                                        data = data,
+                                        response = response@analysis@optimal@estimatedValue,
                                         txName = txName,
                                         iter = iter,
                                         fSet = fSet,
                                         suppress = suppress,
                                         step = step)
-
-              if (any(tst)) {
-                estV <- rep(x = NA, times = nrow(x = data))
-                estV[!tst] <- analysis@analysis@optimal@estimatedValue
-                analysis@analysis@optimal@estimatedValue <- estV
-
-                estTx <- rep(x = NA, times = nrow(x = data))
-                estTx[!tst] <- analysis@analysis@optimal@optimalTx
-                analysis@analysis@optimal@optimalTx <- estTx
-              }
 
               return( analysis )
 

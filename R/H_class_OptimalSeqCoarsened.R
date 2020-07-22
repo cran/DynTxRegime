@@ -461,6 +461,7 @@ setMethod(f = ".seqFunc",
               #     (   I(C_{eta} = infinity)        )
               # mean|   --------------------- Y + DR |
               #     (      Pr(C_{eta} > K)           )
+
               mn <- sum(DR + AC / pc[,nDP] * response, na.rm=TRUE) / nSamples
 
               return( mn )

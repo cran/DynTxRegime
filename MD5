@@ -1,6 +1,6 @@
-debf2f17f3aa712c5a7e0cc29ae03dcf *DESCRIPTION
+a04a63edbbec8c6dc4e1ae18f8d28f70 *DESCRIPTION
 6d6984950c44ebd959f7ad46932564d7 *NAMESPACE
-4e2acce9d3b82ff319856bbf54730cc0 *NEWS
+1cd3bb08dc6b3b6eebdd7684895b09f4 *NEWS
 fa5a15c0f5d8c53606d3d288052983d4 *R/A_DecisionPointList.R
 22ba63c7d969d9ba4dc2b243eceefe51 *R/A_DynTxRegime.R
 2254a7415069c78407b26c949f3730b1 *R/A_List.R
@@ -51,14 +51,14 @@ acfbfada13d16c6929c1c7913c07e318 *R/F_PropensityFit_fSet.R
 c81d1c2ca567a4f807d56752ef80ece6 *R/G_Regime.R
 d3c9095af1f7ab1d54f939731d3a16a7 *R/G_RegimeObj.R
 0f255170f061827585820d01bbc36896 *R/H_class_OptimalSeq.R
-ad00f118babfb98eb14edd658ea4d242 *R/H_class_OptimalSeqCoarsened.R
+ef8fdee14e19fb1c2624c0e7afe940bb *R/H_class_OptimalSeqCoarsened.R
 a7173497f757436e4336c8103154f4c0 *R/H_class_OptimalSeqMissing.R
 9287c0df2b9f62b4d71f8d3c2c54e86d *R/H_optimalSeq.R
 ba2859ce7d758583cf13346a6660e3d7 *R/I_ClassificationFit.R
 93497846b79e4d42afb0be0744b9ed46 *R/I_ClassificationFit_SubsetList.R
 ad17a8861437c3519e427e502500943d *R/I_ClassificationFit_fSet.R
 ab160e2a177a36c1d3291cff2b9629f9 *R/I_ClassificationObj.R
-4505cecb25014fdbd6a2074a0d58016d *R/J_class_OptimalClass.R
+d78c2029184d8d7efa9052aa5c375ea3 *R/J_class_OptimalClass.R
 e16e6e210ce9278b04e21d550a35c6b2 *R/J_optimalClass.R
 06f32ba96d539b242b58a36a7c123c41 *R/K_Kernel.R
 a50483c2b8a618b585c14229bba62290 *R/K_KernelObj.R
