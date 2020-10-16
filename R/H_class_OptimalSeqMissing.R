@@ -492,6 +492,7 @@ setMethod(f = ".seqFunc",
   pr <- .predictAll(object = propenObj, newdata = data)
 
   # match column names of pr matrix to tx received
+
   tst <- match(x = data[,.getTxName(object = txObj)], table = colnames(x = pr))
   if (any(is.na(x = tst))) stop("unable to match tx to propensity")
   if (length(x = tst) != nrow(x = data)) stop("dim problem")

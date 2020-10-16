@@ -1,6 +1,6 @@
-a04a63edbbec8c6dc4e1ae18f8d28f70 *DESCRIPTION
+02e3fe7a109d2bd3f57ce0e45ddedf79 *DESCRIPTION
 6d6984950c44ebd959f7ad46932564d7 *NAMESPACE
-1cd3bb08dc6b3b6eebdd7684895b09f4 *NEWS
+bec5fd3e58f3e4b11c42b57a4cb27c35 *NEWS
 fa5a15c0f5d8c53606d3d288052983d4 *R/A_DecisionPointList.R
 22ba63c7d969d9ba4dc2b243eceefe51 *R/A_DynTxRegime.R
 2254a7415069c78407b26c949f3730b1 *R/A_List.R
@@ -52,7 +52,7 @@ c81d1c2ca567a4f807d56752ef80ece6 *R/G_Regime.R
 d3c9095af1f7ab1d54f939731d3a16a7 *R/G_RegimeObj.R
 0f255170f061827585820d01bbc36896 *R/H_class_OptimalSeq.R
 ef8fdee14e19fb1c2624c0e7afe940bb *R/H_class_OptimalSeqCoarsened.R
-a7173497f757436e4336c8103154f4c0 *R/H_class_OptimalSeqMissing.R
+614d605bbb1e0f6081d39620c7f06429 *R/H_class_OptimalSeqMissing.R
 9287c0df2b9f62b4d71f8d3c2c54e86d *R/H_optimalSeq.R
 ba2859ce7d758583cf13346a6660e3d7 *R/I_ClassificationFit.R
 93497846b79e4d42afb0be0744b9ed46 *R/I_ClassificationFit_SubsetList.R
@@ -85,7 +85,7 @@ e3a1844ebb7c86386c9c94ba0bfea49d *R/N_CVInfoObj.R
 8ff40deb43c9c6f4c8a4dcac47ac9c9a *R/N_CVInfokParam.R
 2cef9ce3e57985daf54d1fb84d1ed27f *R/N_OptimStep.R
 060f1a0a8635a62c5805f314a5944bcf *R/O_Learning.R
-bd68b0a92451e9231e52a5f6a4a423e1 *R/O_LearningMulti.R
+19aa61adbc2a317bad2def342a4ba263 *R/O_LearningMulti.R
 115bc24b98e4ec0eb14102eef9422c05 *R/O_LearningObject.R
 c27aa3ae75176d4b9c0adf14c6074245 *R/P_class_.owl.R
 fb9d66e05029f53e10a17e4c0c69196e *R/P_class_OWL.R

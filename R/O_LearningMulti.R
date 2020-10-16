@@ -257,12 +257,20 @@ setMethod(f = "optTx",
           signature = c(x = "LearningMulti",
                         newdata = "data.frame"),
           definition = function(x, newdata, ...) {
+              txName <- .getTxName(object = x@txInfo)
+              if (!any(colnames(x = newdata) %in% txName)) {
+                nms <- colnames(x = newdata)
+                newdata <- cbind(newdata, .getSuperset(object = x@txInfo)[1L])
+                colnames(x = newdata) <- c(nms, txName)
+              } else {
+                newdata[,txName] <- .getSuperset(object = x@txInfo)[1L]
+              }
 
               # process tx information for new data
               txObj <- .newTxObj(txName = .getTxName(x@txInfo),
                                  data = newdata,
                                  fSet = .getSubsetRule(x@txInfo),
-                                 suppress = TRUE)
+                                 suppress = TRUE, verify = FALSE)
 
               # extract new patient subset assignments
               ptsSubset <- .getPtsSubset(object = txObj)
@@ -296,6 +304,18 @@ setMethod(f = "optTx",
               # optimal tx returned as -1/+1; convert to original coding
               topt <- .convertFromBinary(txObj = txObj,
                                          txVec = optVec)
+
+              levels(x = topt) <- .getSuperset(object = x@txInfo)
+
+              if (any(is.na(x = topt))) {
+                tst <- is.na(x = topt)
+                for (i in 1L:length(x = subsets)) {
+                  inSubset <- ptsSubset == names(x = subsets)[i]
+                  if (sum(tst[inSubset]) == 0L) next
+                  if (length(x = subsets[[ i ]]) > 1L) stop("contact developer")
+                  topt[inSubset] <- subsets[[ i ]]
+               }
+              }
 
               return( list("optimalTx" = topt,
                            "decisionFunc" = df) )
