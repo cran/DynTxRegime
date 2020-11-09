@@ -1,3 +1,10 @@
+DynTxRegime v4.9 (Release date: 2020-11-09)
+==============
+
+Changes:
+
+* Fixed typo for non-standard usage case of bowl()
+
 DynTxRegime v4.8 (Release date: 2020-10-15)
 ==============
 

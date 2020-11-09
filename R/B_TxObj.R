@@ -64,7 +64,6 @@ setMethod(f = ".compareTx",
 setMethod(f = ".convertFromBinary",
           signature = c("txObj" = "TxObj"),
           definition = function(txObj, ...){
-
               return( .convertFromBinary(txObj = txObj@txInfo, ...) )
             })
 

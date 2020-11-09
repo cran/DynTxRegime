@@ -143,7 +143,7 @@ setMethod(f = ".convertFromBinary",
 
                   # if only 1 feasible tx and training data received more than
                   # 1 tx, assign all non-NA individuals to appropriate tx
-                  optVec[usePts & {txVec < -0.5 || txVec > 0.5}] <- subsets[[ i ]]
+                  optVec[usePts & {txVec < -0.5 | txVec > 0.5}] <- subsets[[ i ]]
 
                 } else if (length(x = subsets[[ i ]]) == 2L) {
 

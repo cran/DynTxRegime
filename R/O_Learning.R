@@ -156,6 +156,7 @@ NULL
   } else {
     optVec[!isSingle & index] <- optOrg[!isSingle & index]
   }
+
   if (is(object = txObj, class2 = "TxInfoWithSubsets")) {
     subsets <- .getSubsets(object = txObj)
     ptsSubset <- .getPtsSubset(object = txObj)

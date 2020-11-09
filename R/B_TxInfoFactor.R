@@ -73,8 +73,10 @@ setMethod(f = ".convertTx",
           signature = c(object = "TxInfoFactor",
                         txVec = "ANY"),
           definition = function(object, txVec) {
+
               temp <- factor(x = txVec, levels = object@superset)
               temp2 <- factor(x = txVec)
+
               if (!all(levels(x = temp2) %in% object@superset)) {
                 stop("inappropriate vector provided to convertTx")
               }

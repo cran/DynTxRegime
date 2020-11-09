@@ -162,6 +162,7 @@ setMethod(f = ".compareTx",
                         vec1 = "factor",
                         vec2 = "factor"),
           definition = function(object, vec1, vec2) {
+
                return( .compareTx(object = as(object  = object,
                                               Class = "TxInfoFactor"), 
                                   vec1 = vec1,

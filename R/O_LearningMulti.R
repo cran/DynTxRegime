@@ -134,7 +134,6 @@ setMethod(f = ".newLearning",
               argList[[ "mu" ]] <- mu
 
               for (i in 1L:length(x = kernel)) {
-
                 # extract subset names for this kernel
                 kName <- names(x = kernel)[i]
                 kNames <- unlist(x = strsplit(x = kName, split = ","))
@@ -271,6 +270,8 @@ setMethod(f = "optTx",
                                  data = newdata,
                                  fSet = .getSubsetRule(x@txInfo),
                                  suppress = TRUE, verify = FALSE)
+
+              txObj@txInfo@superset <- .getSuperset(x@txInfo)
 
               # extract new patient subset assignments
               ptsSubset <- .getPtsSubset(object = txObj)
