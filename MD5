@@ -1,4 +1,4 @@
-ad379dfaedfe949183b1ca1a33b90481 *DESCRIPTION
+5acfb5b5c00d711508ac6fcaf1235ace *DESCRIPTION
 6d6984950c44ebd959f7ad46932564d7 *NAMESPACE
 ac79a1ca4268b585bc23625f0c86d803 *NEWS
 fa5a15c0f5d8c53606d3d288052983d4 *R/A_DecisionPointList.R
@@ -19,7 +19,7 @@ a337bdda2e9ee2aa5d6d846d72bf4b3b *R/A_SubsetList.R
 b72611285e8cd9da66fa9755dbcef6c4 *R/B_TxInfoNoSubsets.R
 7c089371bfd7400c3ac5477b99f62d50 *R/B_TxInfoWithSubsets.R
 f165d63c87f9dd5ec94f43a7b7ca7e8a *R/B_TxObj.R
-7230414beee60ca69758475515dcc85d *R/B_TxSubset.R
+2ee161fb4d62458adfc7b88c01549301 *R/B_TxSubset.R
 cda9b47abd48de3394aaaf429397f0d6 *R/B_TxSubsetFactor.R
 cc3ab0f7c720a0716b17d9c94c5efd39 *R/B_TxSubsetInteger.R
 442aeaa36d32deffc0532b111087c2ce *R/C_TypedFit.R

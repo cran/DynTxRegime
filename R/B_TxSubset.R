@@ -500,15 +500,15 @@ setMethod(f = ".identifySubsets",
         stop("subsets must contain at least one treatment option", 
              call. = FALSE)
       }
-      if (class(x = tmp[[ 2L ]]) == "factor") {
+      if (is.factor(x = tmp[[ 2L ]])) {
         # if provided as a factor vector, convert to character
         txvec[[ "subsets" ]][[ i ]][[ 2L ]] <- levels(x = tmp[[ 2L ]])[tmp[[ 2L ]]]
-      } else if (class(x = tmp[[2L]]) == "numeric") {
+      } else if (is.numeric(x = tmp[[2L]])) {
         # if provided as a numeric vector, round and convert to integer
         txvec[[ "subsets" ]][[ i ]][[2L]] <- as.integer(round(tmp[[2L]],0L))
-      } else if (class(x = tmp[[ 2L ]]) != "factor" && 
-                 class(x = tmp[[ 2L ]]) != "integer" &&
-                 class(x = tmp[[ 2L ]]) != "character") {
+      } else if (!is.factor(x = tmp[[ 2L ]]) && 
+                 !is.integer(x = tmp[[ 2L ]]) &&
+                 !is.character(x = tmp[[ 2L ]])) {
         stop("fSet defined treatment must be factor/character or integer",
              call. = FALSE)
       }
@@ -534,15 +534,15 @@ setMethod(f = ".identifySubsets",
            " to every patient --- verify fSet", call. = FALSE)
     }
 
-    if (class(x = txvec[[ 2L ]]) == "factor") {
+    if (is.factor(x = txvec[[ 2L ]])) {
       # if provided as a factor vector, convert to character
       txvec[[ 2L ]] <- levels(x = txvec[[ 2L ]])[txvec[[ 2L ]]]
-    } else if (class(x = txvec[[ 2L ]]) == "numeric") {
+    } else if (is.numeric(x = txvec[[ 2L ]])) {
       # if provided as a numeric vector, round and convert to integer
       txvec[[2L]] <- as.integer(round(txvec[[2L]],0L))
-    } else if (class(x = txvec[[ 2L ]]) != "factor" && 
-               class(x = txvec[[ 2L ]]) != "integer" &&
-               class(x = txvec[[ 2L ]]) != "character") {
+    } else if (!is.factor(x = txvec[[ 2L ]]) && 
+               !is.integer(x = txvec[[ 2L ]]) &&
+               !is.character(x = txvec[[ 2L ]])) {
       stop("fSet defined treatment must be factor/character or integer",
            call. = FALSE)
     }
