@@ -67,6 +67,7 @@ Class \code{IQLearnFS_VHet} contains the results for the first stage
 
 \describe{
    \item{residuals}{:Retrieve the residuals of the regression.}
+   \item{qqplot}{QQ plot of the residuals for the interactive Q-Learning algorithm.}
 }
 }
 

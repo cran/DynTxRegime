@@ -3,14 +3,32 @@
 \name{IQLearnFS_VHet-methods}
 \alias{IQLearnFS_VHet-methods}
 \alias{print,IQLearnFS_VHet-method}
+\alias{qqplot,IQLearnFS_VHet-method}
 \alias{show,IQLearnFS_VHet-method}
 \title{Methods Available for Objects of Class \code{IQLearnFS_VHet}}
 \usage{
 \S4method{print}{IQLearnFS_VHet}(x, ...)
+
+\S4method{qqplot}{IQLearnFS_VHet}(
+  x,
+  y,
+  plot.it = TRUE,
+  xlab = deparse1(substitute(x)),
+  ylab = deparse1(substitute(y)),
+  ...,
+  conf.level = NULL,
+  conf.args = list(exact = NULL, simulate.p.value = FALSE, B = 2000, col = NA, border =
+    NULL)
+)
 
 \S4method{show}{IQLearnFS_VHet}(object)
 }
 \description{
 Methods Available for Objects of Class \code{IQLearnFS_VHet}
 }
+\section{Functions}{
+\itemize{
+\item \code{qqplot(IQLearnFS_VHet)}: 
+
+}}
 \keyword{internal}

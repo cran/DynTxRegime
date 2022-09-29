@@ -1,8 +1,8 @@
 Package: DynTxRegime
 Type: Package
 Title: Methods for Estimating Optimal Dynamic Treatment Regimes
-Version: 4.10
-Date: 2022-06-05
+Version: 4.11
+Date: 2022-09-28
 Author: S. T. Holloway, E. B. Laber, K. A. Linn, B. Zhang, M. Davidian, and A. A. Tsiatis
 Maintainer: Shannon T. Holloway <shannon.t.holloway@gmail.com>
 Description: Methods to estimate dynamic treatment regimes using Interactive
@@ -18,7 +18,7 @@ Imports: kernlab, rgenoud, dfoptim
 NeedsCompilation: no
 Repository: CRAN
 Encoding: UTF-8
-RoxygenNote: 7.1.0
+RoxygenNote: 7.2.1
 Collate: 'A_generics.R' 'A_List.R' 'A_DecisionPointList.R'
         'A_OptimalInfo.R' 'A_OptimalObj.R' 'A_DynTxRegime.R'
         'A_ModelObjSubset.R' 'A_SubsetList.R' 'A_ModelObj_SubsetList.R'
@@ -57,5 +57,5 @@ Collate: 'A_generics.R' 'A_List.R' 'A_DecisionPointList.R'
         'S_class_.earl.R' 'S_class_EARL.R' 'S_earl.R'
         'checkFSetAndOutcomeModels.R' 'checkFSetAndPropensityModels.R'
         'checkInputs.R' 'internalTest.R' 'titleIt.R'
-Packaged: 2022-06-05 17:00:06 UTC; 19194
-Date/Publication: 2022-06-07 12:20:09 UTC
+Packaged: 2022-09-29 00:34:01 UTC; 19194
+Date/Publication: 2022-09-29 15:10:12 UTC

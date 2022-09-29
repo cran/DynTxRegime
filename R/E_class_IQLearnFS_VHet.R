@@ -1,4 +1,4 @@
-# October 25, 2018
+# September 28, 2022
 
 #' Class \code{IQLearnFS_VHet}
 #'
@@ -21,6 +21,7 @@
 #' @section Methods For Accessing Main Results:
 #' \describe{
 #'    \item{residuals}{:Retrieve the residuals of the regression.}
+#'    \item{qqplot}{QQ plot of the residuals for the interactive Q-Learning algorithm.}
 #'}
 #'
 #' @include E_class_IQLearnSS.R E_class_IQLearnFS.R
@@ -147,36 +148,24 @@ setMethod(f = "print",
               callNextMethod()
             })
 
-#' Quantile-Quantile Plots
-#'
-#' QQ plot of the residuals for the interactive Q-Learning algorithm.
-#'
-#' @usage
-#'   qqplot(x, y, plot.it, xlab, ylab, ...)
-#'
-#'   ## S4 method for IQLearnFS_VHet,ANY
-#'   qqplot(x, y, plot.it, xlab, ylab, ...)
-#'
-#' @param x An object of class IQLearnFS_VHet
-#' @param y ANY
-#' @param plot.it logical. Should the result be plotted?
-#' @param xlab,ylab The 'xlab' and 'ylab' refer to the y and x axes respectively.
-#' @param ... graphical parameters
-#'
-#' @name qqplot
-#' @docType methods
-#' @aliases qqplot,IQLearnFS_VHet-method
-#'
+
+#' @noRd
 #' @importFrom stats qqplot qqnorm qqline
+#'
+#' @exportMethod qqplot
+qqplot.IQLearnFS_VHet <- function(x, y, plot.it, xlab, ylab, ...) {
+              x <- residuals(x)
+              qqnorm(x, ...)
+              qqline(x, ...)
+            }
+
+#' @describeIn IQLearnFS_VHet-methods
 #'
 #' @exportMethod qqplot
 setMethod(f = "qqplot",
           signature = c(x = "IQLearnFS_VHet", y = "ANY"),
-          definition = function(x, y, plot.it, xlab, ylab, ...) {
-              x <- residuals(x)
-              qqnorm(x, ...)
-              qqline(x, ...)
-            })
+          definition = qqplot.IQLearnFS_VHet)
+
 
 #' @rdname residuals
 setMethod(f = "residuals",

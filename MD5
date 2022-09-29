@@ -1,4 +1,4 @@
-5acfb5b5c00d711508ac6fcaf1235ace *DESCRIPTION
+7b2b38705551152a23d49a61a6eedac5 *DESCRIPTION
 6d6984950c44ebd959f7ad46932564d7 *NAMESPACE
 ac79a1ca4268b585bc23625f0c86d803 *NEWS
 fa5a15c0f5d8c53606d3d288052983d4 *R/A_DecisionPointList.R
@@ -36,7 +36,7 @@ f6ed2ea585d9f07e806c3bdcc6e1adb3 *R/D_OutcomeSimpleFit_SubsetList.R
 b835a1c1be4eae59a8a309078a980471 *R/E_class_IQLearnFS.R
 ee60ed9dd6cf68d145c9021fdcd35ba8 *R/E_class_IQLearnFS_C.R
 e9bb978663789f141c2b3d07b312b972 *R/E_class_IQLearnFS_ME.R
-6e1175fc1b4ccd28b9259c710490d8ee *R/E_class_IQLearnFS_VHet.R
+7e830f9e5ee68d3a51c01ae0c4957428 *R/E_class_IQLearnFS_VHet.R
 789c6121a4eed33f854ed0c53f2682e3 *R/E_class_IQLearnSS.R
 892f451fe7015380e461457a0c10d2c4 *R/E_class_QLearn.R
 f6be0ba2492a0efc39a32e245d53518b *R/E_iqLearnFSC.R
@@ -150,8 +150,8 @@ e1a1f5c965a65dea6a624a9afbd7e08c *man/IQLearnFS-methods.Rd
 0f07f09b56b8e0380423475f6407f90d *man/IQLearnFS_C-methods.Rd
 dff69542dbd36601ac1b91da87196f33 *man/IQLearnFS_ME-class.Rd
 49f279d5a6459e35fccefd3a7c9fd0fc *man/IQLearnFS_ME-methods.Rd
-b8b56ec05c2798aeef42ca01eefa972d *man/IQLearnFS_VHet-class.Rd
-ea9edb07a5efc1868c613b600ab16393 *man/IQLearnFS_VHet-methods.Rd
+8a3c75f00d0ddbb610ae5cb3d45f7e49 *man/IQLearnFS_VHet-class.Rd
+21309696b948b6f0fa70981d5a8e16a6 *man/IQLearnFS_VHet-methods.Rd
 120990002db0ad49ad6c9e2e9e88b26f *man/IQLearnSS-class.Rd
 30d54362651b6f8af3e07d531029117c *man/IQLearnSS-methods.Rd
 9297cd3d13aa3c3891f7c1ef605813ac *man/Kernel-class.Rd
@@ -341,7 +341,6 @@ e14c755cdd46b483a8ef3b0628da8bc0 *man/newTxSubset.Rd
 b53aa20c9fbc4670e515b5ff3427661e *man/plot.Rd
 aaa47f965cbee249b44dda2bca2920ca *man/propen.Rd
 3528363c418e6f3f637d0d78c881410f *man/qLearn.Rd
-5e449a4750dd1dea0ed3a58824175f46 *man/qqplot.Rd
 cf63443ecdc0953fdbeeebbe85d2b548 *man/regimeCoef.Rd
 18bb6047adc73afca082451c004c694d *man/residuals.Rd
 509afd30fcbe8f56ce111467074295db *man/rwl.Rd
