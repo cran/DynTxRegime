@@ -153,7 +153,12 @@ setMethod(f = "print",
 #' @importFrom stats qqplot qqnorm qqline
 #'
 #' @exportMethod qqplot
-qqplot.IQLearnFS_VHet <- function(x, y, plot.it, xlab, ylab, ...) {
+qqplot.IQLearnFS_VHet <- function(x, y, plot.it, xlab, ylab, ...,
+                                  conf.level = NULL, 
+                                  conf.args = list(exact = NULL, 
+                                                   simulate.p.value = FALSE, 
+                                                   B = 2000, col = NA, 
+                                                   border = NULL)) {
               x <- residuals(x)
               qqnorm(x, ...)
               qqline(x, ...)
