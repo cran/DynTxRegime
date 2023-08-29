@@ -43,7 +43,7 @@ setClass(Class = "QLearn",
 #'
 #' @return an object of class QLearn.
 #'
-#' @name newQLearn
+#' @rdname newQLearn
 #'
 #' @keywords internal
 setGeneric(name = ".newQLearn",

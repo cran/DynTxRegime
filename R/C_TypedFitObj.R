@@ -52,7 +52,7 @@ setClass(Class = "TypedFitObj",
 #'
 #' Call newTypedFit and stores result in @fit
 #'
-#' @name newTypedFitObj
+#' @rdname newTypedFitObj
 #'
 #' @param modelObj A modeling object
 #' @param txObj A TxObj object

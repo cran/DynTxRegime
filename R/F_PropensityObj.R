@@ -55,7 +55,7 @@ setClass(Class = "PropensityObj",
 #'
 #' Calls newPropensityFit and stores result in @propen.
 #'
-#' @name newPropensityObj
+#' @rdname newPropensityObj
 #'
 #' @param moPropen A modeling object
 #' @param txObj A TxObj object

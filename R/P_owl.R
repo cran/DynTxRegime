@@ -154,7 +154,7 @@ owl <- function(...,
 
   # treatments must be binary
   txVec <- .checkBinaryTx(txName = txName, data = data)
-
+  
   # verify cross-validation quantities
   cvVerified <- .verifyCV(lambdas = lambdas, cvFolds = cvFolds, kparam = kparam)
 

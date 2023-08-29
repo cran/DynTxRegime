@@ -34,7 +34,7 @@ setClass(Class = "IQLearnFS_VHet",
 #'
 #' Performs log-linear regression on the residuals.
 #'
-#' @name newIQLearnFS_VHet
+#' @rdname newIQLearnFS_VHet
 #'
 #' @keywords internal
 setGeneric(name = ".newIQLearnFS_VHet", 
@@ -153,7 +153,9 @@ setMethod(f = "print",
 #' @importFrom stats qqplot qqnorm qqline
 #'
 #' @exportMethod qqplot
-qqplot.IQLearnFS_VHet <- function(x, y, plot.it, xlab, ylab, ...,
+qqplot.IQLearnFS_VHet <- function(x, y, plot.it = TRUE, 
+                                  xlab = deparse1(substitute(x)), 
+                                  ylab = deparse1(substitute(y)), ...,
                                   conf.level = NULL, 
                                   conf.args = list(exact = NULL, 
                                                    simulate.p.value = FALSE, 

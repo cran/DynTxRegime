@@ -42,7 +42,7 @@ setClass(Class = "CVInfoObj",
 #' @param kernel Kernel (w/kernel parameters) to be considered
 #' @param ... Additional arguments as needed
 #'
-#' @name newCVInfoObj
+#' @rdname newCVInfoObj
 #'
 #' @keywords internal
 setGeneric(name = ".newCVInfoObj",
@@ -65,7 +65,7 @@ NULL
 
 #' @rdname newCVInfoObj
 #' @param methodObject Object parameters for weighted learning method
-#' @param cvFolds Number of cross-validation folds
+#' @param cvObject Cross-Validation object
 #' @param suppress T/F indicating if screen prints are generated
 setMethod(f = ".newCVInfoObj",
           signature = c(lambdas = "ANY",

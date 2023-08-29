@@ -41,7 +41,7 @@ setClass("OptimalSeq",
 #' @param fSet function(s) defining feasible tx
 #' @param ... additional inputs.
 #'
-#' @name newOptimalSeq
+#' @rdname newOptimalSeq
 #'
 #' @keywords internal
 setGeneric(name = ".newOptimalSeq",
@@ -66,7 +66,7 @@ setGeneric(name = "genetic",
 #' Method is defined by inheriting classes to define the objective function
 #'   optmized by the genetic algorithm.
 #'
-#' @name seqFunc
+#' @rdname seqFunc
 #'
 #' @keywords internal
 setGeneric(name = ".seqFunc",

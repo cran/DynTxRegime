@@ -23,7 +23,7 @@ setClass(Class = "Learning",
 #'
 #' Performs a weighted learning analysis.
 #'
-#' @name newLearning
+#' @rdname newLearning
 #'
 #' @param fSet NULL or function defining feasible tx
 #' @param kernel a Kernel object

@@ -68,7 +68,7 @@ setMethod(f = "[[<-",
 #'
 #' Applies the specified function to each element of the \code{List}.
 #'
-#' @name cycleList
+#' @rdname cycleList
 #'
 #' @keywords internal
 setGeneric(name = ".cycleList",

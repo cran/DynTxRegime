@@ -54,7 +54,7 @@ setClass(Class = "OptimalClass",
 #' Method dispatches the appropriate function to obtain estimates for the
 #'   optimal treatment and value using classification.
 #'
-#' @name newOptimalClass
+#' @rdname newOptimalClass
 #'
 #' @keywords internal
 setGeneric(name = ".newOptimalClass",

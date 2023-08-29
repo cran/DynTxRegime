@@ -50,8 +50,6 @@ optimization methods}
 \item{suppress}{T/F indicating if prints to screen are executed}
 
 \item{...}{Additional inputs for optimization}
-
-\item{txVec}{treatment vector recast as +/- 1}
 }
 \value{
 An RWL object

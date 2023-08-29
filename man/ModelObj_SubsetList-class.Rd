@@ -3,7 +3,7 @@
 \docType{class}
 \name{ModelObj_SubsetList-class}
 \alias{ModelObj_SubsetList-class}
-\alias{ModelObj_SubsetList}
+\alias{initialize,ModelObj_SubsetList-method}
 \title{Class ModelObj_SubsetList}
 \usage{
 \S4method{initialize}{ModelObj_SubsetList}(.Object, ...)

@@ -49,7 +49,7 @@ setClass(Class = "TxSubset",
 #' Processes input to determine ptsSubset and singleton to create a
 #'   \code{TxSubset} object
 #'
-#' @name newTxSubset
+#' @rdname newTxSubset
 #'
 #' @keywords internal
 setGeneric(name = ".newTxSubset",

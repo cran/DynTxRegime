@@ -29,7 +29,7 @@ setClass(Class = "OptimBasic",
 #' 
 #' Dispatches appropriate methods to optimize an object function.
 #'
-#' @name newOptim
+#' @rdname newOptim
 #'
 #' @keywords internal
 setGeneric(name = ".newOptim",

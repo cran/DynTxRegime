@@ -1,3 +1,17 @@
+DynTxRegime v4.14 (Release date: 2023-08-29)
+==============
+
+Changes:
+
+* Removed errant debugging argument
+
+DynTxRegime v4.13 (Release date: 2023-08-28)
+==============
+
+Changes:
+
+* Modified logit surrogate loss function to match documentation.
+
 DynTxRegime v4.9 (Release date: 2020-11-09)
 ==============
 

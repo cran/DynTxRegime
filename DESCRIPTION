@@ -1,8 +1,8 @@
 Package: DynTxRegime
 Type: Package
 Title: Methods for Estimating Optimal Dynamic Treatment Regimes
-Version: 4.12
-Date: 2023-04-25
+Version: 4.14
+Date: 2023-08-29
 Author: S. T. Holloway, E. B. Laber, K. A. Linn, B. Zhang, M. Davidian, and A. A. Tsiatis
 Maintainer: Shannon T. Holloway <shannon.t.holloway@gmail.com>
 Description: Methods to estimate dynamic treatment regimes using Interactive
@@ -57,5 +57,5 @@ Collate: 'A_generics.R' 'A_List.R' 'A_DecisionPointList.R'
         'S_class_.earl.R' 'S_class_EARL.R' 'S_earl.R'
         'checkFSetAndOutcomeModels.R' 'checkFSetAndPropensityModels.R'
         'checkInputs.R' 'internalTest.R' 'titleIt.R'
-Packaged: 2023-04-25 14:16:20 UTC; 19194
-Date/Publication: 2023-04-25 14:50:11 UTC
+Packaged: 2023-08-29 12:56:11 UTC; 19194
+Date/Publication: 2023-08-29 13:30:02 UTC

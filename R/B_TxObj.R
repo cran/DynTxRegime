@@ -23,7 +23,7 @@ setClass(Class = "TxObj",
 #'
 #' Creates appropriate \code{TxObj} based on class of fSet and txName.
 #'
-#' @name newTxObj
+#' @rdname newTxObj
 #' 
 #' @keywords internal
 setGeneric(name = ".newTxObj",

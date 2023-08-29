@@ -25,7 +25,7 @@ setClass(Class = "IQLearnFS_ME",
 #'
 #' Performs regression on the fitted main effects the second stage regression.
 #'
-#' @name newIQLearnFS_ME
+#' @rdname newIQLearnFS_ME
 #'
 #' @keywords internal
 setGeneric(name = ".newIQLearnFS_ME", 

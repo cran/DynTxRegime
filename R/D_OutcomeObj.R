@@ -47,7 +47,7 @@ setClass(Class = "OutcomeObj",
 #'
 #' Calls newOutcomeFit and stores in @outcome.
 #'
-#' @name newOutcomeObj
+#' @rdname newOutcomeObj
 #'
 #' @param moMain A modeling object for main effects
 #' @param moCont A modeling object for contrasts

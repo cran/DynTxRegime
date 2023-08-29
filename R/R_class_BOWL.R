@@ -62,7 +62,7 @@ NULL
 #' @param suppress T/F indicating if prints to screen are to be executed
 #' @param guess Starting values for optimization
 #'
-#' @name newBOWL
+#' @rdname newBOWL
 #'
 #' @keywords internal
 setMethod(f = ".newBOWL",

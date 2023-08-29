@@ -56,7 +56,7 @@ setClass(Class = "RWL",
 
 #' Complete a Residual Weighted Learning Analysis
 #'
-#' @name newRWL
+#' @rdname newRWL
 #'
 #' @param kernel A Kernel object
 #'
@@ -89,7 +89,6 @@ NULL
 #' @param kernel Kernel object
 #' @param fSet Function or NULL defining subsets
 #' @param responseType Character indicating type of response
-#' @param txVec treatment vector recast as +/- 1
 #' @param surrogate Surrogate object
 #' @param suppress T/F indicating if prints to screen are executed
 #' @param guess optional numeric vector providing starting values for

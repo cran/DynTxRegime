@@ -3,7 +3,7 @@
 \docType{class}
 \name{ModelObj_DecisionPointList-class}
 \alias{ModelObj_DecisionPointList-class}
-\alias{ModelObj_DecisionPointList}
+\alias{initialize,ModelObj_DecisionPointList-method}
 \title{Class ModelObj_DecisionPointList}
 \usage{
 \S4method{initialize}{ModelObj_DecisionPointList}(.Object, ...)

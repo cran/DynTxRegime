@@ -40,7 +40,7 @@
 #'
 #' Combines moMain and moCont into a single modeling object.
 #'
-#' @name newModel
+#' @rdname newModel
 #'
 #' @keywords internal
 setGeneric(name = ".newModel",

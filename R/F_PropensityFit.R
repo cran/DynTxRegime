@@ -25,7 +25,7 @@ setClass("PropensityFit",
 #'
 #' Dispatches appropriate method for completing propensity regressions.
 #'
-#' @name newPropensityFit
+#' @rdname newPropensityFit
 #'
 #' @param moPropen A modeling object
 #' @param txObj A TxObj object

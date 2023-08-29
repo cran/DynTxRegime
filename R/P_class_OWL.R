@@ -42,7 +42,7 @@ setClass(Class = "OWL",
 
 #' Complete an OWL Analysis
 #'
-#' @name newOWL
+#' @rdname newOWL
 #'
 #' @param moPropen modelObj for propensity modeling
 #' @param data data.frame of covariates
@@ -52,7 +52,6 @@ setClass(Class = "OWL",
 #' @param cvFolds Number of cross-validation folds
 #' @param kernel Kernel object or SubsetList
 #' @param fSet NULL or function defining subset rules
-#' @param txVec Tx vector recast as +/- 1
 #' @param surrogate Surrogate object
 #' @param suppress T/F indicating if prints to screen are executed
 #' @param guess optional numeric vector providing starting values for

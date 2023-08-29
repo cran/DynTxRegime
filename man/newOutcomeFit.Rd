@@ -2,8 +2,8 @@
 % Please edit documentation in R/D_OutcomeNoFit.R, R/D_OutcomeSimpleFit.R,
 %   R/D_OutcomeSimpleFit_fSet.R, R/D_OutcomeIterateFit.R,
 %   R/D_OutcomeSimpleFit_SubsetList.R
-\name{newOutcomeFit}
-\alias{newOutcomeFit}
+\name{.newOutcomeFit}
+\alias{.newOutcomeFit}
 \alias{.newOutcomeFit,NULL,NULL,TxObj,NULL-method}
 \alias{.newOutcomeFit,modelObj,modelObj,TxInfoNoSubsets,NULL-method}
 \alias{.newOutcomeFit,modelObj,NULL,TxInfoNoSubsets,NULL-method}

@@ -23,7 +23,7 @@ setClass(Class = 'ClassificationFit',
 #'   object specified by the user and the feasible tx definitions.
 #'   The value object returned depends on the underlying typed fit method.
 #'
-#' @name newClassificationFit
+#' @rdname newClassificationFit
 #' @docType methods
 setGeneric(name = ".newClassificationFit",
            def = function(moClass, txObj, ...) {
@@ -62,7 +62,6 @@ NULL
 #'
 #' @param moClass modeling object(s) defining the classification regression
 #' @param txObj TxObj defining the tx feasible sets
-#' @param contrast vector of contrasts
 #' @param data data.frame of covariates and tx received
 #' @param suppress logical indicating user's screen printing preference
 #' @param ... additional arguments. Ignored.

@@ -22,7 +22,7 @@ setClass(Class = "TypedFit",
 #'   used to identify the purpose of the step, such as a propensity or
 #'   outcome regression.
 #'
-#' @name newTypedFit
+#' @rdname newTypedFit
 #'
 #' @param modelObj A modeling object
 #' @param txObj A TxObj object

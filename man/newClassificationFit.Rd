@@ -2,8 +2,8 @@
 % Please edit documentation in R/I_ClassificationFit.R,
 %   R/I_ClassificationFit_SubsetList.R, R/I_ClassificationFit_fSet.R
 \docType{methods}
-\name{newClassificationFit}
-\alias{newClassificationFit}
+\name{.newClassificationFit}
+\alias{.newClassificationFit}
 \alias{.newClassificationFit,modelObj,TxInfoNoSubsets-method}
 \alias{.newClassificationFit,ModelObj_SubsetList,TxInfoWithSubsets-method}
 \alias{.newClassificationFit,modelObj,TxInfoWithSubsets-method}
@@ -27,8 +27,6 @@
 \item{data}{data.frame of covariates and tx received}
 
 \item{suppress}{logical indicating user's screen printing preference}
-
-\item{contrast}{vector of contrasts}
 }
 \description{
 Methods dispatch appropriate typed fit methods based on the modeling

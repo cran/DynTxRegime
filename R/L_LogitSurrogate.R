@@ -27,8 +27,8 @@ NULL
 #' @rdname LogitSurrogate-methods
 setMethod(f = ".phiFunc",
           signature = c(surrogate = "LogitSurrogate"),
-          definition = function(surrogate, u) { 
-              return( log(x = 1.0 + exp(x = -u)) ) 
+          definition = function(surrogate, u) {
+              return( log(x = 1.0 + exp(x = -u))) 
             })
 
 #' \code{.dphiFunc}
@@ -39,5 +39,5 @@ setMethod(f = ".dPhiFunc",
           signature = c(surrogate = "LogitSurrogate"),
           definition = function(surrogate, u, du) {
               expu <- exp(x = -u)
-              return( - {expu / {1.0 + expu}} * du )
+              return( - {expu / {1.0 + expu}} * du)
             })

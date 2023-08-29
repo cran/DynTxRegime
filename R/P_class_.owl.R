@@ -120,7 +120,6 @@ setMethod(f = ".objFn",
 
               lb <- drop(x = vee %*% vee)*0.5*lambda
               u <- methodObject@txSignR*{drop(x = temp) + bee}
-
               res <- mean(x = methodObject@absRinvPi*
                               .phiFunc(surrogate = methodObject@surrogate,
                                        u = u, ...)) + lb
@@ -232,7 +231,7 @@ setMethod(f = ".valueFunc",
                                  txVec = txVec,
                                  prWgt = prWgt,
                                  response = response) 
-
+  
   tsr <- txVec
   tsr[response <= 0] <- -tsr[response <= 0]
 

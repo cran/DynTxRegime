@@ -22,7 +22,7 @@ setClass(Class = "CVInfo",
 #'
 #' Dispatch appropriate cross-validation procedure.
 #'
-#' @name newCVInfo
+#' @rdname newCVInfo
 #'
 #' @param lambdas tuning parameters
 #' @param kernel kernel object

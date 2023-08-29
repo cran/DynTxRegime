@@ -53,6 +53,7 @@
 
   surrogate <- tolower(surrogate)
   if (surrogate == "logit") {
+    message("Note that the logit function was changed in version 4.13")
     surrogate <- new("LogitSurrogate")
   } else if (surrogate == "exp") {
     surrogate <- new("ExpSurrogate")

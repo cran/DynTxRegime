@@ -39,7 +39,6 @@ setClass(Class = "ModelObj_SubsetList",
 
 #' Constructor Method of ModelObj_SubsetList Class
 #'
-#' @name ModelObj_SubsetList
 #' @rdname ModelObj_SubsetList-class
 #'
 setMethod(f = "initialize",

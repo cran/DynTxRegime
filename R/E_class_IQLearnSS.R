@@ -36,7 +36,7 @@ setClass(Class = "IQLearnSS",
 #'
 #' Performs the regression of the outcome.
 #'
-#' @name newIQLearnSS
+#' @rdname newIQLearnSS
 #'
 #' @keywords internal
 setGeneric(name = ".newIQLearnSS", 

@@ -37,7 +37,7 @@ setClass(Class = "OptimObj",
 #'
 #' Call newOptim and stores result under common name
 #'
-#' @name newOptimObj
+#' @rdname newOptimObj
 #'
 #' @keywords internal
 setGeneric(name = ".newOptimObj",

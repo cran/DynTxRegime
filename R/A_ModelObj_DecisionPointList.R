@@ -41,7 +41,6 @@ setClass(Class = "ModelObj_DecisionPointList",
 
 #' Constructor Method of ModelObj_DecisionPointList Class
 #'
-#' @name ModelObj_DecisionPointList
 #' @rdname ModelObj_DecisionPointList-class
 #'
 setMethod(f = "initialize",

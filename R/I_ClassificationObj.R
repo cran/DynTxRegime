@@ -41,7 +41,7 @@ setClass(Class = "ClassificationObj",
 #'
 #' Method calls .newClassificationFit() and stores the result in @classif.
 #'
-#' @name newClassificationObj
+#' @rdname newClassificationObj
 #' @docType methods
 #'
 #' @keywords internal
@@ -52,7 +52,7 @@ setGeneric(name = ".newClassificationObj",
 
 #' Create an Object of Class \code{ClassificationFitObj}
 #'
-#' @inheritParams newClassificationFit
+#' @inheritParams .newClassificationFit
 #'
 #' @rdname newClassificationObj
 setMethod(".newClassificationObj",

@@ -38,7 +38,7 @@ setClass(Class = "IQLearnFS_C",
 #'
 #' Performs regression on the fitted contrasts of the second stage regression.
 #'
-#' @name newIQLearnFS_C
+#' @rdname newIQLearnFS_C
 #'
 #' @keywords internal
 setGeneric(name = ".newIQLearnFS_C", 

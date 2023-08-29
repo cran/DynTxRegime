@@ -43,7 +43,7 @@ setClass(Class = "EARL",
 
 #' Complete an EARL Analysis
 #'
-#' @name newEARL
+#' @rdname newEARL
 #'
 #' @param moPropen modelObj for propensity modeling
 #' @param moMain modelObj for main effects of outcome model
@@ -55,7 +55,6 @@ setClass(Class = "EARL",
 #' @param cvFolds Number of cross-validation folds
 #' @param kernel Kernel object or SubsetList
 #' @param fSet NULL or function defining subset rules
-#' @param txVec Tx vector recast as +/- 1
 #' @param surrogate Surrogate object
 #' @param iter Maximum iterations for outcome regression
 #' @param suppress T/F indicating if prints to screen are executed

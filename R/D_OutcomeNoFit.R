@@ -18,7 +18,7 @@ setClass(Class = "OutcomeNoFit", contains = c("TxObj"))
 #'
 #' Dispatch appropriate methods to perform outcome regression step.
 #'
-#' @name newOutcomeFit
+#' @rdname newOutcomeFit
 #'
 #' @param moMain A modeling object for main effects or NULL
 #' @param moCont A modeling object for contrasts or NULL
