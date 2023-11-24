@@ -78,7 +78,7 @@ setClass(Class = "OptimalInfo",
 #'    IQLearnFS_ME, or IQLearnFS_VHet
 #' @param w If IQ-Learning, object of class IQLearnSS, IQLearnFS_C, 
 #'    IQLearnFS_ME, or IQLearnFS_VHet
-#' @param dens If IQ-Learning, one of {norm, nonpar} 
+#' @param dens If IQ-Learning, one of \{"norm", "nonpar"\} 
 #' @param ...  Optional additional input. Ignored.
 #'
 #' @usage

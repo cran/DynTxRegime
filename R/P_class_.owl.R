@@ -157,7 +157,7 @@ setMethod(f = ".dobjFn",
 
             })
 
-#' code{.objFn} is not allowed for OWL with multiple radial kernels
+#' \code{.objFn} is not allowed for OWL with multiple radial kernels
 #'
 #' @rdname internal-owl-methods
 setMethod(f = ".objFn",
@@ -170,7 +170,7 @@ setMethod(f = ".objFn",
                                 ...,
                                 lambda) { stop("not allowed") })
 
-#' code{.dobjFn} is not allowed for OWL with multiple radial kernels
+#' \code{.dobjFn} is not allowed for OWL with multiple radial kernels
 #'
 #' @rdname internal-owl-methods
 setMethod(f = ".dobjFn",
@@ -287,7 +287,7 @@ setMethod(f = ".optimFunc",
               argList[[ "l" ]] <- rep(0.0,n)
               argList[[ "r" ]] <- 0.0
               argList[[ "verb" ]] <- as.numeric(!suppress)
-
+              
               # optimization
               optimResults <- tryCatch(expr = do.call(what = kernlab::ipop,
                                                       args = argList),

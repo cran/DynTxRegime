@@ -31,8 +31,8 @@
 \description{
 Methods Available for Objects of Class \code{.owl}
 
-code{.objFn} is not allowed for OWL with multiple radial kernels
+\code{.objFn} is not allowed for OWL with multiple radial kernels
 
-code{.dobjFn} is not allowed for OWL with multiple radial kernels
+\code{.dobjFn} is not allowed for OWL with multiple radial kernels
 }
 \keyword{internal}

@@ -26,7 +26,7 @@ IQLearnFS_ME, or IQLearnFS_VHet}
 \item{z}{If IQ-Learning, object of class IQLearnSS, IQLearnFS_C, 
 IQLearnFS_ME, or IQLearnFS_VHet}
 
-\item{dens}{If IQ-Learning, one of {norm, nonpar}}
+\item{dens}{If IQ-Learning, one of \{"norm", "nonpar"\}}
 }
 \description{
 Retrieve the value as estimated by the statistical method.

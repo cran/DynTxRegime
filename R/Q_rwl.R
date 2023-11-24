@@ -40,7 +40,7 @@
 #' @param cvFolds If cross-validation is to be used to select the tuning
 #'   parameters, the number of folds.
 #' @param kernel A character object.
-#'   must be one of {linear, poly, radial}
+#'   must be one of \{"linear", "poly", "radial"\}
 #' @param kparam A numeric object of NULL.
 #'   If kernel = linear, kparam is ignored.
 #'   If kernel = poly, kparam is the degree of the polynomial

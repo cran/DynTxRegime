@@ -45,7 +45,7 @@
 #' @param surrogate The surrogate 0-1 loss function must be one of
 #'   logit, exp, hinge, sqhinge, huber
 #' @param kernel A character object.
-#'   must be one of {linear, poly, radial}
+#'   must be one of \{"linear", "poly", "radial"\}
 #' @param kparam A numeric object of NULL.
 #'   If kernel = linear, kparam is ignored.
 #'   If kernel = poly, kparam is the degree of the polynomial

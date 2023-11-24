@@ -75,7 +75,7 @@ parameters, the number of folds.}
 logit, exp, hinge, sqhinge, huber}
 
 \item{kernel}{A character object.
-must be one of {linear, poly, radial}}
+must be one of \{"linear", "poly", "radial"\}}
 
 \item{kparam}{A numeric object of NULL.
 If kernel = linear, kparam is ignored.

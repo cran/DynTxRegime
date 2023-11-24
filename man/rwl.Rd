@@ -66,7 +66,7 @@ cross-validation algorithm}
 parameters, the number of folds.}
 
 \item{kernel}{A character object.
-must be one of {linear, poly, radial}}
+must be one of \{"linear", "poly", "radial"\}}
 
 \item{kparam}{A numeric object of NULL.
 If kernel = linear, kparam is ignored.
