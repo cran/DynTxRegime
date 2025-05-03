@@ -1,9 +1,33 @@
 Package: DynTxRegime
 Type: Package
 Title: Methods for Estimating Optimal Dynamic Treatment Regimes
-Version: 4.15
-Date: 2023-11-24
-Author: S. T. Holloway, E. B. Laber, K. A. Linn, B. Zhang, M. Davidian, and A. A. Tsiatis
+Version: 4.16
+Date: 2025-05-03
+Author: Shannon T. Holloway [aut, cre],
+  E. B. Laber [aut],
+  K. A. Linn [aut],
+  B. Zhang [aut],
+  M. Davidian [aut],
+  A. A. Tsiatis [aut]
+Authors@R: c(person(given = c("Shannon", "T."),
+                        family = "Holloway",
+                        role = c("aut", "cre"),
+                        email = "shannon.t.holloway@gmail.com"),
+             person(given = c("E.", "B."),
+                        family = "Laber",
+                        role = "aut"),
+                 person(given = c("K.", "A."),
+                        family = "Linn",
+                        role = "aut"),
+                 person(given = "B.",
+                        family = "Zhang",
+                        role = "aut"),
+                 person(given = "M.",
+                        family = "Davidian",
+                        role = "aut"),
+                 person(given = c("A.", "A."),
+                        family = "Tsiatis",
+                        role = "aut"))
 Maintainer: Shannon T. Holloway <shannon.t.holloway@gmail.com>
 Description: Methods to estimate dynamic treatment regimes using Interactive
   Q-Learning, Q-Learning, weighted learning, and value-search methods based on 
@@ -57,5 +81,5 @@ Collate: 'A_generics.R' 'A_List.R' 'A_DecisionPointList.R'
         'S_class_.earl.R' 'S_class_EARL.R' 'S_earl.R'
         'checkFSetAndOutcomeModels.R' 'checkFSetAndPropensityModels.R'
         'checkInputs.R' 'internalTest.R' 'titleIt.R'
-Packaged: 2023-11-24 16:38:56 UTC; 19194
-Date/Publication: 2023-11-24 17:10:05 UTC
+Packaged: 2025-05-03 18:44:32 UTC; 19194
+Date/Publication: 2025-05-03 19:20:02 UTC
